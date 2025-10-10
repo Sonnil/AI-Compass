@@ -35,7 +35,7 @@
       "search"
     ],
     "accessLink": "https://gemini.google.com",
-    "logoUrl": "https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg"
+    "logoUrl": "https://www.google.com/favicon.ico"
   },
   {
     "name": "Perplexity AI",
@@ -54,7 +54,7 @@
       "web"
     ],
     "accessLink": "https://perplexity.ai",
-    "logoUrl": "https://yt3.googleusercontent.com/0hMC-6W0zIznMJLaaPGQRhbkb_0SZCkqpRVjQZ8XzXcRiA9KjVgE_4J6-DFG1NhMpzjJZf-0=s900-c-k-c0x00ffffff-no-rj"
+    "logoUrl": "https://pplx.ai/favicon.ico"
   },
   {
     "name": "Jasper AI",
@@ -91,7 +91,7 @@
       "design"
     ],
     "accessLink": "https://midjourney.com",
-    "logoUrl": "https://cdn.midjourney.com/b07dac22-026b-4ceb-ad83-5d3c4c6c8b98/0_0.png"
+    "logoUrl": "https://www.midjourney.com/favicon.ico"
   },
   {
     "name": "Runway ML",
