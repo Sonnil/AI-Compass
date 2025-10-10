@@ -94,13 +94,16 @@ function generateIntelligentResponse(systemPrompt: string, userInput: string, to
 
   // Greeting responses
   if (detectedIntents.includes('greeting')) {
-    const response = `Hello! 👋 I'm your AI Compass assistant, and I know all about Sanofi's ${toolsCatalog.length} AI tools.
+    const internalCount = toolsCatalog.filter(t => t.type === 'internal').length
+    const externalCount = toolsCatalog.filter(t => t.type === 'external').length
+    const response = `Hello! 👋 I'm your AI Compass assistant, and I know all about Sanofi's comprehensive AI tools catalog with **${internalCount} internal** and **${externalCount} external** tools.
 
 I can help you:
 🔍 **Find the right tool** for your specific needs
-📊 **Compare tools** to see which works best
+📊 **Compare tools** to see which works best  
 🎯 **Get recommendations** based on your role or project
-📋 **Check access requirements** and training needs`
+📋 **Check access requirements** and training needs
+🆕 **Discover new AI tools** like Claude 3, Gemini, Perplexity AI, and more!`
     
     return response + getSuggestedQuestions('greeting')
   }
@@ -233,14 +236,17 @@ function analyzeUseCase(input: string): string {
 
 function getToolRecommendations(useCase: string, toolsCatalog: any[]): any[] {
   const recommendations = {
-    'research': ['Newton', 'AI Research Factory', 'MedIS'],
-    'productivity': ['Concierge', 'Microsoft Copilot'],
-    'creative': ['ChatGPT', 'Jasper AI'],
-    'medical': ['MedIS', 'Newton'],
-    'manufacturing': ['Digital Twins', 'Plai'],
-    'finance': ['Plai'],
-    'visualization': ['Plai'],
-    'coding': ['Microsoft Copilot', 'ChatGPT']
+    'research': ['Newton', 'AI Research Factory', 'MedIS', 'Perplexity AI', 'Claude 3', 'Google Gemini'],
+    'productivity': ['Concierge', 'Microsoft Copilot', 'Notion AI', 'Amazon Q'],
+    'creative': ['ChatGPT', 'Jasper AI', 'Midjourney', 'Runway ML', 'Stable Diffusion'],
+    'medical': ['MedIS', 'Newton', 'IBM Watsonx'],
+    'manufacturing': ['Digital Twins', 'Plai', 'IBM Watsonx'],
+    'finance': ['Plai', 'Salesforce Agentforce', 'Amazon Q'],
+    'visualization': ['Plai', 'Runway ML', 'Midjourney'],
+    'coding': ['Microsoft Copilot', 'ChatGPT', 'Replit Ghostwriter', 'Hugging Face'],
+    'marketing': ['Jasper AI', 'Salesforce Agentforce', 'Midjourney', 'Runway ML'],
+    'enterprise': ['IBM Watsonx', 'Salesforce Agentforce', 'Amazon Q', 'Cohere Command R+'],
+    'opensource': ['Stable Diffusion', 'Mistral AI', 'Hugging Face']
   }
   
   const toolNames = recommendations[useCase] || recommendations['productivity']
@@ -414,9 +420,12 @@ export default function ChatWidget({ toolsCatalog, apiPath }: Props) {
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState<Msg[]>([
-    { role: 'assistant', content: 'Hello! I\'m your AI Compass assistant. Ask me about any AI tool, compare capabilities, or get recommendations for your specific use case.' }
+    { role: 'assistant', content: 'Hello! I\'m your AI Compass assistant. Ask me about any AI tool from our comprehensive catalog including internal Sanofi tools and the latest external AI platforms like Claude 3, Google Gemini, Perplexity AI, and more! 🚀' }
   ])
   const abortRef = useRef<AbortController | null>(null)
+
+  // Debug logging
+  console.log('ChatWidget rendered with', toolsCatalog?.length, 'tools')
 
   async function send() {
     if (!input.trim()) return
@@ -521,8 +530,12 @@ export default function ChatWidget({ toolsCatalog, apiPath }: Props) {
     <>
       <button
         className="fixed bottom-5 right-5 h-12 px-4 rounded-2xl shadow-lg border-2 border-blue-200 dark:border-blue-700 bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white flex items-center gap-2 transition-all duration-300 hover:scale-105 hover:shadow-xl group z-40"
-        onClick={() => setOpen(o => !o)}
+        onClick={() => {
+          console.log('Chat button clicked, current open state:', open)
+          setOpen(o => !o)
+        }}
         aria-label="Open AI Compass chat assistant"
+        title="Click to open AI Compass Assistant"
       >
         <Bot className="w-5 h-5 group-hover:animate-pulse" />
         <span className="font-medium">AI Assistant</span>

@@ -14,7 +14,9 @@
       "reasoning",
       "text",
       "enterprise"
-    ]
+    ],
+    "accessLink": "https://claude.ai",
+    "logoUrl": "https://claude.ai/favicon.ico"
   },
   {
     "name": "Google Gemini",
@@ -31,7 +33,9 @@
       "workspace",
       "google",
       "search"
-    ]
+    ],
+    "accessLink": "https://gemini.google.com",
+    "logoUrl": "https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg"
   },
   {
     "name": "Perplexity AI",
@@ -48,7 +52,9 @@
       "research",
       "citation",
       "web"
-    ]
+    ],
+    "accessLink": "https://perplexity.ai",
+    "logoUrl": "https://yt3.googleusercontent.com/0hMC-6W0zIznMJLaaPGQRhbkb_0SZCkqpRVjQZ8XzXcRiA9KjVgE_4J6-DFG1NhMpzjJZf-0=s900-c-k-c0x00ffffff-no-rj"
   },
   {
     "name": "Jasper AI",
@@ -64,7 +70,9 @@
       "marketing",
       "content",
       "writing"
-    ]
+    ],
+    "accessLink": "https://jasper.ai",
+    "logoUrl": "https://www.jasper.ai/favicon.ico"
   },
   {
     "name": "Midjourney",
@@ -81,7 +89,9 @@
       "creative",
       "visuals",
       "design"
-    ]
+    ],
+    "accessLink": "https://midjourney.com",
+    "logoUrl": "https://cdn.midjourney.com/b07dac22-026b-4ceb-ad83-5d3c4c6c8b98/0_0.png"
   },
   {
     "name": "Runway ML",
@@ -98,7 +108,9 @@
       "creative",
       "media",
       "generation"
-    ]
+    ],
+    "accessLink": "https://runwayml.com",
+    "logoUrl": "https://runwayml.com/favicon.ico"
   },
   {
     "name": "Stable Diffusion",
@@ -114,7 +126,9 @@
       "open-source",
       "image",
       "creative"
-    ]
+    ],
+    "accessLink": "https://stability.ai",
+    "logoUrl": "https://stability.ai/favicon.ico"
   },
   {
     "name": "Mistral AI",
@@ -130,7 +144,9 @@
       "open-source",
       "LLM",
       "developer"
-    ]
+    ],
+    "accessLink": "https://mistral.ai",
+    "logoUrl": "https://mistral.ai/favicon.ico"
   },
   {
     "name": "Cohere Command R+",
@@ -146,7 +162,9 @@
       "enterprise",
       "RAG",
       "retrieval"
-    ]
+    ],
+    "accessLink": "https://cohere.com",
+    "logoUrl": "https://cohere.com/favicon.ico"
   },
   {
     "name": "IBM Watsonx",
@@ -162,7 +180,9 @@
       "enterprise",
       "data",
       "governance"
-    ]
+    ],
+    "accessLink": "https://watsonx.ai",
+    "logoUrl": "https://www.ibm.com/favicon.ico"
   },
   {
     "name": "Salesforce Agentforce",
@@ -178,7 +198,9 @@
       "CRM",
       "enterprise",
       "automation"
-    ]
+    ],
+    "accessLink": "https://salesforce.com/products/agentforce",
+    "logoUrl": "https://www.salesforce.com/favicon.ico"
   },
   {
     "name": "Amazon Q",
@@ -194,7 +216,9 @@
       "enterprise",
       "AWS",
       "assistant"
-    ]
+    ],
+    "accessLink": "https://aws.amazon.com/q",
+    "logoUrl": "https://aws.amazon.com/favicon.ico"
   },
   {
     "name": "Hugging Face",
@@ -210,7 +234,9 @@
       "open-source",
       "platform",
       "models"
-    ]
+    ],
+    "accessLink": "https://huggingface.co",
+    "logoUrl": "https://huggingface.co/favicon.ico"
   },
   {
     "name": "Replit Ghostwriter",
@@ -226,7 +252,9 @@
       "coding",
       "developer",
       "IDE"
-    ]
+    ],
+    "accessLink": "https://replit.com/ai",
+    "logoUrl": "https://replit.com/favicon.ico"
   },
   {
     "name": "Notion AI",
@@ -242,6 +270,8 @@
       "productivity",
       "notes",
       "workspace"
-    ]
+    ],
+    "accessLink": "https://notion.so/product/ai",
+    "logoUrl": "https://www.notion.so/favicon.ico"
   }
 ]

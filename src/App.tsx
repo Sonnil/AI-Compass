@@ -446,14 +446,17 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    // auto-sync if feeds already in localStorage or sync with local feed
+    // auto-sync if feeds already in localStorage or sync with local and external feeds
     const stored = JSON.parse(localStorage.getItem('aihub_feeds') || '[]') as string[]
     if (stored.length) {
       onSyncAll(stored)
     } else if (!hasInitialSync) {
-      // Auto-sync with local feed if no external feeds configured and haven't synced before
-      console.log('Initial sync with local feed...')
-      onSyncAll(['http://localhost:5173/ai-tools-feed.json'])
+      // Auto-sync with both local and new external feeds
+      console.log('Initial sync with local and external feeds...')
+      onSyncAll([
+        'http://localhost:5173/ai-tools-feed.json',
+        'http://localhost:5173/external-ai-tools-2025.json'
+      ])
       setHasInitialSync(true)
     }
   }, [hasInitialSync])
