@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npm run gen:feed",
+    "build": "npm run gen:feed && tsc && vite build",
     "preview": "vite preview",
-    "gen:feed": "node scripts/generate-feed.mjs"
+    "gen:feed": "node scripts/generate-feed.mjs",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "@azure/msal-browser": "^4.25.0",

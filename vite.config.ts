@@ -12,5 +12,10 @@ export default defineConfig({
   server: {
     port: 5173
   },
-  base: './' // good for static hosting
+  base: process.env.NODE_ENV === 'production' ? '/AI-Compass/' : '/',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false
+  }
 })
