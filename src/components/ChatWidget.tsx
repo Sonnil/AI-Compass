@@ -10,7 +10,8 @@ type Props = {
 }
 
 function getApiPath(override?: string) {
-  const envPath = import.meta?.env?.VITE_CHAT_API_PATH as string | undefined
+  // TypeScript-safe way to access Vite environment variables
+  const envPath = (import.meta as any)?.env?.VITE_CHAT_API_PATH as string | undefined
   return override || envPath || '/api/ai-chat'
 }
 
