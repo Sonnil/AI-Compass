@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     port: 5173
   },
-  base: './',
+  base: '/AI-Compass/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
