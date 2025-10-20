@@ -18,15 +18,13 @@ npm run build
 npm run preview
 ```
 
-## External feeds
-Add feeds via the **Sync** button in the header, or set an env var:
-```
-VITE_TOOLS_FEED_URL=https://your-domain.com/ai-tools-feed.json
-```
+## External feed
+- Default catalog: `public/ai-tools-feed.json`
+
+You can add additional feeds via the Sync button in the header; the app will merge and dedupe by tool name.
 
 ## Feed generator
-Run:
 ```bash
 npm run gen:feed
 ```
-It writes `public/ai-tools-feed.json` which you can host statically.
+This command regenerates `public/ai-tools-feed.json` from the curated data.

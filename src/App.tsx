@@ -74,6 +74,20 @@ const translations = {
     noMatches: "No tools match your search.",
     new: "New",
     updated: "Updated",
+    analytics: "Analytics",
+    refresh: "Refresh",
+    addToCompare: "Add to compare",
+    remove: "Remove",
+    access: "Access",
+    website: "Website",
+    docs: "Docs",
+    training: "Training",
+    support: "Support",
+    quickAccess: "Quick Access",
+    externalLinks: "External Links",
+    modules: "Modules",
+    light: "Light",
+    dark: "Dark",
   },
   fr: {
     title: "AI Compass",
@@ -101,6 +115,20 @@ const translations = {
     noMatches: "Aucun outil ne correspond à votre recherche.",
     new: "Nouveau",
     updated: "Mis à jour",
+    analytics: "Analytique",
+    refresh: "Actualiser",
+    addToCompare: "Ajouter pour comparer",
+    remove: "Retirer",
+    access: "Accès",
+    website: "Site web",
+    docs: "Documents",
+    training: "Formation",
+    support: "Assistance",
+    quickAccess: "Accès Rapide",
+    externalLinks: "Liens Externes",
+    modules: "Modules",
+    light: "Clair",
+    dark: "Sombre",
   },
   es: {
     title: "AI Compass",
@@ -128,6 +156,20 @@ const translations = {
     noMatches: "Ninguna herramienta coincide con tu búsqueda.",
     new: "Nuevo",
     updated: "Actualizado",
+    analytics: "Analítica",
+    refresh: "Actualizar",
+    addToCompare: "Agregar para comparar",
+    remove: "Quitar",
+    access: "Acceso",
+    website: "Sitio web",
+    docs: "Documentos",
+    training: "Capacitación",
+    support: "Soporte",
+    quickAccess: "Acceso Rápido",
+    externalLinks: "Enlaces Externos",
+    modules: "Módulos",
+    light: "Claro",
+    dark: "Oscuro",
   },
   de: {
     title: "AI Compass",
@@ -155,6 +197,20 @@ const translations = {
     noMatches: "Keine Tools entsprechen Ihrer Suche.",
     new: "Neu",
     updated: "Aktualisiert",
+    analytics: "Analytik",
+    refresh: "Aktualisieren",
+    addToCompare: "Zum Vergleich hinzufügen",
+    remove: "Entfernen",
+    access: "Zugriff",
+    website: "Webseite",
+    docs: "Dokumente",
+    training: "Schulung",
+    support: "Unterstützung",
+    quickAccess: "Schnellzugriff",
+    externalLinks: "Externe Links",
+    modules: "Module",
+    light: "Hell",
+    dark: "Dunkel",
   },
   pt: {
     title: "AI Compass",
@@ -182,6 +238,20 @@ const translations = {
     noMatches: "Nenhuma ferramenta corresponde à sua busca.",
     new: "Novo",
     updated: "Atualizado",
+    analytics: "Análise",
+    refresh: "Atualizar",
+    addToCompare: "Adicionar para comparar",
+    remove: "Remover",
+    access: "Acesso",
+    website: "Site",
+    docs: "Documentos",
+    training: "Treinamento",
+    support: "Suporte",
+    quickAccess: "Acesso Rápido",
+    externalLinks: "Links Externos",
+    modules: "Módulos",
+    light: "Claro",
+    dark: "Escuro",
   },
   zh: {
     title: "AI Compass",
@@ -209,6 +279,20 @@ const translations = {
     noMatches: "没有工具匹配您的搜索。",
     new: "新",
     updated: "已更新",
+    analytics: "分析",
+    refresh: "刷新",
+    addToCompare: "添加到比较",
+    remove: "移除",
+    access: "访问",
+    website: "网站",
+    docs: "文档",
+    training: "培训",
+    support: "支持",
+    quickAccess: "快速访问",
+    externalLinks: "外部链接",
+    modules: "模块",
+    light: "浅色",
+    dark: "深色",
   },
   ja: {
     title: "AI Compass",
@@ -236,6 +320,20 @@ const translations = {
     noMatches: "検索に一致するツールがありません。",
     new: "新規",
     updated: "更新済み",
+    analytics: "分析",
+    refresh: "更新",
+    addToCompare: "比較に追加",
+    remove: "削除",
+    access: "アクセス",
+    website: "ウェブサイト",
+    docs: "ドキュメント",
+    training: "トレーニング",
+    support: "サポート",
+    quickAccess: "クイックアクセス",
+    externalLinks: "外部リンク",
+    modules: "モジュール",
+    light: "ライト",
+    dark: "ダーク",
   },
   vi: {
     title: "AI Compass",
@@ -263,6 +361,20 @@ const translations = {
     noMatches: "Không có công cụ nào phù hợp với tìm kiếm của bạn.",
     new: "Mới",
     updated: "Đã cập nhật",
+    analytics: "Phân tích",
+    refresh: "Làm mới",
+    addToCompare: "Thêm vào so sánh",
+    remove: "Xóa",
+    access: "Truy cập",
+    website: "Trang web",
+    docs: "Tài liệu",
+    training: "Đào tạo",
+    support: "Hỗ trợ",
+    quickAccess: "Truy cập nhanh",
+    externalLinks: "Liên kết ngoài",
+    modules: "Mô-đun",
+    light: "Sáng",
+    dark: "Tối",
   }
 } as const
 
@@ -273,12 +385,63 @@ const seededTools: Tool[] = [
   { name: "Plai", type: "internal", primaryPurpose: "Decision intelligence across functions", targetUsers: "10,000+ employees across functions", accessLink: "https://plai.sanofi.com/", documentationLink: "Plai SharePoint", modules: "Plai.qa (Quality), Plai.m&s (Manufacturing & Supply), Plai.fin (Finance)", logoUrl: "/Plai.svg", accessToSanofiSystems: true, peopleSearch: "Limited", knowledgeBase: "Enterprise data", qualipsoAccess: true, dataViz: "Dashboards", predictiveAnalytics: "What-if scenarios", office365Integration: false, excelDataAnalysis: "Plai.fin", complianceAwareness: "Enterprise", trainingRequired: "Role-specific", cost: "Included for employees", bestUseCase: "Data-driven decisions", technology: "Aily Labs AI", tags: ["decision-intelligence","dashboards","finance"] },
   { name: "MedIS", type: "internal", primaryPurpose: "Medical insights engine", targetUsers: "Medical & R&D teams", accessLink: "https://medinsights.sanofi.com", documentationLink: "MedIS SharePoint", supportLink: "Access Form", trainingLink: "Responsible AI Training", accessToSanofiSystems: true, documentCreation: true, knowledgeBase: "Medical", scientificLiterature: true, dataViz: true, predictiveAnalytics: true, generalKnowledge: "Medical only", complianceAwareness: "Medical", trainingRequired: "RAISE", cost: "For Medical/R&D", bestUseCase: "Medical insights", technology: "GenAI Platform", tags: ["medical","insights"] },
   { name: "Medvi", type: "internal", primaryPurpose: "Medical compliance tool", targetUsers: "Medical teams", accessLink: "Through Medical Affairs portal", documentationLink: "Medvi SharePoint", accessToSanofiSystems: true, knowledgeBase: "Compliance", complianceAwareness: "Specialized", trainingRequired: "Medical", cost: "For Medical teams", bestUseCase: "Compliance checks", technology: "AI compliance", tags: ["compliance","medical"] },
-  { name: "GenAI Platform", type: "internal", primaryPurpose: "Foundation for AI applications", targetUsers: "Developers & business users", accessLink: "DAIS GenAI Homepage", documentationLink: "https://docs.sanofi.com/genaiplatform", supportLink: "https://docs.sanofi.com/genaiplatform/65075089739", accessToSanofiSystems: true, documentCreation: true, knowledgeBase: "Via applications", qualipsoAccess: "Via applications", scientificLiterature: "Via applications", patentAnalysis: "Via applications", chemicalStructure: "Via applications", dataViz: true, predictiveAnalytics: true, excelDataAnalysis: "Via applications", pptCreation: "Via applications", creativeWriting: true, codeGeneration: true, imageGeneration: true, diagramCreation: true, complianceAwareness: "Via applications", trainingRequired: "RAISE", cost: "For developers", bestUseCase: "Building AI applications", technology: "Various AI models", tags: ["platform","developers","foundation"] },
+  { name: "GenAI Platform", type: "internal", primaryPurpose: "Foundation for AI applications", targetUsers: "Developers & business users", accessLink: "https://genai-ctd.sanofi.com/", documentationLink: "https://docs.sanofi.com/genaiplatform", supportLink: "https://docs.sanofi.com/genaiplatform/65075089739", accessToSanofiSystems: true, documentCreation: true, knowledgeBase: "Via applications", qualipsoAccess: "Via applications", scientificLiterature: "Via applications", patentAnalysis: "Via applications", chemicalStructure: "Via applications", dataViz: true, predictiveAnalytics: true, excelDataAnalysis: "Via applications", pptCreation: "Via applications", creativeWriting: true, codeGeneration: true, imageGeneration: true, diagramCreation: true, complianceAwareness: "Via applications", trainingRequired: "RAISE", cost: "For developers", bestUseCase: "Building AI applications", technology: "Various AI models", tags: ["platform","developers","foundation"] },
   { name: "Digital Twins", type: "internal", primaryPurpose: "Manufacturing simulation", targetUsers: "Manufacturing teams", accessLink: "Ballroom Twin: Access through Manufacturing systems", documentationLink: "Available through Manufacturing SharePoint", supportLink: "Contact Manufacturing Digital team", accessToSanofiSystems: true, knowledgeBase: "Manufacturing", dataViz: true, predictiveAnalytics: true, diagramCreation: true, complianceAwareness: "Manufacturing", trainingRequired: "Manufacturing", cost: "For Manufacturing", bestUseCase: "Manufacturing optimization", technology: "Simulation models", tags: ["manufacturing","simulation"] },
   { name: "AI Research Factory", type: "internal", primaryPurpose: "R&D drug discovery acceleration", targetUsers: "R&D scientists", accessLink: "Through R&D systems", documentationLink: "Available in R&D SharePoint", accessToSanofiSystems: true, knowledgeBase: "R&D", scientificLiterature: true, patentAnalysis: true, chemicalStructure: true, dataViz: true, predictiveAnalytics: true, generalKnowledge: "Science only", complianceAwareness: "R&D", trainingRequired: "R&D", cost: "For R&D", bestUseCase: "Drug discovery", technology: "Various AI models", tags: ["R&D","discovery"] },
   { name: "Microsoft Copilot", type: "external", primaryPurpose: "Microsoft 365 productivity", targetUsers: "All employees with M365", meetingScheduling: true, emailManagement: true, peopleSearch: true, documentCreation: true, dataViz: true, predictiveAnalytics: "Limited", office365Integration: "Full", excelDataAnalysis: "Advanced", pptCreation: true, generalKnowledge: true, creativeWriting: true, codeGeneration: true, realTimeWebSearch: true, imageGeneration: true, diagramCreation: "Limited", complianceAwareness: "General", trainingRequired: "No", cost: "With M365 license", bestUseCase: "Office productivity", technology: "Microsoft AI", tags: ["office","productivity","m365"] },
   { name: "ChatGPT", type: "external", primaryPurpose: "General-purpose AI", targetUsers: "Public", documentCreation: true, generalKnowledge: "Extensive", creativeWriting: "Strongest", codeGeneration: true, realTimeWebSearch: "Depends on version", imageGeneration: "Plus/Pro", trainingRequired: "No", cost: "Free/Paid tiers", bestUseCase: "General research", technology: "OpenAI GPT", tags: ["general","research","writing"] },
 ]
+
+const FEED_ACCESS_LINKS: Record<string, string> = {
+  "Claude 3": "https://claude.ai",
+  "Google Gemini": "https://gemini.google.com",
+  "Perplexity AI": "https://perplexity.ai",
+  "Jasper AI": "https://jasper.ai",
+  "Midjourney": "https://midjourney.com",
+  "Runway ML": "https://runwayml.com",
+  "Stable Diffusion": "https://stability.ai",
+  "Mistral AI": "https://mistral.ai",
+  "Cohere Command R+": "https://cohere.com",
+  "IBM Watsonx": "https://watsonx.ai",
+  "Salesforce Agentforce": "https://salesforce.com/products/agentforce",
+  "Amazon Q": "https://aws.amazon.com/q",
+  "Hugging Face": "https://huggingface.co",
+  "Replit Ghostwriter": "https://replit.com/ai",
+  "Notion AI": "https://www.notion.so/product/ai",
+  "Microsoft Copilot": "https://www.microsoft.com/microsoft-365/copilot"
+}
+
+const FEED_LOGO_OVERRIDES: Record<string, string> = {
+  "Claude 3": "https://claude.ai/favicon.ico",
+  "Google Gemini": "https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg",
+  "Perplexity AI": "https://yt3.googleusercontent.com/0hMC-6W0zIznMJLaaPGQRhbkb_0SZCkqpRVjQZ8XzXcRiA9KjVgE_4J6-DFG1NhMpzjJZf-0=s900-c-k-c0x00ffffff-no-rj",
+  "Jasper AI": "https://www.jasper.ai/favicon.ico",
+  "Midjourney": "https://cdn.midjourney.com/b07dac22-026b-4ceb-ad83-5d3c4c6c8b98/0_0.png",
+  "Runway ML": "https://runwayml.com/favicon.ico",
+  "Stable Diffusion": "https://stability.ai/favicon.ico",
+  "Mistral AI": "https://mistral.ai/favicon.ico",
+  "Cohere Command R+": "https://cohere.com/favicon.ico",
+  "IBM Watsonx": "https://www.ibm.com/favicon.ico",
+  "Salesforce Agentforce": "https://www.salesforce.com/favicon.ico",
+  "Amazon Q": "https://aws.amazon.com/favicon.ico",
+  "Hugging Face": "https://huggingface.co/favicon.ico",
+  "Replit Ghostwriter": "https://replit.com/favicon.ico",
+  "Notion AI": "https://www.notion.so/favicon.ico",
+  "Microsoft Copilot": "https://www.microsoft.com/favicon.ico"
+}
+
+// Resolve asset URLs so they work with Vite's BASE_URL (important for GitHub Pages)
+function resolveLogoUrl(url?: string): string | undefined {
+  if (!url) return undefined
+  const trimmed = url.trim()
+  // External or data URLs: return as-is
+  if (/^(https?:)?\/\//i.test(trimmed) || trimmed.startsWith('data:')) return trimmed
+  // Normalize relative paths against the base URL
+  const base = (import.meta as any)?.env?.BASE_URL || '/'
+  const normalizedBase = base.endsWith('/') ? base : base + '/'
+  const relative = trimmed.startsWith('/') ? trimmed.slice(1) : trimmed
+  return normalizedBase + relative
+}
 
 function useLocalStorage<T>(key: string, initial: T): [T, React.Dispatch<React.SetStateAction<T>>] {
   const [value, setValue] = useState<T>(() => {
@@ -366,6 +529,15 @@ const App: React.FC = () => {
   const [ideaText, setIdeaText] = useState('')
   const [showComparePanel, setShowComparePanel] = useState(false)
   const [showSuggestionModal, setShowSuggestionModal] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
+
+  function normalizeFeeds(urls: string[]): string[] {
+    const cleaned = (urls || []).filter(Boolean)
+    if (cleaned.length === 0) return defaultFeedUrls
+    const set = new Set<string>()
+    for (const url of cleaned) set.add(url)
+    return Array.from(set.values())
+  }
 
   // Authentication handlers
   const handleAuthenticated = (userData: any) => {
@@ -388,8 +560,22 @@ const App: React.FC = () => {
 
   const tools = useMemo(() => {
     const map = new Map<string, Tool>()
-    for (const t of baseTools) map.set(t.name.toLowerCase(), t)
-    for (const e of externalTools) map.set((e.name||'').toLowerCase(), { ...e, type: 'external' })
+    for (const t of baseTools) {
+      if (!t?.name) continue
+      map.set(t.name.toLowerCase(), t)
+    }
+    for (const e of externalTools) {
+      if (!e?.name) continue
+      const key = e.name.toLowerCase()
+      const tags = Array.isArray(e.tags) ? e.tags : []
+      const inferredType: Tool['type'] = e.type || (tags.includes('internal') ? 'internal' : 'external')
+      const existing = map.get(key)
+      if (existing && existing.type === 'internal' && inferredType !== 'external') {
+        map.set(key, { ...existing, ...e, type: 'internal' })
+      } else {
+        map.set(key, { ...(existing || {}), ...e, type: inferredType })
+      }
+    }
     return Array.from(map.values())
   }, [baseTools, externalTools])
 
@@ -405,19 +591,54 @@ const App: React.FC = () => {
     })
   }, [tools, scope, query])
 
+  const defaultFeedUrls = useMemo(() => {
+    try {
+      const base = import.meta.env.BASE_URL || '/'
+      const normalizedBase = base.endsWith('/') ? base : `${base}/`
+      const origin = window.location.origin
+      return [new URL('ai-tools-feed.json', `${origin}${normalizedBase}`).toString()]
+    } catch {
+      return ['/ai-tools-feed.json']
+    }
+  }, [])
+
   async function fetchExternalToolsFrom(url: string): Promise<Tool[]> {
     if (!url) return []
     try {
-      const res = await fetch(url, { headers: { accept: 'application/json' }})
+      const res = await fetch(url, { headers: { accept: 'application/json' }, cache: 'no-store' })
       if (!res.ok) return []
-      const data = await res.json()
-      return Array.isArray(data) ? data : []
-    } catch { return [] }
+      const payload = await res.json()
+      const list = Array.isArray(payload) ? payload : (Array.isArray(payload?.tools) ? payload.tools : [])
+      return list
+        .filter(item => item && typeof item.name === 'string')
+        .map(item => {
+          const tags = Array.isArray(item.tags) ? item.tags : []
+          const inferredType: Tool['type'] = (item.type as Tool['type']) || (tags.includes('internal') ? 'internal' : 'external')
+          const logoUrl = item.logoUrl || FEED_LOGO_OVERRIDES[item.name] || undefined
+          const accessLink = item.accessLink || FEED_ACCESS_LINKS[item.name] || undefined
+          return {
+            ...item,
+            ...(accessLink ? { accessLink } : {}),
+            ...(logoUrl ? { logoUrl } : {}),
+            tags,
+            type: inferredType
+          }
+        }) as Tool[]
+    } catch (error) {
+      console.warn('Failed to fetch tools from', url, error)
+      return []
+    }
   }
 
   async function onSyncAll(feeds: string[]) {
-    const lists = await Promise.all((feeds||[]).map(fetchExternalToolsFrom))
-    const merged = lists.flat().filter(x => x && typeof x.name === 'string').map(x => ({ ...x, type: 'external' as const }))
+    const lists = await Promise.all((feeds || []).map(fetchExternalToolsFrom))
+    const merged = lists.flat()
+      .filter(x => x && typeof x.name === 'string')
+      .map(x => {
+        const tags = Array.isArray(x.tags) ? x.tags : []
+        const inferredType: Tool['type'] = (x.type as Tool['type']) || (tags.includes('internal') ? 'internal' : 'external')
+        return { ...x, tags, type: inferredType }
+      })
     console.log('Loaded external tools:', merged.map(t => ({ name: t.name, logoUrl: t.logoUrl })))
 
     const meta = { ...(externalMeta || {}) }
@@ -428,15 +649,33 @@ const App: React.FC = () => {
       const key = (item.name || '').toLowerCase()
       const clean = { ...item }; delete (clean as any).type
       const h = hashRecord(clean)
-      const prev = meta[key]
-      if (!prev) {
+      const prevMeta = meta[key]
+      if (!prevMeta) {
         meta[key] = { hash: h, addedAt: new Date().toISOString() }
         nSet.add(key)
-      } else if (prev.hash !== h) {
-        meta[key] = { ...prev, hash: h, updatedAt: new Date().toISOString() }
+      } else if (prevMeta.hash !== h) {
+        meta[key] = { ...prevMeta, hash: h, updatedAt: new Date().toISOString() }
         uSet.add(key)
       }
-      byName.set(key, item)
+
+      const existing = byName.get(key)
+      if (!existing) {
+        byName.set(key, item)
+      } else {
+        const incomingInternal = (item.type as Tool['type']) === 'internal'
+        const existingInternal = (existing.type as Tool['type']) === 'internal'
+        // Prefer internal definitions regardless of feed order
+        if (incomingInternal && !existingInternal) {
+          byName.set(key, item)
+        } else if (existingInternal && !incomingInternal) {
+          // keep existing internal
+        } else if (existingInternal && incomingInternal) {
+          // both internal: keep the first (assumed official internal feed)
+        } else {
+          // both external: latest wins
+          byName.set(key, item)
+        }
+      }
     }
     setExternalMeta(meta)
     setExternalTools(Array.from(byName.values()))
@@ -446,20 +685,16 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    // auto-sync if feeds already in localStorage or sync with local and external feeds
+    // Always sync on load to prevent stale localStorage from blocking updates
     const stored = JSON.parse(localStorage.getItem('aihub_feeds') || '[]') as string[]
     if (stored.length) {
-      onSyncAll(stored)
-    } else if (!hasInitialSync) {
-      // Auto-sync with both local and new external feeds
-      console.log('Initial sync with local and external feeds...')
-      onSyncAll([
-        'http://localhost:5173/ai-tools-feed.json',
-        'http://localhost:5173/external-ai-tools-2025.json'
-      ])
+      onSyncAll(normalizeFeeds(stored))
+    } else {
+  console.log('Syncing default catalog feed...')
+      onSyncAll(defaultFeedUrls)
       setHasInitialSync(true)
     }
-  }, [hasInitialSync])
+  }, [defaultFeedUrls])
 
   function renderValue(val: any) {
     if (val === true) return <span className="text-xs px-2 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 border">✅ Yes</span>
@@ -506,12 +741,30 @@ const App: React.FC = () => {
             <button className="px-3 h-10 rounded-2xl border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-amber-100 hover:to-blue-100 dark:hover:from-slate-700 dark:hover:to-purple-900 flex items-center gap-2 transition-all duration-300 hover:scale-105 hover:shadow-lg group"
               onClick={() => setIsDark(!isDark)} aria-label="Toggle dark mode">
               {isDark ? <Sun className="w-4 h-4 group-hover:rotate-180 group-hover:text-amber-500 transition-all duration-300" /> : <Moon className="w-4 h-4 group-hover:rotate-12 group-hover:text-blue-500 transition-all duration-300" />} 
-              <span className="group-hover:scale-110 transition-transform duration-300">{isDark ? 'Light' : 'Dark'}</span>
+              <span className="group-hover:scale-110 transition-transform duration-300">{isDark ? t.light : t.dark}</span>
             </button>
             <button className="px-3 h-10 rounded-2xl border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-blue-100 hover:to-teal-100 dark:hover:from-slate-700 dark:hover:to-blue-900 flex items-center gap-2 transition-all duration-300 hover:scale-105 hover:shadow-lg group"
               onClick={() => setCurrentView('analytics')} aria-label="Open analytics dashboard">
               <BarChart3 className="w-4 h-4 group-hover:text-blue-500 transition-all duration-300 group-hover:scale-110" />
-              <span className="group-hover:scale-110 transition-transform duration-300">Analytics</span>
+              <span className="group-hover:scale-110 transition-transform duration-300">{t.analytics}</span>
+            </button>
+            <button
+              className="px-3 h-10 rounded-2xl border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-green-100 hover:to-blue-100 dark:hover:from-slate-700 dark:hover:to-green-900 flex items-center gap-2 transition-all duration-300 hover:scale-105 hover:shadow-lg group"
+              onClick={async () => {
+                try {
+                  setRefreshing(true)
+                  const stored = JSON.parse(localStorage.getItem('aihub_feeds') || '[]') as string[]
+                  const feedsToUse = (stored && stored.length) ? normalizeFeeds(stored) : defaultFeedUrls
+                  await onSyncAll(feedsToUse)
+                } finally {
+                  setRefreshing(false)
+                }
+              }}
+              aria-label="Force refresh catalog"
+              title="Re-sync the tools catalog"
+            >
+              <RefreshCw className={`w-4 h-4 transition-all duration-300 ${refreshing ? 'animate-spin text-green-600' : 'group-hover:rotate-180 group-hover:text-green-500'}`} />
+              <span className="group-hover:scale-110 transition-transform duration-300">{refreshing ? 'Refreshing…' : 'Refresh'}</span>
             </button>
             <button className="px-3 h-10 rounded-2xl border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-yellow-100 hover:to-pink-100 dark:hover:from-slate-700 dark:hover:to-yellow-900 flex items-center gap-2 transition-all duration-300 hover:scale-105 hover:shadow-lg group"
               onClick={() => setShowSuggestionModal(true)} aria-label="Open suggestion box">
@@ -645,7 +898,7 @@ const App: React.FC = () => {
                   {tool.logoUrl && (
                     <div className="flex-shrink-0 ml-4">
                       <img 
-                        src={tool.logoUrl} 
+                        src={resolveLogoUrl(tool.logoUrl) || tool.logoUrl} 
                         alt={`${tool.name} logo`}
                         className="w-12 h-12 rounded-xl object-contain bg-white/50 p-2 border border-slate-200 dark:border-slate-700 group-hover:scale-110 transition-transform duration-300"
                         onError={(e) => {
@@ -662,7 +915,7 @@ const App: React.FC = () => {
                     <button className={"px-3 h-9 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg " + (compareList.includes(tool.name) ? "bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-md hover:from-red-400 hover:to-pink-400 hover:shadow-red-500/30" : "border border-purple-200 dark:border-purple-700 hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 hover:text-white hover:border-transparent hover:shadow-purple-500/30")}
                       onClick={() => setCompareList(prev => prev.includes(tool.name) ? prev.filter(n => n !== tool.name) : [...prev, tool.name])}>
                       <GitCompare className="w-4 h-4 inline mr-2 transition-transform group-hover:rotate-12" />
-                      {compareList.includes(tool.name) ? 'Remove' : 'Add to compare'}
+                      {compareList.includes(tool.name) ? t.remove : t.addToCompare}
                     </button>
                   </div>
                 </div>
@@ -677,25 +930,25 @@ const App: React.FC = () => {
                 {(tool.accessLink || tool.documentationLink || tool.trainingLink || tool.supportLink) && (
                   <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700">
                     <div className="text-xs text-slate-500 dark:text-slate-400 mb-2">
-                      {tool.type === 'internal' ? 'Quick Access' : 'External Links'}
+                      {tool.type === 'internal' ? t.quickAccess : t.externalLinks}
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {tool.accessLink && (
-                        <AccessLink href={tool.accessLink} label={tool.type === 'internal' ? 'Access' : 'Website'} />
+                        <AccessLink href={tool.accessLink} label={tool.type === 'internal' ? t.access : t.website} />
                       )}
                       {tool.documentationLink && (
-                        <AccessLink href={tool.documentationLink} label="Docs" />
+                        <AccessLink href={tool.documentationLink} label={t.docs} />
                       )}
                       {tool.trainingLink && (
-                        <AccessLink href={tool.trainingLink} label="Training" />
+                        <AccessLink href={tool.trainingLink} label={t.training} />
                       )}
                       {tool.supportLink && (
-                        <AccessLink href={tool.supportLink} label="Support" />
+                        <AccessLink href={tool.supportLink} label={t.support} />
                       )}
                     </div>
                     {tool.modules && (
                       <div className="mt-2">
-                        <div className="text-xs text-slate-500 dark:text-slate-400">Modules: {tool.modules}</div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">{t.modules}: {tool.modules}</div>
                       </div>
                     )}
                   </div>

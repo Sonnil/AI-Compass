@@ -1,7 +1,17 @@
-import React, { useRef, useState } from 'react'
-import { MessageSquare, X, Send, Bot, Sparkles } from 'lucide-react'
+import React, { useRef, useState, useEffect } from 'react'
+import { MessageSquare, X, Send, Bot, Sparkles, Maximize2, Minimize2, ArrowDown } from 'lucide-react'
 
 type Msg = { role: 'user' | 'assistant', content: string }
+
+type UserProfile = {
+  name?: string
+  department?: string
+  interests: string[]
+  commonQueries: string[]
+  toolsAskedAbout: string[]
+  conversationStyle: 'formal' | 'casual' | 'technical'
+  lastInteraction?: string
+}
 
 type Props = {
   toolsCatalog: any[]
@@ -14,8 +24,205 @@ function getApiPath(override?: string) {
   return override || '/api/ai-chat'
 }
 
-// Enhanced AI Agent with real intelligence
+// Learn from user interactions and build profile
+function updateUserProfile(userInput: string, conversationHistory: Msg[], toolsCatalog: any[]): UserProfile {
+  const storedProfile = localStorage.getItem('ai_compass_user_profile')
+  const profile: UserProfile = storedProfile ? JSON.parse(storedProfile) : {
+    interests: [],
+    commonQueries: [],
+    toolsAskedAbout: [],
+    conversationStyle: 'casual'
+  }
+
+  // Detect user's conversation style
+  const input = userInput.toLowerCase()
+  if (input.match(/\b(please|kindly|would you|could you)\b/)) {
+    profile.conversationStyle = 'formal'
+  } else if (input.match(/\b(hey|cool|awesome|thanks|thx)\b/)) {
+    profile.conversationStyle = 'casual'
+  } else if (input.match(/\b(api|integration|technical|specification|architecture)\b/)) {
+    profile.conversationStyle = 'technical'
+  }
+
+  // Track topics of interest
+  const topics = ['r&d', 'research', 'medical', 'manufacturing', 'finance', 'productivity', 'creative', 'data', 'compliance', 'automation']
+  topics.forEach(topic => {
+    if (input.includes(topic) && !profile.interests.includes(topic)) {
+      profile.interests.push(topic)
+    }
+  })
+
+  // Track tools asked about
+  toolsCatalog.forEach(tool => {
+    if (input.includes(tool.name.toLowerCase()) && !profile.toolsAskedAbout.includes(tool.name)) {
+      profile.toolsAskedAbout.push(tool.name)
+      if (profile.toolsAskedAbout.length > 10) profile.toolsAskedAbout.shift()
+    }
+  })
+
+  // Track common query patterns
+  const queryTypes = ['compare', 'recommend', 'access', 'training', 'cost', 'features']
+  queryTypes.forEach(type => {
+    if (input.includes(type)) {
+      profile.commonQueries.push(type)
+      if (profile.commonQueries.length > 20) profile.commonQueries.shift()
+    }
+  })
+
+  profile.lastInteraction = new Date().toISOString()
+  localStorage.setItem('ai_compass_user_profile', JSON.stringify(profile))
+  return profile
+}
+
+// Get personalized greeting based on user profile and time
+function getPersonalizedGreeting(profile: UserProfile): string {
+  const hour = new Date().getHours()
+  let timeGreeting = 'Hello'
+  
+  if (hour < 12) timeGreeting = 'Good morning'
+  else if (hour < 17) timeGreeting = 'Good afternoon'
+  else timeGreeting = 'Good evening'
+
+  const greetings = [
+    `${timeGreeting}! 👋`,
+    `Hey there! 😊`,
+    `Hi! Great to see you again! 🌟`,
+    `${timeGreeting}! Hope you're having a great day! ☀️`
+  ]
+
+  const casualGreetings = [
+    `Hey! 👋 What's up?`,
+    `Hi there! 😊 How's it going?`,
+    `Hello! 🌟 Nice to see you!`,
+    `Hey! Hope you're doing well! ✨`
+  ]
+
+  const formalGreetings = [
+    `${timeGreeting}. How may I assist you today?`,
+    `${timeGreeting}. I'm here to help.`,
+    `Hello. What can I help you with today?`
+  ]
+
+  let greeting: string
+  if (profile.conversationStyle === 'formal') {
+    greeting = formalGreetings[Math.floor(Math.random() * formalGreetings.length)]
+  } else if (profile.conversationStyle === 'casual') {
+    greeting = casualGreetings[Math.floor(Math.random() * casualGreetings.length)]
+  } else {
+    greeting = greetings[Math.floor(Math.random() * greetings.length)]
+  }
+
+  return greeting
+}
+
+// Detect small talk and respond appropriately
+function getSmallTalkResponse(userInput: string, profile: UserProfile): string | null {
+  const input = userInput.toLowerCase().trim()
+  
+  // Name/Identity questions
+  if (input.match(/\b(who are you|what('|')s your name|what are you called|what do (?:people|they) call you|tell me about yourself|introduce yourself|your name)\b/i)) {
+    const responses = [
+      `Hi! I'm **SONA**, which stands for **S**anofi **O**nline **N**avigation **A**ssistant! 🤖\n\nI'm your dedicated AI Compass assistant, here to help you navigate and discover the perfect AI tools from Sanofi's comprehensive catalog. Whether you need internal tools like Concierge and Newton, or want to explore external platforms like ChatGPT and Claude, I've got you covered! 🚀\n\nWhat can I help you find today?`,
+      `Nice to meet you! My name is **SONA** - your AI Compass assistant! 😊\n\nI specialize in helping Sanofi employees like you discover, compare, and understand our extensive collection of AI tools. Think of me as your personal guide through the world of AI at Sanofi!\n\nWhat would you like to explore?`,
+      `I'm **SONA**, the AI Compass assistant! 🌟\n\nMy job is to help you find the perfect AI tools for your needs - whether it's for R&D, productivity, medical insights, or creative work. I know everything about our internal tools and the latest external AI platforms!\n\nHow can I assist you today?`
+    ]
+    return responses[Math.floor(Math.random() * responses.length)]
+  }
+  
+  // Greetings
+  if (input.match(/^(hi|hello|hey|good morning|good afternoon|good evening|greetings|howdy|sup|what's up|yo)$/i)) {
+    const greeting = getPersonalizedGreeting(profile)
+    return `${greeting} I'm **SONA**, your AI Compass assistant, ready to help you explore Sanofi's AI tools! 🚀\n\nWhat brings you here today?`
+  }
+  
+  // How are you
+  if (input.match(/^(how are you|how's it going|how are things|what's up|how do you do)\??$/i)) {
+    const responses = [
+      `I'm doing great, thanks for asking! 😊 I'm SONA, and I'm excited to help you discover the perfect AI tools.`,
+      `Doing wonderful! 🌟 I've been helping lots of people find the right AI tools today. What can I help you with?`,
+      `I'm fantastic! ✨ Ready to help you navigate the AI tools landscape.`,
+      `Feeling great! 💪 Let's find some awesome AI tools for you.`
+    ]
+    return responses[Math.floor(Math.random() * responses.length)]
+  }
+  
+  // Weather talk
+  if (input.match(/\b(weather|temperature|rain|sunny|cold|hot|forecast)\b/i)) {
+    const responses = [
+      `I don't have access to weather data, but I hope it's nice where you are! ☀️ What I, SONA, can help with is finding the perfect AI tool for your needs.`,
+      `Weather's not my thing, but AI tools definitely are! 🌟 I'm SONA, and I'd love to help you find what you're looking for.`,
+      `I'm more of an AI tools expert than a meteorologist! 😊 But I'd love to help you with anything related to our catalog.`
+    ]
+    return responses[Math.floor(Math.random() * responses.length)]
+  }
+  
+  // Thanks
+  if (input.match(/^(thanks|thank you|thx|ty|appreciate it|much appreciated)$/i)) {
+    const responses = [
+      `You're very welcome! 😊 Happy to help anytime!`,
+      `My pleasure! 🌟 Feel free to ask if you need anything else.`,
+      `Glad I could help! ✨ Come back anytime you need assistance.`,
+      `You're welcome! 👍 Always here to help with AI tools.`
+    ]
+    return responses[Math.floor(Math.random() * responses.length)]
+  }
+  
+  // Goodbye
+  if (input.match(/^(bye|goodbye|see you|later|catch you later|gotta go|take care)$/i)) {
+    const responses = [
+      `Goodbye! 👋 Feel free to come back anytime you need help with AI tools!`,
+      `See you later! 🌟 Happy exploring!`,
+      `Take care! ✨ Come back soon if you need more assistance!`,
+      `Bye! 😊 Good luck with your AI tools journey!`
+    ]
+    return responses[Math.floor(Math.random() * responses.length)]
+  }
+  
+  // General pleasantries
+  if (input.match(/^(nice|cool|awesome|great|perfect|excellent|wonderful)$/i)) {
+    return `I'm glad you think so! 😊 Is there anything specific about our AI tools I can help you with?`
+  }
+  
+  return null
+}
+
+// Enhanced AI Agent with real intelligence and personality awareness
 function getSmartAIResponse(userInput: string, toolsCatalog: any[], conversationHistory: Msg[]): string {
+  // Update user profile based on interaction
+  const userProfile = updateUserProfile(userInput, conversationHistory, toolsCatalog)
+  
+  // Check for small talk first
+  const smallTalkResponse = getSmallTalkResponse(userInput, userProfile)
+  if (smallTalkResponse) {
+    const internalCount = toolsCatalog.filter(t => t.type === 'internal').length
+    const externalCount = toolsCatalog.filter(t => t.type === 'external').length
+    
+    // Add personalized suggestions based on profile
+    let personalizedHelp = `\n\n**Here's what I can help you with:**\n`
+    
+    if (userProfile.interests.length > 0) {
+      personalizedHelp += `\n🎯 **Based on your interests** (${userProfile.interests.slice(0, 3).join(', ')}):\n`
+      personalizedHelp += `• Find specialized tools for your area\n`
+      personalizedHelp += `• Get recommendations tailored to your work\n`
+    }
+    
+    personalizedHelp += `\n🔍 **Discover & Compare:**\n`
+    personalizedHelp += `• Explore ${internalCount} internal and ${externalCount} external AI tools\n`
+    personalizedHelp += `• Compare features, costs, and capabilities\n`
+    personalizedHelp += `• Find the perfect tool for any task\n`
+    
+    personalizedHelp += `\n📋 **Quick Access:**\n`
+    personalizedHelp += `• Check training requirements\n`
+    personalizedHelp += `• View access links and documentation\n`
+    personalizedHelp += `• Learn about new AI tools\n`
+    
+    if (userProfile.toolsAskedAbout.length > 0) {
+      personalizedHelp += `\n💡 **Continue exploring:**\n`
+      personalizedHelp += `You've been interested in: ${userProfile.toolsAskedAbout.slice(-3).join(', ')}\n`
+    }
+    
+    return smallTalkResponse + personalizedHelp
+  }
   // Create a comprehensive context about the tools
   const toolsContext = toolsCatalog.map(tool => {
     return `Tool: ${tool.name}
@@ -64,10 +271,10 @@ INSTRUCTIONS:
 Respond as a knowledgeable AI assistant:`
 
   // Enhanced response generation with better logic
-  return generateIntelligentResponse(systemPrompt, userInput, toolsCatalog)
+  return generateIntelligentResponse(systemPrompt, userInput, toolsCatalog, userProfile)
 }
 
-function generateIntelligentResponse(systemPrompt: string, userInput: string, toolsCatalog: any[]): string {
+function generateIntelligentResponse(systemPrompt: string, userInput: string, toolsCatalog: any[], userProfile: UserProfile): string {
   const input = userInput.toLowerCase()
   
   // Check if the question is relevant to AI tools and Sanofi
@@ -92,18 +299,44 @@ function generateIntelligentResponse(systemPrompt: string, userInput: string, to
     .filter(([_, regex]) => regex.test(input))
     .map(([intent]) => intent)
 
-  // Greeting responses
+  // Greeting responses with personalization
   if (detectedIntents.includes('greeting')) {
+    const greeting = getPersonalizedGreeting(userProfile)
     const internalCount = toolsCatalog.filter(t => t.type === 'internal').length
     const externalCount = toolsCatalog.filter(t => t.type === 'external').length
-    const response = `Hello! 👋 I'm your AI Compass assistant, and I know all about Sanofi's comprehensive AI tools catalog with **${internalCount} internal** and **${externalCount} external** tools.
-
-I can help you:
-🔍 **Find the right tool** for your specific needs
-📊 **Compare tools** to see which works best  
-🎯 **Get recommendations** based on your role or project
-📋 **Check access requirements** and training needs
-🆕 **Discover new AI tools** like Claude 3, Gemini, Perplexity AI, and more!`
+    
+    let response = `${greeting} I'm **SONA**, your AI Compass assistant, and I know all about Sanofi's comprehensive AI tools catalog with **${internalCount} internal** and **${externalCount} external** tools.\n\n`
+    
+    // Add personalized welcome back message
+    if (userProfile.lastInteraction) {
+      const lastVisit = new Date(userProfile.lastInteraction)
+      const daysSince = Math.floor((Date.now() - lastVisit.getTime()) / (1000 * 60 * 60 * 24))
+      if (daysSince === 0) {
+        response += `Welcome back! 🌟\n\n`
+      } else if (daysSince === 1) {
+        response += `Great to see you again! It's been a day since your last visit. 🌟\n\n`
+      } else if (daysSince < 7) {
+        response += `Welcome back! It's been ${daysSince} days. 🌟\n\n`
+      }
+    }
+    
+    response += `**I can help you:**\n`
+    response += `🔍 **Find the right tool** for your specific needs\n`
+    response += `📊 **Compare tools** to see which works best\n`
+    response += `🎯 **Get recommendations** based on your role or project\n`
+    response += `📋 **Check access requirements** and training needs\n`
+    response += `🆕 **Discover new AI tools** like Claude 3, Gemini, Perplexity AI, and more!`
+    
+    // Add personalized suggestions based on history
+    if (userProfile.interests.length > 0) {
+      response += `\n\n**Based on your interests:**\n`
+      response += `I noticed you're interested in ${userProfile.interests.slice(0, 3).join(', ')}. I can recommend tools specifically for these areas!`
+    }
+    
+    if (userProfile.toolsAskedAbout.length > 0) {
+      response += `\n\n**Continue exploring:**\n`
+      response += `You've checked out ${userProfile.toolsAskedAbout.slice(-3).join(', ')} recently. Want to compare them or explore similar tools?`
+    }
     
     return response + getSuggestedQuestions('greeting')
   }
@@ -416,16 +649,181 @@ function getSuggestedQuestions(responseType: string, mentionedTools: string[] = 
   return `\n\n**💡 Try asking:**\n${selectedQuestions.map(q => `• "${q}"`).join('\n')}`
 }
 
+// Component to format assistant messages with proper markdown-like rendering
+function FormattedMessage({ content }: { content: string }) {
+  const lines = content.split('\n')
+  const elements: React.ReactNode[] = []
+  let key = 0
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]
+    
+    // Headers (##)
+    if (line.startsWith('## ')) {
+      elements.push(
+        <h3 key={key++} className="text-base font-bold mt-4 mb-2 text-slate-900 dark:text-white flex items-center gap-2">
+          {line.replace('## ', '')}
+        </h3>
+      )
+    }
+    // Bold text (**text**)
+    else if (line.includes('**')) {
+      const parts = line.split(/(\*\*.*?\*\*)/)
+      elements.push(
+        <p key={key++} className="mb-2">
+          {parts.map((part, idx) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+              return <strong key={idx} className="font-semibold text-slate-900 dark:text-white">{part.slice(2, -2)}</strong>
+            }
+            return <span key={idx}>{part}</span>
+          })}
+        </p>
+      )
+    }
+    // Bullet points (• or - at start)
+    else if (line.match(/^[•\-]\s/)) {
+      elements.push(
+        <div key={key++} className="flex gap-2 mb-1.5 ml-2">
+          <span className="text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5">•</span>
+          <span className="flex-1">{line.replace(/^[•\-]\s/, '')}</span>
+        </div>
+      )
+    }
+    // Numbered lists
+    else if (line.match(/^\d+\.\s/)) {
+      const match = line.match(/^(\d+)\.\s(.*)/)
+      if (match) {
+        elements.push(
+          <div key={key++} className="flex gap-2 mb-1.5 ml-2">
+            <span className="text-blue-600 dark:text-blue-400 font-semibold flex-shrink-0">{match[1]}.</span>
+            <span className="flex-1">{match[2]}</span>
+          </div>
+        )
+      }
+    }
+    // Emoji headings (🔍, 📊, etc.)
+    else if (line.match(/^[🔍📊🎯📋🆕💰🔗✅⚠️📚👥💡🔹🔧]/)) {
+      elements.push(
+        <div key={key++} className="font-semibold mt-3 mb-2 text-slate-900 dark:text-white">
+          {line}
+        </div>
+      )
+    }
+    // Links (text with http/https)
+    else if (line.includes('http')) {
+      const urlRegex = /(https?:\/\/[^\s]+)/g
+      const parts = line.split(urlRegex)
+      elements.push(
+        <p key={key++} className="mb-2">
+          {parts.map((part, idx) => {
+            if (part.match(/^https?:\/\//)) {
+              return (
+                <a 
+                  key={idx} 
+                  href={part} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  {part}
+                </a>
+              )
+            }
+            return <span key={idx}>{part}</span>
+          })}
+        </p>
+      )
+    }
+    // Empty lines (spacing)
+    else if (line.trim() === '') {
+      elements.push(<div key={key++} className="h-2" />)
+    }
+    // Regular text
+    else if (line.trim()) {
+      elements.push(
+        <p key={key++} className="mb-2">
+          {line}
+        </p>
+      )
+    }
+  }
+
+  return <div className="space-y-1">{elements}</div>
+}
+
 export default function ChatWidget({ toolsCatalog, apiPath }: Props) {
   const [open, setOpen] = useState(false)
+  const [expanded, setExpanded] = useState(false)
   const [input, setInput] = useState('')
+  
+  // Get personalized initial greeting
+  const getInitialGreeting = () => {
+    const storedProfile = localStorage.getItem('ai_compass_user_profile')
+    const profile: UserProfile = storedProfile ? JSON.parse(storedProfile) : {
+      interests: [],
+      commonQueries: [],
+      toolsAskedAbout: [],
+      conversationStyle: 'casual'
+    }
+    
+    const hour = new Date().getHours()
+    let greeting = 'Hello! 👋'
+    
+    if (hour < 12) greeting = 'Good morning! ☀️'
+    else if (hour < 17) greeting = 'Good afternoon! 🌤️'
+    else greeting = 'Good evening! 🌙'
+    
+    let welcomeMsg = `${greeting} I'm **SONA**, your AI Compass assistant, here to help you explore Sanofi's comprehensive AI tools catalog! 🚀\n\n`
+    
+    if (profile.lastInteraction) {
+      welcomeMsg += `Welcome back! 🌟 Ready to discover more AI tools?\n\n`
+    }
+    
+    welcomeMsg += `Feel free to ask me anything about our internal and external AI tools - from features and comparisons to access requirements and recommendations!\n\n`
+    welcomeMsg += `**Quick tips:**\n`
+    welcomeMsg += `• Ask me to compare tools\n`
+    welcomeMsg += `• Get personalized recommendations\n`
+    welcomeMsg += `• Learn about new AI capabilities\n\n`
+    welcomeMsg += `What would you like to know today? 💡`
+    
+    return welcomeMsg
+  }
+  
   const [messages, setMessages] = useState<Msg[]>([
-    { role: 'assistant', content: 'Hello! I\'m your AI Compass assistant. Ask me about any AI tool from our comprehensive catalog including internal Sanofi tools and the latest external AI platforms like Claude 3, Google Gemini, Perplexity AI, and more! 🚀' }
+    { role: 'assistant', content: getInitialGreeting() }
   ])
+  const [showScrollButton, setShowScrollButton] = useState(false)
+  const [autoScroll, setAutoScroll] = useState(true)
   const abortRef = useRef<AbortController | null>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const messagesContainerRef = useRef<HTMLDivElement>(null)
 
   // Debug logging
   console.log('ChatWidget rendered with', toolsCatalog?.length, 'tools')
+
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    if (autoScroll && messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [messages, autoScroll])
+
+  // Detect when user scrolls up
+  const handleScroll = () => {
+    if (!messagesContainerRef.current) return
+    
+    const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current
+    const isNearBottom = scrollHeight - scrollTop - clientHeight < 100
+    
+    setAutoScroll(isNearBottom)
+    setShowScrollButton(!isNearBottom)
+  }
+
+  // Scroll to bottom function
+  const scrollToBottom = () => {
+    setAutoScroll(true)
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   async function send() {
     if (!input.trim()) return
@@ -538,29 +936,47 @@ export default function ChatWidget({ toolsCatalog, apiPath }: Props) {
         title="Click to open AI Compass Assistant"
       >
         <Bot className="w-5 h-5 group-hover:animate-pulse" />
-        <span className="font-medium">AI Assistant</span>
+        <span className="font-medium">SONA</span>
         <Sparkles className="w-4 h-4 group-hover:animate-spin" />
       </button>
 
       {open && (
-        <div className="fixed bottom-20 right-5 w-[380px] max-h-[75vh] rounded-2xl border-2 border-blue-200 dark:border-blue-700 bg-white dark:bg-slate-900 shadow-2xl flex flex-col overflow-hidden z-50 animate-in slide-in-from-bottom-4 duration-300">
+        <div className={`fixed ${
+          expanded 
+            ? 'inset-4 w-auto h-auto' 
+            : 'bottom-20 right-5 w-[380px] max-h-[75vh]'
+        } rounded-2xl border-2 border-blue-200 dark:border-blue-700 bg-white dark:bg-slate-900 shadow-2xl flex flex-col overflow-hidden z-50 transition-all duration-300`}>
           <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-600 to-teal-600 text-white">
             <div className="flex items-center gap-3">
               <Bot className="w-5 h-5" />
               <div>
-                <div className="font-semibold">AI Compass Assistant</div>
+                <div className="font-semibold">SONA - AI Compass</div>
                 <div className="text-xs text-blue-100">Your AI tools expert</div>
               </div>
             </div>
-            <button 
-              className="p-2 rounded-lg hover:bg-white/20 transition-colors" 
-              onClick={() => setOpen(false)}
-              aria-label="Close chat"
-            >
-              <X className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-2">
+              <button 
+                className="p-2 rounded-lg hover:bg-white/20 transition-colors" 
+                onClick={() => setExpanded(e => !e)}
+                aria-label={expanded ? "Collapse chat" : "Expand chat"}
+                title={expanded ? "Collapse to normal size" : "Expand to full screen"}
+              >
+                {expanded ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+              </button>
+              <button 
+                className="p-2 rounded-lg hover:bg-white/20 transition-colors" 
+                onClick={() => setOpen(false)}
+                aria-label="Close chat"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
           </div>
-          <div className="flex-1 overflow-auto p-4 space-y-4 bg-slate-50 dark:bg-slate-800/50">
+          <div 
+            ref={messagesContainerRef}
+            onScroll={handleScroll}
+            className="flex-1 overflow-auto p-4 space-y-4 bg-slate-50 dark:bg-slate-800/50 relative"
+          >
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`flex items-start gap-3 max-w-[85%] ${m.role === 'user' ? 'flex-row-reverse' : ''}`}>
@@ -580,11 +996,28 @@ export default function ChatWidget({ toolsCatalog, apiPath }: Props) {
                       ? 'bg-blue-600 text-white'
                       : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700'
                   }`}>
-                    {m.content}
+                    {m.role === 'assistant' ? (
+                      <FormattedMessage content={m.content} />
+                    ) : (
+                      m.content
+                    )}
                   </div>
                 </div>
               </div>
             ))}
+            <div ref={messagesEndRef} />
+            
+            {/* Scroll to bottom button */}
+            {showScrollButton && (
+              <button
+                onClick={scrollToBottom}
+                className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 z-10 animate-bounce"
+                aria-label="Scroll to bottom"
+                title="Scroll to latest message"
+              >
+                <ArrowDown className="w-5 h-5" />
+              </button>
+            )}
           </div>
           <div className="p-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
             <div className="flex items-center gap-3">

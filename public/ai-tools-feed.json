@@ -1,277 +1,480 @@
-[
-  {
-    "name": "Claude 3",
-    "primaryPurpose": "General-purpose AI assistant emphasizing safety and reasoning",
-    "targetUsers": "Enterprise, researchers, and individuals",
-    "technology": "Anthropic Constitutional AI",
-    "bestUseCase": "Long-form reasoning, safe and accurate text generation",
-    "cost": "Free / Pro / API tiered pricing",
-    "realTimeWebSearch": true,
-    "codeGeneration": true,
-    "imageGeneration": false,
-    "tags": [
-      "assistant",
-      "reasoning",
-      "text",
-      "enterprise"
-    ],
-    "accessLink": "https://claude.ai",
-    "logoUrl": "https://claude.ai/favicon.ico"
-  },
-  {
-    "name": "Google Gemini",
-    "primaryPurpose": "Multimodal AI model integrated into Google Workspace and Cloud",
-    "targetUsers": "General public, enterprise teams, developers",
-    "technology": "Google DeepMind Gemini family",
-    "bestUseCase": "Search, document summarization, code, image understanding",
-    "cost": "Free / Workspace Enterprise plans",
-    "realTimeWebSearch": true,
-    "codeGeneration": true,
-    "imageGeneration": true,
-    "tags": [
-      "multimodal",
-      "workspace",
-      "google",
-      "search"
-    ],
-    "accessLink": "https://gemini.google.com",
-    "logoUrl": "https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg"
-  },
-  {
-    "name": "Perplexity AI",
-    "primaryPurpose": "AI-powered search and discovery engine",
-    "targetUsers": "Researchers, analysts, knowledge workers",
-    "technology": "Hybrid search + LLMs (OpenAI / Claude)",
-    "bestUseCase": "Fact-checked, cited research responses",
-    "cost": "Free / Pro tier",
-    "realTimeWebSearch": true,
-    "codeGeneration": false,
-    "imageGeneration": false,
-    "tags": [
-      "search",
-      "research",
-      "citation",
-      "web"
-    ],
-    "accessLink": "https://perplexity.ai",
-    "logoUrl": "https://yt3.googleusercontent.com/0hMC-6W0zIznMJLaaPGQRhbkb_0SZCkqpRVjQZ8XzXcRiA9KjVgE_4J6-DFG1NhMpzjJZf-0=s900-c-k-c0x00ffffff-no-rj"
-  },
-  {
-    "name": "Jasper AI",
-    "primaryPurpose": "Marketing and content creation AI",
-    "targetUsers": "Marketers, content creators, social media teams",
-    "technology": "OpenAI GPT + proprietary fine-tuning",
-    "bestUseCase": "Blog writing, SEO optimization, ad copy",
-    "cost": "Paid (subscription)",
-    "realTimeWebSearch": false,
-    "codeGeneration": false,
-    "imageGeneration": true,
-    "tags": [
-      "marketing",
-      "content",
-      "writing"
-    ],
-    "accessLink": "https://jasper.ai",
-    "logoUrl": "https://www.jasper.ai/favicon.ico"
-  },
-  {
-    "name": "Midjourney",
-    "primaryPurpose": "Text-to-image generative model for creative visuals",
-    "targetUsers": "Designers, artists, creative teams",
-    "technology": "Proprietary diffusion model",
-    "bestUseCase": "High-quality image generation from text prompts",
-    "cost": "Paid subscription via Discord",
-    "realTimeWebSearch": false,
-    "codeGeneration": false,
-    "imageGeneration": true,
-    "tags": [
-      "image",
-      "creative",
-      "visuals",
-      "design"
-    ],
-    "accessLink": "https://midjourney.com",
-    "logoUrl": "https://cdn.midjourney.com/b07dac22-026b-4ceb-ad83-5d3c4c6c8b98/0_0.png"
-  },
-  {
-    "name": "Runway ML",
-    "primaryPurpose": "AI-powered video editing and generation platform",
-    "targetUsers": "Filmmakers, marketers, creative professionals",
-    "technology": "Runway Gen-3 multimodal video model",
-    "bestUseCase": "Video editing, scene generation, motion design",
-    "cost": "Free trial / Subscription",
-    "realTimeWebSearch": false,
-    "codeGeneration": false,
-    "imageGeneration": true,
-    "tags": [
-      "video",
-      "creative",
-      "media",
-      "generation"
-    ],
-    "accessLink": "https://runwayml.com",
-    "logoUrl": "https://runwayml.com/favicon.ico"
-  },
-  {
-    "name": "Stable Diffusion",
-    "primaryPurpose": "Open-source image generation model",
-    "targetUsers": "Developers, artists, researchers",
-    "technology": "Latent diffusion models (Stability AI)",
-    "bestUseCase": "Customizable image generation and model fine-tuning",
-    "cost": "Free (open-source)",
-    "realTimeWebSearch": false,
-    "codeGeneration": false,
-    "imageGeneration": true,
-    "tags": [
-      "open-source",
-      "image",
-      "creative"
-    ],
-    "accessLink": "https://stability.ai",
-    "logoUrl": "https://stability.ai/favicon.ico"
-  },
-  {
-    "name": "Mistral AI",
-    "primaryPurpose": "High-performance open large language models",
-    "targetUsers": "Developers, enterprises, researchers",
-    "technology": "Mixtral and open-weight LLMs",
-    "bestUseCase": "Custom LLM deployments, multilingual tasks",
-    "cost": "Free / API paid plans",
-    "realTimeWebSearch": false,
-    "codeGeneration": true,
-    "imageGeneration": false,
-    "tags": [
-      "open-source",
-      "LLM",
-      "developer"
-    ],
-    "accessLink": "https://mistral.ai",
-    "logoUrl": "https://mistral.ai/favicon.ico"
-  },
-  {
-    "name": "Cohere Command R+",
-    "primaryPurpose": "Retrieval-augmented generation for enterprise search",
-    "targetUsers": "Enterprises, developers, knowledge management teams",
-    "technology": "Cohere LLM with RAG integration",
-    "bestUseCase": "Internal data chatbots, document summarization",
-    "cost": "API based / Paid",
-    "realTimeWebSearch": true,
-    "codeGeneration": true,
-    "imageGeneration": false,
-    "tags": [
-      "enterprise",
-      "RAG",
-      "retrieval"
-    ],
-    "accessLink": "https://cohere.com",
-    "logoUrl": "https://cohere.com/favicon.ico"
-  },
-  {
-    "name": "IBM Watsonx",
-    "primaryPurpose": "Enterprise-grade AI and data platform",
-    "targetUsers": "Corporate, regulated industries",
-    "technology": "IBM Watson foundation models",
-    "bestUseCase": "Data governance, model lifecycle management",
-    "cost": "Enterprise licensing",
-    "realTimeWebSearch": false,
-    "codeGeneration": true,
-    "imageGeneration": false,
-    "tags": [
-      "enterprise",
-      "data",
-      "governance"
-    ],
-    "accessLink": "https://watsonx.ai",
-    "logoUrl": "https://www.ibm.com/favicon.ico"
-  },
-  {
-    "name": "Salesforce Agentforce",
-    "primaryPurpose": "CRM AI agents for sales and support automation",
-    "targetUsers": "Sales, marketing, and customer service teams",
-    "technology": "Salesforce Einstein GPT + LLM agents",
-    "bestUseCase": "Automating CRM workflows and customer insights",
-    "cost": "Enterprise licensing",
-    "realTimeWebSearch": false,
-    "codeGeneration": false,
-    "imageGeneration": false,
-    "tags": [
-      "CRM",
-      "enterprise",
-      "automation"
-    ],
-    "accessLink": "https://salesforce.com/products/agentforce",
-    "logoUrl": "https://www.salesforce.com/favicon.ico"
-  },
-  {
-    "name": "Amazon Q",
-    "primaryPurpose": "Enterprise AI assistant and search solution",
-    "targetUsers": "AWS customers, developers, data teams",
-    "technology": "Amazon Bedrock + proprietary models",
-    "bestUseCase": "Data insights, business search, AWS integration",
-    "cost": "Included with AWS / tiered plans",
-    "realTimeWebSearch": true,
-    "codeGeneration": true,
-    "imageGeneration": false,
-    "tags": [
-      "enterprise",
-      "AWS",
-      "assistant"
-    ],
-    "accessLink": "https://aws.amazon.com/q",
-    "logoUrl": "https://aws.amazon.com/favicon.ico"
-  },
-  {
-    "name": "Hugging Face",
-    "primaryPurpose": "Platform for hosting and deploying open AI models",
-    "targetUsers": "Developers, researchers, enterprises",
-    "technology": "Transformers, Diffusion, Open models",
-    "bestUseCase": "Hosting, sharing, and fine-tuning open AI models",
-    "cost": "Free / Paid enterprise tiers",
-    "realTimeWebSearch": false,
-    "codeGeneration": true,
-    "imageGeneration": true,
-    "tags": [
-      "open-source",
-      "platform",
-      "models"
-    ],
-    "accessLink": "https://huggingface.co",
-    "logoUrl": "https://huggingface.co/favicon.ico"
-  },
-  {
-    "name": "Replit Ghostwriter",
-    "primaryPurpose": "AI coding assistant for developers",
-    "targetUsers": "Software engineers, students",
-    "technology": "Code LLM integrated in Replit IDE",
-    "bestUseCase": "Autocomplete, explain, and debug code",
-    "cost": "Subscription / Free trial",
-    "realTimeWebSearch": false,
-    "codeGeneration": true,
-    "imageGeneration": false,
-    "tags": [
-      "coding",
-      "developer",
-      "IDE"
-    ],
-    "accessLink": "https://replit.com/ai",
-    "logoUrl": "https://replit.com/favicon.ico"
-  },
-  {
-    "name": "Notion AI",
-    "primaryPurpose": "Embedded AI assistant inside Notion workspace",
-    "targetUsers": "Knowledge workers, teams, writers",
-    "technology": "OpenAI models integrated in Notion",
-    "bestUseCase": "Summarizing, rewriting, brainstorming, planning",
-    "cost": "Paid (Notion Plus / Business)",
-    "realTimeWebSearch": false,
-    "codeGeneration": false,
-    "imageGeneration": false,
-    "tags": [
-      "productivity",
-      "notes",
-      "workspace"
-    ],
-    "accessLink": "https://notion.so/product/ai",
-    "logoUrl": "https://www.notion.so/favicon.ico"
-  }
-]
+{
+  "lastUpdated": "2025-10-18T20:18:03.861Z",
+  "totalTools": 25,
+  "tools": [
+    {
+      "name": "Concierge",
+      "type": "internal",
+      "primaryPurpose": "Workplace productivity & collaboration",
+      "targetUsers": "All employees",
+      "technology": "OpenAI GPT",
+      "bestUseCase": "Daily work tasks",
+      "cost": "Included for employees",
+      "realTimeWebSearch": false,
+      "codeGeneration": true,
+      "imageGeneration": true,
+      "accessLink": "https://concierge.sanofi.com",
+      "logoUrl": "/Concierge.svg",
+      "tags": [
+        "internal",
+        "productivity",
+        "sanofi"
+      ]
+    },
+    {
+      "name": "Newton",
+      "type": "internal",
+      "primaryPurpose": "R&D scientific assistant",
+      "targetUsers": "R&D teams",
+      "technology": "OpenAI GPT",
+      "bestUseCase": "Scientific research and literature review",
+      "cost": "For R&D employees",
+      "realTimeWebSearch": true,
+      "codeGeneration": true,
+      "imageGeneration": true,
+      "accessLink": "https://digital.sanofi.com/newton",
+      "tags": [
+        "internal",
+        "research",
+        "science"
+      ]
+    },
+    {
+      "name": "Plai",
+      "type": "internal",
+      "primaryPurpose": "Decision intelligence across functions",
+      "targetUsers": "Enterprise teams",
+      "technology": "Aily Labs AI",
+      "bestUseCase": "Data-driven decisions and forecasting",
+      "cost": "Included for employees",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": false,
+      "accessLink": "https://plai.sanofi.com/",
+      "logoUrl": "/Plai.svg",
+      "tags": [
+        "internal",
+        "decision",
+        "analytics"
+      ]
+    },
+    {
+      "name": "MedIS",
+      "type": "internal",
+      "primaryPurpose": "Medical insights engine",
+      "targetUsers": "Medical & R&D teams",
+      "technology": "GenAI Platform",
+      "bestUseCase": "Medical insights and compliance",
+      "cost": "For Medical/R&D",
+      "realTimeWebSearch": false,
+      "codeGeneration": true,
+      "imageGeneration": false,
+      "accessLink": "https://medinsights.sanofi.com",
+      "tags": [
+        "internal",
+        "medical",
+        "insights"
+      ]
+    },
+    {
+      "name": "GenAI Platform",
+      "type": "internal",
+      "primaryPurpose": "Foundation for AI applications",
+      "targetUsers": "Developers & business users",
+      "technology": "Various AI models",
+      "bestUseCase": "Building AI applications and services",
+      "cost": "For developers",
+      "realTimeWebSearch": false,
+      "codeGeneration": true,
+      "imageGeneration": true,
+      "accessLink": "https://genai-ctd.sanofi.com/",
+      "tags": [
+        "internal",
+        "foundation",
+        "platform"
+      ]
+    },
+    {
+      "name": "Medvi",
+      "type": "internal",
+      "primaryPurpose": "Medical compliance tool",
+      "targetUsers": "Medical teams",
+      "technology": "AI compliance",
+      "bestUseCase": "Compliance checks",
+      "cost": "For Medical teams",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": false,
+      "accessLink": "#",
+      "tags": [
+        "internal",
+        "compliance",
+        "medical"
+      ]
+    },
+    {
+      "name": "Digital Twins",
+      "type": "internal",
+      "primaryPurpose": "Manufacturing simulation",
+      "targetUsers": "Manufacturing teams",
+      "technology": "Simulation models",
+      "bestUseCase": "Manufacturing optimization",
+      "cost": "For Manufacturing",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": false,
+      "accessLink": "#",
+      "tags": [
+        "internal",
+        "manufacturing",
+        "simulation"
+      ]
+    },
+    {
+      "name": "AI Research Factory",
+      "type": "internal",
+      "primaryPurpose": "R&D drug discovery acceleration",
+      "targetUsers": "R&D scientists",
+      "technology": "Various AI models",
+      "bestUseCase": "Drug discovery",
+      "cost": "For R&D",
+      "realTimeWebSearch": false,
+      "codeGeneration": true,
+      "imageGeneration": false,
+      "accessLink": "#",
+      "tags": [
+        "internal",
+        "R&D",
+        "discovery"
+      ]
+    },
+    {
+      "name": "Microsoft Copilot",
+      "type": "external",
+      "primaryPurpose": "Microsoft 365 productivity assistant",
+      "targetUsers": "All employees with M365",
+      "technology": "Microsoft AI",
+      "bestUseCase": "Office productivity and automation",
+      "cost": "With M365 license",
+      "realTimeWebSearch": true,
+      "codeGeneration": true,
+      "imageGeneration": true,
+      "accessLink": "https://www.microsoft.com/microsoft-365/copilot",
+      "logoUrl": "https://www.microsoft.com/favicon.ico",
+      "tags": [
+        "external",
+        "microsoft",
+        "productivity"
+      ]
+    },
+    {
+      "name": "ChatGPT",
+      "type": "external",
+      "primaryPurpose": "General-purpose AI assistant",
+      "targetUsers": "Public and enterprise",
+      "technology": "OpenAI GPT",
+      "bestUseCase": "Research, conversation, coding, reasoning",
+      "cost": "Free / Plus / Team / Enterprise",
+      "realTimeWebSearch": true,
+      "codeGeneration": true,
+      "imageGeneration": true,
+      "accessLink": "https://chat.openai.com",
+      "logoUrl": "https://chat.openai.com/favicon.ico",
+      "tags": [
+        "external",
+        "chatbot",
+        "openai"
+      ]
+    },
+    {
+      "name": "Claude 3",
+      "type": "external",
+      "primaryPurpose": "General-purpose AI assistant emphasizing safety and reasoning",
+      "targetUsers": "Enterprise, researchers, and individuals",
+      "technology": "Anthropic Constitutional AI",
+      "bestUseCase": "Long-form reasoning, safe and accurate text generation",
+      "cost": "Free / Pro / API tiered pricing",
+      "realTimeWebSearch": true,
+      "codeGeneration": true,
+      "imageGeneration": false,
+      "accessLink": "https://claude.ai",
+      "logoUrl": "https://claude.ai/favicon.ico",
+      "tags": [
+        "assistant",
+        "reasoning",
+        "text",
+        "enterprise"
+      ]
+    },
+    {
+      "name": "Google Gemini",
+      "type": "external",
+      "primaryPurpose": "Multimodal AI model integrated into Google Workspace and Cloud",
+      "targetUsers": "General public, enterprise teams, developers",
+      "technology": "Google DeepMind Gemini family",
+      "bestUseCase": "Search, document summarization, code, image understanding",
+      "cost": "Free / Workspace Enterprise plans",
+      "realTimeWebSearch": true,
+      "codeGeneration": true,
+      "imageGeneration": true,
+      "accessLink": "https://gemini.google.com",
+      "logoUrl": "https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg",
+      "tags": [
+        "multimodal",
+        "workspace",
+        "google",
+        "search"
+      ]
+    },
+    {
+      "name": "Perplexity AI",
+      "type": "external",
+      "primaryPurpose": "AI-powered search and discovery engine",
+      "targetUsers": "Researchers, analysts, knowledge workers",
+      "technology": "Hybrid search + LLMs (OpenAI / Claude)",
+      "bestUseCase": "Fact-checked, cited research responses",
+      "cost": "Free / Pro tier",
+      "realTimeWebSearch": true,
+      "codeGeneration": false,
+      "imageGeneration": false,
+      "accessLink": "https://perplexity.ai",
+      "logoUrl": "https://yt3.googleusercontent.com/0hMC-6W0zIznMJLaaPGQRhbkb_0SZCkqpRVjQZ8XzXcRiA9KjVgE_4J6-DFG1NhMpzjJZf-0=s900-c-k-c0x00ffffff-no-rj",
+      "tags": [
+        "search",
+        "research",
+        "citation",
+        "web"
+      ]
+    },
+    {
+      "name": "Jasper AI",
+      "type": "external",
+      "primaryPurpose": "Marketing and content creation AI",
+      "targetUsers": "Marketers, content creators, social media teams",
+      "technology": "OpenAI GPT + proprietary fine-tuning",
+      "bestUseCase": "Blog writing, SEO optimization, ad copy",
+      "cost": "Paid (subscription)",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": true,
+      "accessLink": "https://jasper.ai",
+      "logoUrl": "https://www.jasper.ai/favicon.ico",
+      "tags": [
+        "marketing",
+        "content",
+        "writing"
+      ]
+    },
+    {
+      "name": "Midjourney",
+      "type": "external",
+      "primaryPurpose": "Text-to-image generative model for creative visuals",
+      "targetUsers": "Designers, artists, creative teams",
+      "technology": "Proprietary diffusion model",
+      "bestUseCase": "High-quality image generation from text prompts",
+      "cost": "Paid subscription via Discord",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": true,
+      "accessLink": "https://midjourney.com",
+      "logoUrl": "https://cdn.midjourney.com/b07dac22-026b-4ceb-ad83-5d3c4c6c8b98/0_0.png",
+      "tags": [
+        "image",
+        "creative",
+        "visuals",
+        "design"
+      ]
+    },
+    {
+      "name": "Runway ML",
+      "type": "external",
+      "primaryPurpose": "AI-powered video editing and generation platform",
+      "targetUsers": "Filmmakers, marketers, creative professionals",
+      "technology": "Runway Gen-3 multimodal video model",
+      "bestUseCase": "Video editing, scene generation, motion design",
+      "cost": "Free trial / Subscription",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": true,
+      "accessLink": "https://runwayml.com",
+      "logoUrl": "https://runwayml.com/favicon.ico",
+      "tags": [
+        "video",
+        "creative",
+        "media",
+        "generation"
+      ]
+    },
+    {
+      "name": "Stable Diffusion",
+      "type": "external",
+      "primaryPurpose": "Open-source image generation model",
+      "targetUsers": "Developers, artists, researchers",
+      "technology": "Latent diffusion models (Stability AI)",
+      "bestUseCase": "Customizable image generation and model fine-tuning",
+      "cost": "Free (open-source)",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": true,
+      "accessLink": "https://stability.ai",
+      "logoUrl": "https://stability.ai/favicon.ico",
+      "tags": [
+        "open-source",
+        "image",
+        "creative"
+      ]
+    },
+    {
+      "name": "Mistral AI",
+      "type": "external",
+      "primaryPurpose": "High-performance open large language models",
+      "targetUsers": "Developers, enterprises, researchers",
+      "technology": "Mixtral and open-weight LLMs",
+      "bestUseCase": "Custom LLM deployments, multilingual tasks",
+      "cost": "Free / API paid plans",
+      "realTimeWebSearch": false,
+      "codeGeneration": true,
+      "imageGeneration": false,
+      "accessLink": "https://mistral.ai",
+      "logoUrl": "https://mistral.ai/favicon.ico",
+      "tags": [
+        "open-source",
+        "LLM",
+        "developer"
+      ]
+    },
+    {
+      "name": "Cohere Command R+",
+      "type": "external",
+      "primaryPurpose": "Retrieval-augmented generation for enterprise search",
+      "targetUsers": "Enterprises, developers, knowledge management teams",
+      "technology": "Cohere LLM with RAG integration",
+      "bestUseCase": "Internal data chatbots, document summarization",
+      "cost": "API based / Paid",
+      "realTimeWebSearch": true,
+      "codeGeneration": true,
+      "imageGeneration": false,
+      "accessLink": "https://cohere.com",
+      "logoUrl": "https://cohere.com/favicon.ico",
+      "tags": [
+        "enterprise",
+        "RAG",
+        "retrieval"
+      ]
+    },
+    {
+      "name": "IBM Watsonx",
+      "type": "external",
+      "primaryPurpose": "Enterprise AI and data platform",
+      "targetUsers": "Enterprises, data science teams",
+      "technology": "IBM foundation models and governance tools",
+      "bestUseCase": "Responsible AI deployment and data governance",
+      "cost": "Enterprise licensing",
+      "realTimeWebSearch": false,
+      "codeGeneration": true,
+      "imageGeneration": false,
+      "accessLink": "https://watsonx.ai",
+      "logoUrl": "https://www.ibm.com/favicon.ico",
+      "tags": [
+        "enterprise",
+        "governance",
+        "platform"
+      ]
+    },
+    {
+      "name": "Salesforce Agentforce",
+      "type": "external",
+      "primaryPurpose": "Customer experience copilots",
+      "targetUsers": "Salesforce admins and CRM teams",
+      "technology": "Einstein 1 platform",
+      "bestUseCase": "Automating customer support and sales workflows",
+      "cost": "Salesforce licensing",
+      "realTimeWebSearch": true,
+      "codeGeneration": false,
+      "imageGeneration": false,
+      "accessLink": "https://salesforce.com/products/agentforce",
+      "logoUrl": "https://www.salesforce.com/favicon.ico",
+      "tags": [
+        "crm",
+        "automation",
+        "support"
+      ]
+    },
+    {
+      "name": "Amazon Q",
+      "type": "external",
+      "primaryPurpose": "AWS-aware business assistant",
+      "targetUsers": "AWS customers and enterprise teams",
+      "technology": "AWS Bedrock models",
+      "bestUseCase": "Answering company-specific questions with AWS data",
+      "cost": "Usage-based",
+      "realTimeWebSearch": true,
+      "codeGeneration": true,
+      "imageGeneration": false,
+      "accessLink": "https://aws.amazon.com/q",
+      "logoUrl": "https://aws.amazon.com/favicon.ico",
+      "tags": [
+        "aws",
+        "assistant",
+        "enterprise"
+      ]
+    },
+    {
+      "name": "Hugging Face",
+      "type": "external",
+      "primaryPurpose": "Open-source AI model hub",
+      "targetUsers": "Developers, researchers, ML engineers",
+      "technology": "Transformers, diffusion, and community models",
+      "bestUseCase": "Discovering and deploying state-of-the-art models",
+      "cost": "Free / Pro subscription",
+      "realTimeWebSearch": false,
+      "codeGeneration": true,
+      "imageGeneration": true,
+      "accessLink": "https://huggingface.co",
+      "logoUrl": "https://huggingface.co/favicon.ico",
+      "tags": [
+        "open-source",
+        "models",
+        "community"
+      ]
+    },
+    {
+      "name": "Replit Ghostwriter",
+      "type": "external",
+      "primaryPurpose": "AI pair programmer",
+      "targetUsers": "Developers and students",
+      "technology": "Replit code models",
+      "bestUseCase": "Generating and refactoring code inside the browser",
+      "cost": "Paid (Replit plan)",
+      "realTimeWebSearch": false,
+      "codeGeneration": true,
+      "imageGeneration": false,
+      "accessLink": "https://replit.com/ai",
+      "logoUrl": "https://replit.com/favicon.ico",
+      "tags": [
+        "developer",
+        "coding",
+        "assistant"
+      ]
+    },
+    {
+      "name": "Notion AI",
+      "type": "external",
+      "primaryPurpose": "Workspace content assistant",
+      "targetUsers": "Knowledge workers and teams",
+      "technology": "Notion AI platform",
+      "bestUseCase": "Drafting docs, summarizing notes, brainstorming",
+      "cost": "Paid add-on",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": false,
+      "accessLink": "https://www.notion.so/product/ai",
+      "logoUrl": "https://www.notion.so/favicon.ico",
+      "tags": [
+        "productivity",
+        "workspace",
+        "content"
+      ]
+    }
+  ]
+}

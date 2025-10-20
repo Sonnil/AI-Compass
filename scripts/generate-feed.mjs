@@ -1,20 +1,8 @@
 // scripts/generate-feed.mjs
-import { writeFile, mkdir, readFile } from 'fs/promises'
+import { mkdir, readFile, writeFile } from 'fs/promises'
 import path from 'path'
 
-// Read the external AI tools from the new JSON file
-let externalTools = []
-try {
-  const externalData = await readFile('public/external-ai-tools-2025.json', 'utf8')
-  externalTools = JSON.parse(externalData).map(tool => ({
-    ...tool,
-    // Add official website links and logos for external tools
-    accessLink: getOfficialLink(tool.name),
-    logoUrl: getLogoUrl(tool.name)
-  }))
-} catch (error) {
-  console.log('No external tools file found, using default curated list')
-}
+const FEED_PATH = 'public/ai-tools-feed.json'
 
 function getOfficialLink(toolName) {
   const links = {
@@ -40,6 +28,8 @@ function getOfficialLink(toolName) {
 function getLogoUrl(toolName) {
   // Using reliable logo URLs from CDNs and public sources
   const logos = {
+    'Concierge': '/Concierge.svg',
+    'Plai': '/Plai.svg',
     'Claude 3': 'https://claude.ai/favicon.ico',
     'Google Gemini': 'https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg',
     'Perplexity AI': 'https://yt3.googleusercontent.com/0hMC-6W0zIznMJLaaPGQRhbkb_0SZCkqpRVjQZ8XzXcRiA9KjVgE_4J6-DFG1NhMpzjJZf-0=s900-c-k-c0x00ffffff-no-rj',
@@ -59,33 +49,6 @@ function getLogoUrl(toolName) {
   return logos[toolName] || ''
 }
 
-const curated = externalTools.length > 0 ? externalTools : [
-  {
-    name: "Perplexity AI",
-    primaryPurpose: "AI-powered search and discovery engine",
-    targetUsers: "Researchers, analysts, knowledge workers",
-    technology: "Hybrid search + LLMs (OpenAI / Claude)",
-    realTimeWebSearch: true,
-    codeGeneration: false,
-    imageGeneration: false,
-    bestUseCase: "Fact-checked, cited research responses",
-    cost: "Free / Pro tier",
-    tags: ["search","research","citation","web"]
-  },
-  {
-    name: "Claude 3",
-    primaryPurpose: "General-purpose AI assistant emphasizing safety and reasoning",
-    targetUsers: "Enterprise, researchers, and individuals",
-    technology: "Anthropic Constitutional AI",
-    realTimeWebSearch: true,
-    codeGeneration: true,
-    imageGeneration: false,
-    bestUseCase: "Long-form reasoning, safe and accurate text generation",
-    cost: "Free / Pro / API tiered pricing",
-    tags: ["assistant","reasoning","text","enterprise"]
-  }
-]
-
 function dedupeByName(list) {
   const m = new Map()
   for (const item of list) {
@@ -96,12 +59,70 @@ function dedupeByName(list) {
 }
 
 async function run() {
-  const merged = dedupeByName([...curated])
-  const outDir = 'public'
-  const outFile = path.join(outDir, 'ai-tools-feed.json')
+  let existingTools = []
+  try {
+    const raw = await readFile(FEED_PATH, 'utf8')
+    const parsed = JSON.parse(raw)
+    if (Array.isArray(parsed)) {
+      existingTools = parsed
+    } else if (Array.isArray(parsed?.tools)) {
+      existingTools = parsed.tools
+    }
+  } catch {
+    console.warn('No existing feed found, starting from curated defaults')
+  }
+
+  const curated = existingTools.length ? existingTools : [
+    {
+      name: 'Perplexity AI',
+      primaryPurpose: 'AI-powered search and discovery engine',
+      targetUsers: 'Researchers, analysts, knowledge workers',
+      technology: 'Hybrid search + LLMs (OpenAI / Claude)',
+      realTimeWebSearch: true,
+      codeGeneration: false,
+      imageGeneration: false,
+      bestUseCase: 'Fact-checked, cited research responses',
+      cost: 'Free / Pro tier',
+      tags: ['search', 'research', 'citation', 'web']
+    },
+    {
+      name: 'Claude 3',
+      primaryPurpose: 'General-purpose AI assistant emphasizing safety and reasoning',
+      targetUsers: 'Enterprise, researchers, and individuals',
+      technology: 'Anthropic Constitutional AI',
+      realTimeWebSearch: true,
+      codeGeneration: true,
+      imageGeneration: false,
+      bestUseCase: 'Long-form reasoning, safe and accurate text generation',
+      cost: 'Free / Pro / API tiered pricing',
+      tags: ['assistant', 'reasoning', 'text', 'enterprise']
+    }
+  ]
+
+  const normalized = dedupeByName(curated).map(tool => {
+  const curatedLogo = getLogoUrl(tool.name)
+  const logoUrl = curatedLogo || tool.logoUrl
+    const accessLink = tool.accessLink || getOfficialLink(tool.name)
+    const tags = Array.isArray(tool.tags) ? tool.tags : []
+    const type = tool.type || (tags.includes('internal') ? 'internal' : 'external')
+    return {
+      ...tool,
+      ...(logoUrl ? { logoUrl } : {}),
+      ...(accessLink ? { accessLink } : {}),
+      tags,
+      type
+    }
+  })
+
+  const outDir = path.dirname(FEED_PATH)
   await mkdir(outDir, { recursive: true })
-  await writeFile(outFile, JSON.stringify(merged, null, 2))
-  console.log(`Wrote ${merged.length} tools → ${outFile}`)
+  const output = {
+    lastUpdated: new Date().toISOString(),
+    totalTools: normalized.length,
+    tools: normalized
+  }
+  await writeFile(FEED_PATH, JSON.stringify(output, null, 2))
+  console.log(`Wrote ${normalized.length} tools → ${FEED_PATH}`)
 }
 
 run().catch(e => { console.error(e); process.exit(1) })

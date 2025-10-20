@@ -110,8 +110,20 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
   }, [enhancedTools, selectedCategory])
 
   const categories = useMemo(() => {
-    const allTags = enhancedTools.flatMap(t => t.tags || [])
-    return ['all', 'internal', 'external', ...Array.from(new Set(allTags))]
+    const baseCategories = ['all', 'internal', 'external']
+    const seen = new Set(baseCategories)
+    for (const tool of enhancedTools) {
+      for (const tag of tool.tags || []) {
+        if (!tag) continue
+        const normalizedTag = tag.trim()
+        if (!normalizedTag) continue
+        if (!seen.has(normalizedTag)) {
+          seen.add(normalizedTag)
+          baseCategories.push(normalizedTag)
+        }
+      }
+    }
+    return baseCategories
   }, [enhancedTools])
 
   const capabilityData = useMemo(() => {
