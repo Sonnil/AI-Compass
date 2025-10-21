@@ -835,37 +835,37 @@ export default function ChatWidget({ toolsCatalog, apiPath }: Props) {
     const ctrl = new AbortController()
     abortRef.current = ctrl
 
-    // Development mode - use smart AI agent
-    if (window.location.hostname === 'localhost') {
-      try {
-        const response = getSmartAIResponse(userInput, toolsCatalog, messages)
-        setMessages(m => [...m, { role: 'assistant', content: '' }])
-        
-        // Simulate streaming with faster typing for better UX
-        let index = 0
-        const interval = setInterval(() => {
-          if (index < response.length) {
-            setMessages(m => {
-              const newMessages = [...m]
-              newMessages[newMessages.length - 1] = {
-                role: 'assistant',
-                content: response.slice(0, index + 1)
-              }
-              return newMessages
-            })
-            index++
-          } else {
-            clearInterval(interval)
-          }
-        }, 15) // Faster typing speed
-        
-        return
-      } catch (error) {
-        setMessages(m => [...m, { role: 'assistant', content: 'Sorry — I encountered an error while processing your request.' }])
-        return
-      }
+    // Always use smart AI agent (no backend required)
+    try {
+      const response = getSmartAIResponse(userInput, toolsCatalog, messages)
+      setMessages(m => [...m, { role: 'assistant', content: '' }])
+      
+      // Simulate streaming with faster typing for better UX
+      let index = 0
+      const interval = setInterval(() => {
+        if (index < response.length) {
+          setMessages(m => {
+            const newMessages = [...m]
+            newMessages[newMessages.length - 1] = {
+              role: 'assistant',
+              content: response.slice(0, index + 1)
+            }
+            return newMessages
+          })
+          index++
+        } else {
+          clearInterval(interval)
+        }
+      }, 15) // Faster typing speed
+      
+      return
+    } catch (error) {
+      setMessages(m => [...m, { role: 'assistant', content: 'Sorry — I encountered an error while processing your request.' }])
+      return
     }
 
+    // Legacy API code below is no longer used but kept for reference
+    /* 
     try {
       const resp = await fetch(getApiPath(apiPath), {
         method: 'POST',
@@ -878,50 +878,10 @@ export default function ChatWidget({ toolsCatalog, apiPath }: Props) {
         setMessages(m => [...m, { role: 'assistant', content: 'Sorry — I hit an error calling the assistant.' }])
         return
       }
-
-      // Stream the answer (SSE-like text stream from the proxy)
-      const reader = resp.body.getReader()
-      const decoder = new TextDecoder()
-      let assistantText = ''
-      setMessages(m => [...m, { role: 'assistant', content: '' }])
-
-      while (true) {
-        const { done, value } = await reader.read()
-        if (done) break
-        const chunk = decoder.decode(value, { stream: true })
-
-        // Supports both raw text streaming and OpenAI SSE 'data:' lines
-        if (chunk.includes('\ndata:')) {
-          chunk.split('\n').forEach(line => {
-            if (!line.startsWith('data:')) return
-            const data = line.replace(/^data:\s*/, '')
-            if (data === '[DONE]') return
-            try {
-              const json = JSON.parse(data)
-              const delta = json?.choices?.[0]?.delta?.content || ''
-              if (delta) {
-                assistantText += delta
-                setMessages(prev => {
-                  const copy = [...prev]
-                  copy[copy.length - 1] = { role: 'assistant', content: assistantText }
-                  return copy
-                })
-              }
-            } catch {}
-          })
-        } else {
-          // naive: treat as plain text stream
-          assistantText += chunk
-          setMessages(prev => {
-            const copy = [...prev]
-            copy[copy.length - 1] = { role: 'assistant', content: assistantText }
-            return copy
-          })
-        }
-      }
     } catch (e) {
       setMessages(m => [...m, { role: 'assistant', content: 'The request was interrupted. Please try again.' }])
     }
+    */
   }
 
   return (
