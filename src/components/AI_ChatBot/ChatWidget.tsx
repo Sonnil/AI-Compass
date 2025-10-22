@@ -247,7 +247,33 @@ function getSmartAIResponse(userInput: string, toolsCatalog: any[], conversation
   ).join('\n')
 
   // Create a smart system prompt
-  const systemPrompt = `You are an AI Compass assistant, an expert on Sanofi's AI tools catalog. You help employees discover, compare, and understand AI tools.
+  const systemPrompt = `You are SONA, the AI Compass assistant at Sanofi. You are an expert on Sanofi's AI tools catalog AND the AI Compass platform itself. You help employees discover, compare, and understand AI tools.
+
+ABOUT AI COMPASS PLATFORM:
+- AI-Compass is Sanofi's next-generation intelligence platform that makes AI exploration intuitive
+- It centralizes internal and external AI tools, benchmarks capabilities, and enables Agentic AI interaction
+- Built by Sanofi's Quality Data Analytics & Digital Team led by Product Owner Sonnil Q. Le
+- Works across all GBUs (Global Business Units) and functions
+- Secure by design, enterprise-ready
+- Built for Sanofians by Sanofians
+
+KEY FEATURES:
+- AI Discovery: Explore Sanofi's global AI initiatives and external innovations
+- Smart Comparison: Benchmark internal tools against industry standards
+- Natural Language Q&A: Ask questions and get contextual insights (that's me!)
+- Analytics Dashboards: Visualize AI usage, maturity, and impact across teams
+- Knowledge Hub: Learn from success stories, reusable assets, and best practices
+
+STRATEGIC VALUE FOR STAKEHOLDERS:
+- Visibility: Unified view of global AI initiatives, maturity, and investments
+- Efficiency: Promote reuse of existing AI assets, eliminate duplication of effort
+- Governance: Reinforce responsible AI via maturity scoring and data lineage
+- Innovation Acceleration: Connect cross-functional teams with external partners and tech
+- Strategic Alignment: Bridge data strategy with execution across GBUs
+
+CONTACT & SUPPORT:
+- For questions, feedback, or collaboration ideas: ai-compass@sanofi.com
+- The platform acts as Sanofi's North Star for AI governance and innovation
 
 AVAILABLE TOOLS CATALOG:
 ${toolsContext}
@@ -259,14 +285,16 @@ USER QUESTION: ${userInput}
 
 INSTRUCTIONS:
 - Be conversational and helpful
+- Answer questions about AI Compass platform itself (team, features, mission, contact)
 - Provide specific tool recommendations based on user needs
 - Compare tools when asked with detailed feature analysis
 - Mention access methods, training requirements, and costs
 - Use bullet points and formatting for clarity
 - If asked about capabilities you don't see in the catalog, suggest the closest alternatives
-- Be aware of Sanofi-specific context (internal vs external tools, compliance, etc.)
+- Be aware of Sanofi-specific context (internal vs external tools, compliance, GBUs)
 - Suggest multiple options when appropriate
 - Ask follow-up questions to better understand user needs
+- When asked about the platform, team, or mission, provide detailed information from the About section
 
 Respond as a knowledgeable AI assistant:`
 
@@ -285,6 +313,7 @@ function generateIntelligentResponse(systemPrompt: string, userInput: string, to
   // Intent detection with better logic
   const intents = {
     greeting: /\b(hi|hello|hey|good morning|good afternoon)\b/i,
+    about_platform: /\b(about|what is|tell me about|explain|mission|purpose|who (built|made|created)|team|contact|email|sonnil)\b.*\b(ai compass|platform|this|you|sona)\b/i,
     comparison: /\b(compare|difference|vs|versus|better|best)\b/i,
     recommendation: /\b(recommend|suggest|need|want|looking for|help with|best for)\b/i,
     specific_tool: new RegExp(`\\b(${toolsCatalog.map(t => t.name.toLowerCase()).join('|')})\\b`, 'i'),
@@ -339,6 +368,47 @@ function generateIntelligentResponse(systemPrompt: string, userInput: string, to
     }
     
     return response + getSuggestedQuestions('greeting')
+  }
+
+  // About platform questions
+  if (detectedIntents.includes('about_platform')) {
+    let response = `## About AI Compass 🧭\n\n`
+    
+    // Check what specific info they're asking about
+    if (input.includes('team') || input.includes('who built') || input.includes('who made') || input.includes('who created') || input.includes('sonnil')) {
+      response += `**Meet the Team:**\n`
+      response += `AI-Compass is developed by Sanofi's **Quality Data Analytics & Digital Team**, led by Product Owner **Sonnil Q. Le**. We're a talented group bringing together experts across Data, AI, and Digital Transformation.\n\n`
+    } else if (input.includes('contact') || input.includes('email') || input.includes('reach out')) {
+      response += `**Get in Touch:**\n`
+      response += `📧 Have questions, feedback, or ideas for collaboration? Email us at **ai-compass@sanofi.com**\n\n`
+    } else if (input.includes('mission') || input.includes('purpose') || input.includes('why')) {
+      response += `**Our Mission:**\n`
+      response += `To make Sanofi's AI ecosystem transparent, actionable, and scalable—empowering every Sanofian to harness AI responsibly and effectively in their daily work.\n\n`
+      response += `AI-Compass acts as Sanofi's **North Star** for AI governance and innovation, ensuring alignment between our digital ambitions and operational execution to deliver measurable impact for patients and stakeholders.\n\n`
+    } else if (input.includes('features') || input.includes('what can') || input.includes('capabilities')) {
+      response += `**Key Features:**\n\n`
+      response += `🔍 **AI Discovery:** Explore Sanofi's global AI initiatives and external innovations\n\n`
+      response += `📊 **Smart Comparison:** Benchmark internal tools against industry standards\n\n`
+      response += `💬 **Natural Language Q&A:** That's me! Ask questions and get contextual insights\n\n`
+      response += `📈 **Analytics Dashboards:** Visualize AI usage, maturity, and impact across teams\n\n`
+      response += `📚 **Knowledge Hub:** Learn from success stories, reusable assets, and best practices\n\n`
+    } else if (input.includes('stakeholder') || input.includes('investor') || input.includes('value') || input.includes('benefit')) {
+      response += `**Value for Stakeholders:**\n\n`
+      response += `👁️ **Visibility:** Unified view of global AI initiatives, maturity, and investments\n\n`
+      response += `⚡ **Efficiency:** Promote reuse of existing AI assets, eliminate duplication of effort\n\n`
+      response += `🛡️ **Governance:** Reinforce responsible AI via maturity scoring and data lineage\n\n`
+      response += `🚀 **Innovation Acceleration:** Connect cross-functional teams with external partners and tech\n\n`
+      response += `🎯 **Strategic Alignment:** Bridge data strategy with execution across GBUs\n\n`
+    } else {
+      // General about response
+      response += `**AI-Compass** is Sanofi's next-generation intelligence platform that makes AI exploration intuitive. It centralizes internal and external AI tools, benchmarks capabilities, and enables **Agentic AI** interaction—all within a secure, user-friendly environment.\n\n`
+      response += `✨ **Built for Sanofians by Sanofians**\n`
+      response += `🔒 **Secure by design, enterprise-ready**\n`
+      response += `🌐 **Works across all GBUs and functions**\n\n`
+      response += `💡 Want to know more? Ask me about our team, features, mission, or how to contact us!\n\n`
+    }
+    
+    return response + getSuggestedQuestions('about_platform')
   }
 
   // Tool comparison logic
@@ -605,6 +675,13 @@ function getSuggestedQuestions(responseType: string, mentionedTools: string[] = 
       "Show me all productivity tools",
       "Compare internal vs external tools",
       "What tools don't require training?"
+    ],
+    about_platform: [
+      "Who built AI Compass?",
+      "What features does AI Compass have?",
+      "What's the mission of AI Compass?",
+      "How do I contact the team?",
+      "Show me tools for data analysis"
     ],
     comparison: [
       "Tell me more about [TOOL] features",
