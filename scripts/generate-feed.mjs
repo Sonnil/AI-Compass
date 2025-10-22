@@ -26,25 +26,27 @@ function getOfficialLink(toolName) {
 }
 
 function getLogoUrl(toolName) {
-  // Using reliable logo URLs from CDNs and public sources
+  // Using local SVG logos to avoid external 404 errors
   const logos = {
     'Concierge': '/Concierge.svg',
     'Plai': '/Plai.svg',
-    'Claude 3': 'https://claude.ai/favicon.ico',
-    'Google Gemini': 'https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg',
-    'Perplexity AI': 'https://yt3.googleusercontent.com/0hMC-6W0zIznMJLaaPGQRhbkb_0SZCkqpRVjQZ8XzXcRiA9KjVgE_4J6-DFG1NhMpzjJZf-0=s900-c-k-c0x00ffffff-no-rj',
-    'Jasper AI': 'https://www.jasper.ai/favicon.ico',
-    'Midjourney': 'https://cdn.midjourney.com/b07dac22-026b-4ceb-ad83-5d3c4c6c8b98/0_0.png',
-    'Runway ML': 'https://runwayml.com/favicon.ico',
-    'Stable Diffusion': 'https://stability.ai/favicon.ico',
-    'Mistral AI': 'https://mistral.ai/favicon.ico',
-    'Cohere Command R+': 'https://cohere.com/favicon.ico',
-    'IBM Watsonx': 'https://www.ibm.com/favicon.ico',
-    'Salesforce Agentforce': 'https://www.salesforce.com/favicon.ico',
-    'Amazon Q': 'https://aws.amazon.com/favicon.ico',
-    'Hugging Face': 'https://huggingface.co/favicon.ico',
-    'Replit Ghostwriter': 'https://replit.com/favicon.ico',
-    'Notion AI': 'https://www.notion.so/favicon.ico'
+    'Claude 3': '/logos/claude.svg',
+    'Google Gemini': '/logos/gemini.svg',
+    'Perplexity AI': '/logos/perplexity.svg',
+    'Jasper AI': '/logos/jasper.svg',
+    'Midjourney': '/logos/midjourney.svg',
+    'Runway ML': '/logos/runway.svg',
+    'Stable Diffusion': '/logos/stable-diffusion.svg',
+    'Mistral AI': '/logos/mistral.svg',
+    'Cohere Command R+': '/logos/cohere.svg',
+    'IBM Watsonx': '/logos/ibm-watsonx.svg',
+    'Salesforce Agentforce': '/logos/salesforce.svg',
+    'Amazon Q': '/logos/amazon-q.svg',
+    'Hugging Face': '/logos/huggingface.svg',
+    'Replit Ghostwriter': '/logos/replit.svg',
+    'Notion AI': '/logos/notion.svg',
+    'Microsoft Copilot': '/logos/microsoft-copilot.svg',
+    'ChatGPT': '/logos/chatgpt.svg'
   }
   return logos[toolName] || ''
 }
