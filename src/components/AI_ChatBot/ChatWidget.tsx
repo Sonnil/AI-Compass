@@ -336,6 +336,7 @@ function getSonnilLeResponse(query: string): string {
   if (lowerQuery.includes('more') || lowerQuery.includes('detail') || lowerQuery.includes('full') || 
       lowerQuery.includes('background') || lowerQuery.includes('career') || lowerQuery.includes('experience')) {
     let response = `## 👤 About Sonnil Q. Le - Full Profile\n\n`
+    response += `![Sonnil Q. Le](${window.location.origin}/AI-Compass/images/sonnil-le-profile.jpg)\n\n`
     response += `**${profile.title}**\n_${profile.role}_\n\n`
     response += `---\n\n`
     response += profile.fullBio
@@ -377,9 +378,20 @@ function getSonnilLeResponse(query: string): string {
     return response
   }
   
+  // Photo request
+  if (lowerQuery.includes('photo') || lowerQuery.includes('picture') || lowerQuery.includes('image') || lowerQuery.includes('look like')) {
+    let response = `## 👤 Sonnil Q. Le\n\n`
+    response += `![Sonnil Q. Le - Associate Director, Quality Operations Data Analytics](${window.location.origin}/AI-Compass/images/sonnil-le-profile.jpg)\n\n`
+    response += `**${profile.title}**\n${profile.role}\n\n`
+    response += `📧 **Contact:** ${profile.contact}\n\n`
+    response += `Want to know more about Sonnil's background, projects, or expertise? Just ask!`
+    return response
+  }
+  
   // Contact info
   if (lowerQuery.includes('contact') || lowerQuery.includes('reach') || lowerQuery.includes('email')) {
     let response = `## 📧 Contact Sonnil Q. Le\n\n`
+    response += `![Sonnil Q. Le](${window.location.origin}/AI-Compass/images/sonnil-le-profile.jpg)\n\n`
     response += `**Email:** ${profile.contact}\n\n`
     response += `Sonnil welcomes questions, feedback, and collaboration ideas about AI-Compass and other data analytics initiatives at Sanofi.\n\n`
     response += `Feel free to reach out for:\n`
@@ -392,6 +404,7 @@ function getSonnilLeResponse(query: string): string {
   
   // Short bio (default)
   let response = `## 👤 About Sonnil Q. Le\n\n`
+  response += `![Sonnil Q. Le](${window.location.origin}/AI-Compass/images/sonnil-le-profile.jpg)\n\n`
   response += `**${profile.title}**\n\n`
   response += profile.shortBio
   response += `\n\n**🚀 Key Projects:**\n`
@@ -1740,8 +1753,29 @@ function FormattedMessage({ content }: { content: string }) {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
     
+    // Images (![alt](url))
+    if (line.match(/!\[.*?\]\(.*?\)/)) {
+      const match = line.match(/!\[(.*?)\]\((.*?)\)/)
+      if (match) {
+        const [, alt, src] = match
+        elements.push(
+          <div key={key++} className="my-4 flex justify-center">
+            <img 
+              src={src} 
+              alt={alt} 
+              className="max-w-[200px] rounded-lg shadow-lg border-2 border-slate-200 dark:border-slate-600"
+              onError={(e) => {
+                console.error('Image failed to load:', src)
+                e.currentTarget.style.display = 'none'
+              }}
+            />
+          </div>
+        )
+      }
+      continue
+    }
     // Headers (##)
-    if (line.startsWith('## ')) {
+    else if (line.startsWith('## ')) {
       elements.push(
         <h3 key={key++} className="text-base font-bold mt-4 mb-2 text-slate-900 dark:text-white flex items-center gap-2">
           {line.replace('## ', '')}
