@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-10-22T15:07:43.911Z",
+  "lastUpdated": "2025-10-22T15:42:00.267Z",
   "totalTools": 25,
   "tools": [
     {
@@ -160,7 +160,7 @@
       "codeGeneration": true,
       "imageGeneration": true,
       "accessLink": "https://www.microsoft.com/microsoft-365/copilot",
-      "logoUrl": "https://www.microsoft.com/favicon.ico",
+      "logoUrl": "/logos/microsoft-copilot.svg",
       "tags": [
         "external",
         "microsoft",
@@ -179,7 +179,7 @@
       "codeGeneration": true,
       "imageGeneration": true,
       "accessLink": "https://chat.openai.com",
-      "logoUrl": "https://chat.openai.com/favicon.ico",
+      "logoUrl": "/logos/chatgpt.svg",
       "tags": [
         "external",
         "chatbot",
@@ -198,7 +198,7 @@
       "codeGeneration": true,
       "imageGeneration": false,
       "accessLink": "https://claude.ai",
-      "logoUrl": "https://claude.ai/favicon.ico",
+      "logoUrl": "/logos/claude.svg",
       "tags": [
         "assistant",
         "reasoning",
@@ -218,7 +218,7 @@
       "codeGeneration": true,
       "imageGeneration": true,
       "accessLink": "https://gemini.google.com",
-      "logoUrl": "https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg",
+      "logoUrl": "/logos/gemini.svg",
       "tags": [
         "multimodal",
         "workspace",
@@ -238,7 +238,7 @@
       "codeGeneration": false,
       "imageGeneration": false,
       "accessLink": "https://perplexity.ai",
-      "logoUrl": "https://yt3.googleusercontent.com/0hMC-6W0zIznMJLaaPGQRhbkb_0SZCkqpRVjQZ8XzXcRiA9KjVgE_4J6-DFG1NhMpzjJZf-0=s900-c-k-c0x00ffffff-no-rj",
+      "logoUrl": "/logos/perplexity.svg",
       "tags": [
         "search",
         "research",
@@ -258,7 +258,7 @@
       "codeGeneration": false,
       "imageGeneration": true,
       "accessLink": "https://jasper.ai",
-      "logoUrl": "https://www.jasper.ai/favicon.ico",
+      "logoUrl": "/logos/jasper.svg",
       "tags": [
         "marketing",
         "content",
@@ -277,7 +277,7 @@
       "codeGeneration": false,
       "imageGeneration": true,
       "accessLink": "https://midjourney.com",
-      "logoUrl": "https://cdn.midjourney.com/b07dac22-026b-4ceb-ad83-5d3c4c6c8b98/0_0.png",
+      "logoUrl": "/logos/midjourney.svg",
       "tags": [
         "image",
         "creative",
@@ -297,7 +297,7 @@
       "codeGeneration": false,
       "imageGeneration": true,
       "accessLink": "https://runwayml.com",
-      "logoUrl": "https://runwayml.com/favicon.ico",
+      "logoUrl": "/logos/runway.svg",
       "tags": [
         "video",
         "creative",
@@ -317,7 +317,7 @@
       "codeGeneration": false,
       "imageGeneration": true,
       "accessLink": "https://stability.ai",
-      "logoUrl": "https://stability.ai/favicon.ico",
+      "logoUrl": "/logos/stable-diffusion.svg",
       "tags": [
         "open-source",
         "image",
@@ -336,7 +336,7 @@
       "codeGeneration": true,
       "imageGeneration": false,
       "accessLink": "https://mistral.ai",
-      "logoUrl": "https://mistral.ai/favicon.ico",
+      "logoUrl": "/logos/mistral.svg",
       "tags": [
         "open-source",
         "LLM",
@@ -355,7 +355,7 @@
       "codeGeneration": true,
       "imageGeneration": false,
       "accessLink": "https://cohere.com",
-      "logoUrl": "https://cohere.com/favicon.ico",
+      "logoUrl": "/logos/cohere.svg",
       "tags": [
         "enterprise",
         "RAG",
@@ -374,7 +374,7 @@
       "codeGeneration": true,
       "imageGeneration": false,
       "accessLink": "https://watsonx.ai",
-      "logoUrl": "https://www.ibm.com/favicon.ico",
+      "logoUrl": "/logos/ibm-watsonx.svg",
       "tags": [
         "enterprise",
         "governance",
@@ -393,7 +393,7 @@
       "codeGeneration": false,
       "imageGeneration": false,
       "accessLink": "https://salesforce.com/products/agentforce",
-      "logoUrl": "https://www.salesforce.com/favicon.ico",
+      "logoUrl": "/logos/salesforce.svg",
       "tags": [
         "crm",
         "automation",
@@ -412,7 +412,7 @@
       "codeGeneration": true,
       "imageGeneration": false,
       "accessLink": "https://aws.amazon.com/q",
-      "logoUrl": "https://aws.amazon.com/favicon.ico",
+      "logoUrl": "/logos/amazon-q.svg",
       "tags": [
         "aws",
         "assistant",
@@ -431,7 +431,7 @@
       "codeGeneration": true,
       "imageGeneration": true,
       "accessLink": "https://huggingface.co",
-      "logoUrl": "https://huggingface.co/favicon.ico",
+      "logoUrl": "/logos/huggingface.svg",
       "tags": [
         "open-source",
         "models",
@@ -450,7 +450,7 @@
       "codeGeneration": true,
       "imageGeneration": false,
       "accessLink": "https://replit.com/ai",
-      "logoUrl": "https://replit.com/favicon.ico",
+      "logoUrl": "/logos/replit.svg",
       "tags": [
         "developer",
         "coding",
@@ -469,7 +469,7 @@
       "codeGeneration": false,
       "imageGeneration": false,
       "accessLink": "https://www.notion.so/product/ai",
-      "logoUrl": "https://www.notion.so/favicon.ico",
+      "logoUrl": "/logos/notion.svg",
       "tags": [
         "productivity",
         "workspace",
