@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Download, Search, Languages, Compass, Sparkles, GitCompare, Send, RefreshCw, ListFilter, X, Lightbulb, Database, Globe, Moon, Sun, Heart, Mail, BarChart3, LogOut, User } from 'lucide-react'
+import { Download, Search, Languages, Compass, Sparkles, GitCompare, Send, RefreshCw, ListFilter, X, Lightbulb, Database, Globe, Moon, Sun, Heart, Mail, BarChart3, LogOut, User, Info } from 'lucide-react'
 import { BRAND } from './branding'
 import Analytics from './Analytics'
 import Authentication from './Authentication'
 import ChatWidget from './components/AI_ChatBot/ChatWidget'
+import AboutAICompass from './components/AboutAICompass'
 
 type Tool = {
   name: string
@@ -515,7 +516,7 @@ const App: React.FC = () => {
 
   const [query, setQuery] = useState('')
   const [scope, setScope] = useState<'all'|'internal'|'external'>('all')
-  const [currentView, setCurrentView] = useState<'main' | 'analytics'>('main')
+  const [currentView, setCurrentView] = useState<'main' | 'analytics' | 'about'>('main')
   const baseTools = useMemo(() => seededTools, [])
   const [externalTools, setExternalTools] = useLocalStorage<Tool[]>('aihub_external', [])
   const [externalMeta, setExternalMeta] = useLocalStorage<Record<string, {hash:string, addedAt?:string, updatedAt?:string}>>('aihub_external_meta', {})
@@ -715,6 +716,22 @@ const App: React.FC = () => {
     return <Analytics tools={tools} onBack={() => setCurrentView('main')} />
   }
 
+  // About view
+  if (currentView === 'about') {
+    return (
+      <div className="relative">
+        <button
+          onClick={() => setCurrentView('main')}
+          className="fixed top-4 left-4 z-50 px-4 py-2 rounded-xl bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center gap-2"
+        >
+          <X className="w-4 h-4" />
+          <span>Close</span>
+        </button>
+        <AboutAICompass />
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-cyan-50 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 dark:text-slate-100" style={{ backgroundImage: 'linear-gradient(135deg, rgba(0, 64, 161, 0.03) 0%, rgba(0, 166, 166, 0.03) 100%)' }}>
       <header className="sticky top-0 z-20 backdrop-blur bg-white/80 dark:bg-slate-900/80 border-b border-blue-200/50 dark:border-blue-700/50 shadow-lg" style={{ boxShadow: '0 10px 15px -3px rgba(0, 64, 161, 0.1), 0 4px 6px -2px rgba(0, 64, 161, 0.05)' }}>
@@ -747,6 +764,11 @@ const App: React.FC = () => {
               onClick={() => setCurrentView('analytics')} aria-label="Open analytics dashboard">
               <BarChart3 className="w-4 h-4 group-hover:text-blue-500 transition-all duration-300 group-hover:scale-110" />
               <span className="group-hover:scale-110 transition-transform duration-300">{t.analytics}</span>
+            </button>
+            <button className="px-3 h-10 rounded-2xl border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-purple-100 hover:to-blue-100 dark:hover:from-slate-700 dark:hover:to-purple-900 flex items-center gap-2 transition-all duration-300 hover:scale-105 hover:shadow-lg group"
+              onClick={() => setCurrentView('about')} aria-label="About AI Compass">
+              <Info className="w-4 h-4 group-hover:text-purple-500 transition-all duration-300 group-hover:scale-110" />
+              <span className="group-hover:scale-110 transition-transform duration-300">About</span>
             </button>
             <button
               className="px-3 h-10 rounded-2xl border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-green-100 hover:to-blue-100 dark:hover:from-slate-700 dark:hover:to-green-900 flex items-center gap-2 transition-all duration-300 hover:scale-105 hover:shadow-lg group"
