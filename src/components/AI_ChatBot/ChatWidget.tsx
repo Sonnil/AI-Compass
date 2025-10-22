@@ -1976,7 +1976,10 @@ function isRelevantToAITools(input: string, toolsCatalog: any[]): boolean {
     // Team and creator related
     'sonnil', 'team', 'built', 'created', 'made', 'developed', 'creator', 
     'developer', 'owner', 'builder', 'who', 'compass', 'sona', 'contact', 
-    'bio', 'background', 'profile', 'about', 'this'
+    'bio', 'background', 'profile', 'about', 'this',
+    // AI educational content (fun facts, jokes, tips, trivia)
+    'joke', 'funny', 'humor', 'laugh', 'fact', 'facts', 'trivia', 'tip', 'tips',
+    'did you know', 'fun fact', 'interesting', 'learn', 'educate', 'teach'
   ]
   
   const irrelevantKeywords = [
@@ -1989,8 +1992,7 @@ function isRelevantToAITools(input: string, toolsCatalog: any[]): boolean {
     'personal', 'relationship', 'dating', 'family', 'friend',
     'health', 'medicine', 'doctor', 'hospital', 'symptom',
     'politics', 'government', 'election', 'politician',
-    'philosophy', 'religion', 'spiritual', 'meaning of life',
-    'joke', 'funny', 'humor', 'laugh'
+    'philosophy', 'religion', 'spiritual', 'meaning of life'
   ]
   
   // Check for irrelevant keywords first
