@@ -469,6 +469,116 @@ function hashRecord(obj: any) {
   try { return btoa(unescape(encodeURIComponent(JSON.stringify(obj)))).slice(0,24) } catch { return Math.random().toString(36).slice(2,10) }
 }
 
+// Welcome popup content generator
+function getWelcomePopupContent(): { type: string; emoji: string; title: string; content: string } {
+  const contentOptions = [
+    // Fun Facts
+    {
+      type: 'Fun Fact',
+      emoji: '🤖',
+      title: 'AI Fun Fact',
+      content: 'The term "Artificial Intelligence" was coined by John McCarthy in 1956 at the Dartmouth Conference, where the field of AI research was officially born!'
+    },
+    {
+      type: 'Fun Fact',
+      emoji: '🧠',
+      title: 'Did You Know?',
+      content: 'GPT-3 has 175 billion parameters and was trained on 45TB of text data - that\'s like reading millions of books!'
+    },
+    {
+      type: 'Fun Fact',
+      emoji: '🎯',
+      title: 'AI Milestone',
+      content: 'In 2016, AlphaGo became the first AI to defeat a world champion Go player, marking a historic moment in AI development.'
+    },
+    {
+      type: 'Fun Fact',
+      emoji: '💡',
+      title: 'Amazing AI Fact',
+      content: 'Modern AI can generate images, write code, compose music, and even help discover new drugs - all from natural language prompts!'
+    },
+    // AI Jokes
+    {
+      type: 'AI Joke',
+      emoji: '😄',
+      title: 'AI Humor Break',
+      content: 'Why did the AI go to therapy? Because it had too many deep learning issues! 🤓'
+    },
+    {
+      type: 'AI Joke',
+      emoji: '🤣',
+      title: 'Tech Humor',
+      content: 'What do you call an AI that sings? A-dell! (Adele) 🎤'
+    },
+    {
+      type: 'AI Joke',
+      emoji: '😂',
+      title: 'Just for Fun',
+      content: 'Why don\'t AI assistants ever get tired? Because they run on renewable energy... and caffeine-free code! ☕'
+    },
+    {
+      type: 'AI Joke',
+      emoji: '🎭',
+      title: 'AI Comedy',
+      content: 'How does an AI flirt? "Hey baby, are you a neural network? Because you\'ve got me making all the right connections!" 💕'
+    },
+    // Educational Tips
+    {
+      type: 'Pro Tip',
+      emoji: '📚',
+      title: 'AI Pro Tip',
+      content: 'When crafting prompts, be specific and provide context. Instead of "write code," try "write a Python function that calculates fibonacci numbers recursively."'
+    },
+    {
+      type: 'Pro Tip',
+      emoji: '⚡',
+      title: 'Productivity Tip',
+      content: 'Use AI tools iteratively! Start with a basic prompt, review the output, then refine with follow-up questions for better results.'
+    },
+    {
+      type: 'Pro Tip',
+      emoji: '🔒',
+      title: 'Security Reminder',
+      content: 'Never share sensitive data, passwords, or confidential information with AI tools. Always review and validate AI-generated content before using it.'
+    },
+    {
+      type: 'Pro Tip',
+      emoji: '🎨',
+      title: 'Creative Tip',
+      content: 'AI excels at brainstorming! Use it to generate multiple variations of ideas, then combine the best elements for innovative solutions.'
+    },
+    // New Tools Highlights
+    {
+      type: 'New Tool',
+      emoji: '🆕',
+      title: 'Explore New Tools',
+      content: 'Check out Claude 3 - Anthropic\'s latest AI assistant with improved reasoning and coding capabilities!'
+    },
+    {
+      type: 'New Tool',
+      emoji: '✨',
+      title: 'Tool Spotlight',
+      content: 'Gemini by Google offers multimodal AI capabilities - it can understand text, images, audio, and video all at once!'
+    },
+    {
+      type: 'New Tool',
+      emoji: '🔍',
+      title: 'Discover More',
+      content: 'Perplexity AI combines search with AI chat - get answers with real-time sources and citations!'
+    },
+    {
+      type: 'New Tool',
+      emoji: '🎨',
+      title: 'Creative AI',
+      content: 'Midjourney and DALL-E 3 are revolutionizing visual content creation with stunning AI-generated images!'
+    }
+  ]
+
+  // Random selection
+  const randomIndex = Math.floor(Math.random() * contentOptions.length)
+  return contentOptions[randomIndex]
+}
+
 const FeedManager: React.FC<{onSync: (urls: string[]) => Promise<void>, lastSync: string | null}> = ({ onSync, lastSync }) => {
   const [feeds, setFeeds] = useLocalStorage<string[]>('aihub_feeds', [])
   const [open, setOpen] = useState(false)
@@ -533,7 +643,26 @@ const App: React.FC = () => {
   const [showSuggestionModal, setShowSuggestionModal] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [showSettingsMenu, setShowSettingsMenu] = useState(false)
+  const [showComparisonView, setShowComparisonView] = useState(false)
+  const [isComparisonMaximized, setIsComparisonMaximized] = useState(false)
+  const [showWelcomePopup, setShowWelcomePopup] = useState(false)
   const settingsMenuRef = useRef<HTMLDivElement>(null)
+  const comparisonRef = useRef<HTMLDivElement>(null)
+
+  // Show welcome popup on page load (once per session)
+  useEffect(() => {
+    // Always show popup on page load with a small delay for better UX
+    setTimeout(() => {
+      setShowWelcomePopup(true)
+    }, 800)
+  }, [])
+
+  // Scroll to comparison when it's shown
+  useEffect(() => {
+    if (showComparisonView && comparisonRef.current) {
+      comparisonRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [showComparisonView])
 
   // Close settings menu when clicking outside
   useEffect(() => {
@@ -886,7 +1015,7 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 py-6 grid gap-6">
+      <main className={`max-w-6xl mx-auto px-4 py-6 grid gap-6 transition-all duration-300 ${showComparisonView && compareTools.length > 0 ? (isComparisonMaximized ? 'pb-[95vh]' : 'pb-[52vh]') : ''}`}>
         {/* Controls */}
         <div className="rounded-2xl border border-blue-200/50 dark:border-blue-700/50 p-4 bg-white/80 dark:bg-slate-900/60 shadow-lg backdrop-blur" style={{ boxShadow: '0 10px 15px -3px rgba(0, 64, 161, 0.1), 0 4px 6px -2px rgba(0, 64, 161, 0.05)' }}>
           <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
@@ -927,7 +1056,16 @@ const App: React.FC = () => {
               <button className="px-3 h-11 rounded-2xl border border-slate-300 dark:border-slate-600 hover:bg-gradient-to-r hover:from-slate-100 hover:to-slate-200 dark:hover:from-slate-700 dark:hover:to-slate-600 transition-all duration-300 hover:scale-105 hover:shadow-lg group" onClick={() => setCompareList([])}>
                 <RefreshCw className="w-4 h-4 inline mr-2 group-hover:rotate-180 transition-transform duration-300" /> {t.clear}
               </button>
-              <button className={"px-3 h-11 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-xl group " + (compareList.length > 0 ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:from-blue-400 hover:to-purple-400 hover:shadow-blue-500/30" : "border border-slate-300 dark:border-slate-600 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white hover:border-transparent hover:shadow-purple-500/30")} onClick={() => setShowComparePanel(v => !v)}>
+              <button 
+                className={"px-3 h-11 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-xl group " + (compareList.length > 0 ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:from-blue-400 hover:to-purple-400 hover:shadow-blue-500/30" : "border border-slate-300 dark:border-slate-600 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white hover:border-transparent hover:shadow-purple-500/30")} 
+                onClick={() => {
+                  if (compareList.length > 0) {
+                    setShowComparisonView(!showComparisonView)
+                  } else {
+                    setShowComparePanel(v => !v)
+                  }
+                }}
+              >
                 <GitCompare className="w-4 h-4 inline mr-2 group-hover:scale-110 transition-transform duration-300" /> {t.comparison} ({compareList.length})
               </button>
             </div>
@@ -954,8 +1092,8 @@ const App: React.FC = () => {
           )}
         </div>
 
-        {/* Results */}
-        <section className="grid gap-3">
+        {/* Results - Split view when comparison is active */}
+        <section className={`grid gap-3 ${showComparisonView && compareTools.length > 0 ? (isComparisonMaximized ? 'h-[10vh]' : 'h-[45vh]') : ''}`}>
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">{t.results} ({filtered.length})</h2>
             <div className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2"><ListFilter className="w-4 h-4" />{t.scope}: {scope}</div>
@@ -965,11 +1103,54 @@ const App: React.FC = () => {
             <div className="border rounded-2xl p-6 text-center text-slate-500">{t.noMatches}</div>
           )}
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className={`grid md:grid-cols-2 gap-4 ${showComparisonView && compareTools.length > 0 ? (isComparisonMaximized ? 'overflow-y-auto max-h-[calc(10vh-60px)]' : 'overflow-y-auto max-h-[calc(45vh-60px)]') : ''}`}>
             {filtered.map(tool => {
               const key = (tool.name||'').toLowerCase()
               const isNew = newNames.has(key)
               const isUpdated = !isNew && updatedNames.has(key)
+              const isInComparison = compareList.includes(tool.name)
+              
+              // Collapsed view when in comparison mode
+              if (showComparisonView && compareTools.length > 0) {
+                return (
+                  <div 
+                    key={tool.name} 
+                    className={`rounded-xl border p-3 transition-all duration-300 bg-white/80 dark:bg-slate-900/60 hover:shadow-lg ${isInComparison ? 'border-blue-500 dark:border-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : 'border-slate-200 dark:border-slate-700'}`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 flex-1">
+                        <span className={"text-xs px-2 py-0.5 rounded-lg font-medium " + (tool.type==='internal' ? "bg-emerald-500 text-white" : "bg-orange-500 text-white")}>
+                          {tool.type==='internal' ? t.internal : t.external}
+                        </span>
+                        <h3 className="text-sm font-semibold">{tool.name}</h3>
+                        {isInComparison && <GitCompare className="w-4 h-4 text-blue-500" />}
+                      </div>
+                      {tool.logoUrl && (
+                        <img 
+                          src={resolveLogoUrl(tool.logoUrl) || tool.logoUrl} 
+                          alt={`${tool.name} logo`}
+                          className="w-8 h-8 rounded-lg object-contain bg-white/50 p-1 border border-slate-200 dark:border-slate-700"
+                          onError={(e) => e.currentTarget.style.display = 'none'}
+                        />
+                      )}
+                      <button 
+                        className={"ml-2 px-2 py-1 rounded-lg text-xs transition-all " + (isInComparison ? "bg-red-500 text-white hover:bg-red-600" : "bg-blue-500 text-white hover:bg-blue-600")}
+                        onClick={() => {
+                          if (isInComparison) {
+                            setCompareList(compareList.filter(n => n !== tool.name))
+                          } else {
+                            setCompareList([...compareList, tool.name])
+                          }
+                        }}
+                      >
+                        {isInComparison ? '✕' : '+'}
+                      </button>
+                    </div>
+                  </div>
+                )
+              }
+              
+              // Full card view when not in comparison mode
               return (
               <div key={tool.name} className="rounded-2xl border border-blue-200/50 dark:border-blue-700/50 p-4 hover:shadow-2xl transition-all duration-300 bg-white/80 dark:bg-slate-900/60 backdrop-blur hover:-translate-y-2 hover:scale-105 hover:border-blue-400/80 dark:hover:border-blue-500/80 cursor-pointer group" style={{ boxShadow: 'var(--hover-shadow, 0 25px 50px -12px rgba(0, 0, 0, 0.25))' }} onMouseEnter={(e) => e.currentTarget.style.setProperty('--hover-shadow', '0 25px 50px -12px rgba(0, 64, 161, 0.3)')} onMouseLeave={(e) => e.currentTarget.style.removeProperty('--hover-shadow')}>
                 <div className="flex items-center justify-between">
@@ -1053,8 +1234,141 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* Comparison Table */}
-        {compareTools.length > 0 && (
+        {/* Comparison Table - Fixed Bottom Panel */}
+        {showComparisonView && compareTools.length > 0 && (
+          <section ref={comparisonRef} className={`fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t-4 border-blue-500 shadow-2xl z-30 overflow-hidden transition-all duration-300 ${isComparisonMaximized ? 'h-[90vh]' : 'h-[50vh]'}`}>
+            <div className="h-full flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+                <h2 className="text-lg font-semibold flex items-center gap-2">
+                  <GitCompare className="w-5 h-5" /> {t.comparison} - {compareTools.length} Tools
+                </h2>
+                <div className="flex items-center gap-2">
+                  <button 
+                    className="px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 transition-all text-sm flex items-center gap-2"
+                    onClick={() => setIsComparisonMaximized(!isComparisonMaximized)}
+                    title={isComparisonMaximized ? 'Minimize' : 'Maximize'}
+                  >
+                    {isComparisonMaximized ? (
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    ) : (
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                      </svg>
+                    )}
+                    {isComparisonMaximized ? 'Minimize' : 'Maximize'}
+                  </button>
+                  <button 
+                    className="px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 transition-all text-sm flex items-center gap-2"
+                    onClick={() => setCompareList([])}
+                  >
+                    <RefreshCw className="w-4 h-4" /> Clear All
+                  </button>
+                  <button 
+                    className="p-1.5 rounded-lg bg-white/20 hover:bg-white/30 transition-all"
+                    onClick={() => {
+                      setShowComparisonView(false)
+                      setIsComparisonMaximized(false)
+                    }}
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+              
+              {/* Comparison Table */}
+              <div className="flex-1 overflow-auto p-4 bg-slate-50/50 dark:bg-slate-950/50">
+                <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden bg-white dark:bg-slate-900">
+                  <table className="min-w-full text-sm">
+                    <thead className="bg-slate-100 dark:bg-slate-800 sticky top-0 z-10">
+                      <tr>
+                        <th className="text-left p-3 sticky left-0 bg-slate-100 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 min-w-[220px] shadow-sm">
+                          <span className="font-semibold">Features</span>
+                        </th>
+                        {compareTools.map(tool => (
+                          <th key={tool.name} className="text-left p-3 border-r border-slate-200 dark:border-slate-700 min-w-[220px]">
+                            <div className="flex items-center justify-between gap-2">
+                              <div className="flex items-center gap-2">
+                                {tool.logoUrl && (
+                                  <img 
+                                    src={resolveLogoUrl(tool.logoUrl) || tool.logoUrl} 
+                                    alt={`${tool.name} logo`}
+                                    className="w-6 h-6 rounded object-contain"
+                                    onError={(e) => e.currentTarget.style.display = 'none'}
+                                  />
+                                )}
+                                <div>
+                                  <div className="font-semibold">{tool.name}</div>
+                                  <span className={"text-xs px-1.5 py-0.5 rounded mt-1 inline-block " + (tool.type==='internal' ? "bg-emerald-500 text-white" : "bg-orange-500 text-white")}>
+                                    {tool.type==='internal' ? t.internal : t.external}
+                                  </span>
+                                </div>
+                              </div>
+                              <button 
+                                className="p-1 rounded hover:bg-red-100 dark:hover:bg-red-900/30 transition-all"
+                                onClick={() => setCompareList(compareList.filter(n => n !== tool.name))}
+                                title="Remove from comparison"
+                              >
+                                <X className="w-4 h-4 text-red-500" />
+                              </button>
+                            </div>
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[
+                        ['primaryPurpose','Primary Purpose'],
+                        ['targetUsers',t.targetUsers],
+                        ['accessToSanofiSystems','Access to Sanofi Systems'],
+                        ['meetingScheduling','Meeting Scheduling'],
+                        ['emailManagement','Email Management'],
+                        ['peopleSearch','People Search'],
+                        ['documentCreation','Document Creation'],
+                        ['knowledgeBase','Sanofi Knowledge Base'],
+                        ['qualipsoAccess','QualiPSO Access'],
+                        ['oneSupportTickets','OneSupport Tickets'],
+                        ['scientificLiterature','Scientific Literature'],
+                        ['patentAnalysis','Patent Analysis'],
+                        ['chemicalStructure','Chemical Structure Analysis'],
+                        ['dataViz','Data Visualization'],
+                        ['predictiveAnalytics','Predictive Analytics'],
+                        ['office365Integration','Office 365 Integration'],
+                        ['excelDataAnalysis','Excel Data Analysis'],
+                        ['pptCreation','PowerPoint Creation'],
+                        ['generalKnowledge','General Knowledge'],
+                        ['creativeWriting','Creative Writing'],
+                        ['codeGeneration','Code Generation'],
+                        ['realTimeWebSearch','Real-time Web Search'],
+                        ['imageGeneration','Image Generation'],
+                        ['diagramCreation','Diagram Creation'],
+                        ['complianceAwareness','Compliance Awareness'],
+                        ['trainingRequired','Training Required'],
+                        ['cost',t.cost],
+                        ['bestUseCase',t.bestUseCase],
+                        ['technology',t.tech],
+                      ].map(([key,label]) => (
+                        <tr key={key as string} className="even:bg-slate-50/50 odd:bg-white dark:even:bg-slate-900/50 dark:odd:bg-slate-900 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-colors">
+                          <td className="p-3 sticky left-0 bg-inherit border-r border-slate-200 dark:border-slate-700 font-medium shadow-sm">{label}</td>
+                          {compareTools.map(tool => (
+                            <td className="p-3 border-r border-slate-200 dark:border-slate-700 align-top" key={tool.name + key}>
+                              {renderValue((tool as any)[key as string])}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Old Comparison Table - Only show when NOT in split view */}
+        {!showComparisonView && compareTools.length > 0 && (
           <section className="grid gap-3">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold flex items-center gap-2"><GitCompare className="w-5 h-5" /> {t.comparison}</h2>
@@ -1246,6 +1560,53 @@ const App: React.FC = () => {
           </div>
         </footer>
       </main>
+
+      {/* Welcome Popup */}
+      {showWelcomePopup && (() => {
+        const popupContent = getWelcomePopupContent()
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fadeIn">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden animate-slideUp">
+              {/* Header */}
+              <div className="relative h-24 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center">
+                <div className="text-6xl">{popupContent.emoji}</div>
+                <button
+                  onClick={() => setShowWelcomePopup(false)}
+                  className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all duration-200 hover:scale-110"
+                  aria-label="Close popup"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+              </div>
+              
+              {/* Content */}
+              <div className="p-6">
+                <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 text-blue-700 dark:text-blue-300">
+                  {popupContent.type}
+                </div>
+                <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-slate-100">
+                  {popupContent.title}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+                  {popupContent.content}
+                </p>
+                
+                {/* Action Button */}
+                <button
+                  onClick={() => setShowWelcomePopup(false)}
+                  className="w-full h-12 rounded-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  style={{ 
+                    background: BRAND.colors.gradient,
+                    color: 'white'
+                  }}
+                >
+                  Got it! Let's explore 🚀
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
     </div>
   )
 }
