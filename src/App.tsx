@@ -5,6 +5,7 @@ import Analytics from './Analytics'
 import Authentication from './Authentication'
 import ChatWidget from './components/AI_ChatBot/ChatWidget'
 import AboutAICompass from './components/AboutAICompass'
+import * as analytics from './utils/analytics'
 
 type Tool = {
   name: string
@@ -654,8 +655,27 @@ const App: React.FC = () => {
     // Always show popup on page load with a small delay for better UX
     setTimeout(() => {
       setShowWelcomePopup(true)
+      analytics.trackWelcomePopup('shown')
     }, 800)
   }, [])
+
+  // Track initial page view
+  useEffect(() => {
+    analytics.trackPageView(window.location.pathname, 'AI Compass - Home')
+  }, [])
+
+  // Track view changes
+  useEffect(() => {
+    if (currentView === 'analytics') {
+      analytics.trackNavigation('main', 'analytics')
+      analytics.trackPageView('/analytics', 'AI Compass - Analytics')
+    } else if (currentView === 'about') {
+      analytics.trackNavigation('main', 'about')
+      analytics.trackPageView('/about', 'AI Compass - About')
+    } else if (currentView === 'main') {
+      analytics.trackPageView('/', 'AI Compass - Home')
+    }
+  }, [currentView])
 
   // Scroll to comparison when it's shown
   useEffect(() => {
@@ -894,49 +914,58 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-cyan-50 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 dark:text-slate-100" style={{ backgroundImage: 'linear-gradient(135deg, rgba(0, 64, 161, 0.03) 0%, rgba(0, 166, 166, 0.03) 100%)' }}>
       <header className="sticky top-0 z-20 backdrop-blur bg-white/80 dark:bg-slate-900/80 border-b border-blue-200/50 dark:border-blue-700/50 shadow-lg" style={{ boxShadow: '0 10px 15px -3px rgba(0, 64, 161, 0.1), 0 4px 6px -2px rgba(0, 64, 161, 0.05)' }}>
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: BRAND.colors.gradient }}>
-            <Compass className="w-5 h-5 text-white" />
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 py-3 flex items-center gap-2 sm:gap-3">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: BRAND.colors.gradient }}>
+            <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </div>
-          <div className="flex-1">
-            <h1 className="text-xl font-bold leading-tight bg-clip-text text-transparent" style={{ backgroundImage: BRAND.colors.gradient }}>{t.title}</h1>
-            <p className="text-sm text-slate-600 dark:text-slate-300">{t.subtitle}</p>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-base sm:text-xl font-bold leading-tight bg-clip-text text-transparent truncate" style={{ backgroundImage: BRAND.colors.gradient }}>{t.title}</h1>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 hidden sm:block">{t.subtitle}</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             {/* Analytics Button */}
-            <button className="px-2 h-8 rounded-lg border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-blue-100 hover:to-teal-100 dark:hover:from-slate-700 dark:hover:to-blue-900 flex items-center gap-1.5 transition-all duration-300 hover:scale-105 text-sm group"
-              onClick={() => setCurrentView('analytics')} aria-label="Open analytics dashboard">
-              <BarChart3 className="w-3.5 h-3.5 group-hover:text-blue-500 transition-all duration-300" />
-              <span>{t.analytics}</span>
+            <button className="px-2 sm:px-3 h-8 sm:h-9 rounded-lg border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-blue-100 hover:to-teal-100 dark:hover:from-slate-700 dark:hover:to-blue-900 flex items-center gap-1 sm:gap-1.5 transition-all duration-300 hover:scale-105 text-xs sm:text-sm group touch-manipulation"
+              onClick={() => {
+                setCurrentView('analytics')
+                analytics.trackFeatureUse('analytics_dashboard')
+              }} aria-label="Open analytics dashboard">
+              <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:text-blue-500 transition-all duration-300" />
+              <span className="hidden sm:inline">{t.analytics}</span>
             </button>
             
             {/* About Button */}
-            <button className="px-2 h-8 rounded-lg border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-purple-100 hover:to-blue-100 dark:hover:from-slate-700 dark:hover:to-purple-900 flex items-center gap-1.5 transition-all duration-300 hover:scale-105 text-sm group"
-              onClick={() => setCurrentView('about')} aria-label="About AI Compass">
-              <Info className="w-3.5 h-3.5 group-hover:text-purple-500 transition-all duration-300" />
-              <span>About</span>
+            <button className="px-2 sm:px-3 h-8 sm:h-9 rounded-lg border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-purple-100 hover:to-blue-100 dark:hover:from-slate-700 dark:hover:to-purple-900 flex items-center gap-1 sm:gap-1.5 transition-all duration-300 hover:scale-105 text-xs sm:text-sm group touch-manipulation"
+              onClick={() => {
+                setCurrentView('about')
+                analytics.trackFeatureUse('about_section')
+              }} aria-label="About AI Compass">
+              <Info className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:text-purple-500 transition-all duration-300" />
+              <span className="hidden sm:inline">About</span>
             </button>
             
             {/* Suggest Button */}
-            <button className="px-2 h-8 rounded-lg border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-yellow-100 hover:to-pink-100 dark:hover:from-slate-700 dark:hover:to-yellow-900 flex items-center gap-1.5 transition-all duration-300 hover:scale-105 text-sm group"
-              onClick={() => setShowSuggestionModal(true)} aria-label="Open suggestion box">
-              <Lightbulb className="w-3.5 h-3.5 group-hover:text-yellow-500 transition-all duration-300" />
-              <span>Suggest</span>
+            <button className="px-2 sm:px-3 h-8 sm:h-9 rounded-lg border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-yellow-100 hover:to-pink-100 dark:hover:from-slate-700 dark:hover:to-yellow-900 flex items-center gap-1 sm:gap-1.5 transition-all duration-300 hover:scale-105 text-xs sm:text-sm group touch-manipulation"
+              onClick={() => {
+                setShowSuggestionModal(true)
+                analytics.trackFeatureUse('suggestion_box')
+              }} aria-label="Open suggestion box">
+              <Lightbulb className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:text-yellow-500 transition-all duration-300" />
+              <span className="hidden sm:inline">Suggest</span>
             </button>
             
             {/* Settings Dropdown */}
             <div className="relative" ref={settingsMenuRef}>
               <button 
-                className="px-2 h-8 rounded-lg border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-slate-100 hover:to-blue-100 dark:hover:from-slate-700 dark:hover:to-slate-600 flex items-center gap-1.5 transition-all duration-300 hover:scale-105 text-sm group"
+                className="px-2 sm:px-3 h-8 sm:h-9 rounded-lg border border-purple-200 dark:border-purple-700 bg-white/70 dark:bg-slate-900/70 hover:bg-gradient-to-r hover:from-slate-100 hover:to-blue-100 dark:hover:from-slate-700 dark:hover:to-slate-600 flex items-center gap-1 sm:gap-1.5 transition-all duration-300 hover:scale-105 text-xs sm:text-sm group touch-manipulation"
                 onClick={() => setShowSettingsMenu(!showSettingsMenu)}
                 aria-label="Settings"
               >
-                <Settings className="w-3.5 h-3.5 group-hover:rotate-90 transition-all duration-300" />
-                <span>Settings</span>
+                <Settings className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:rotate-90 transition-all duration-300" />
+                <span className="hidden sm:inline">Settings</span>
               </button>
               
               {showSettingsMenu && (
-                <div className="absolute right-0 mt-2 w-64 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl z-50 overflow-hidden">
+                <div className="absolute right-0 mt-2 w-56 sm:w-64 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl z-50 overflow-hidden">
                   {/* Language Selector */}
                   <div className="p-3 border-b border-slate-200 dark:border-slate-700">
                     <div className="text-xs font-medium text-slate-600 dark:text-slate-400 mb-2 flex items-center gap-2">
@@ -945,7 +974,11 @@ const App: React.FC = () => {
                     </div>
                     <select 
                       value={lang} 
-                      onChange={e => setLang(e.target.value)} 
+                      onChange={e => {
+                        const newLang = e.target.value
+                        setLang(newLang)
+                        analytics.trackLanguageChange(newLang)
+                      }} 
                       className="w-full h-9 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-2 text-sm hover:border-purple-400 dark:hover:border-purple-500 transition-all cursor-pointer"
                     >
                       <option value="en">🇺🇸 English</option>
@@ -963,8 +996,10 @@ const App: React.FC = () => {
                   <button
                     className="w-full px-3 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-3 transition-all text-sm"
                     onClick={() => {
-                      setIsDark(!isDark)
+                      const newTheme = !isDark
+                      setIsDark(newTheme)
                       setShowSettingsMenu(false)
+                      analytics.trackThemeChange(newTheme ? 'dark' : 'light')
                     }}
                   >
                     {isDark ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-blue-500" />}
@@ -1015,25 +1050,37 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      <main className={`max-w-6xl mx-auto px-4 py-6 grid gap-6 transition-all duration-300 ${showComparisonView && compareTools.length > 0 ? (isComparisonMaximized ? 'pb-[95vh]' : 'pb-[52vh]') : ''}`}>
+      <main className={`max-w-6xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 grid gap-4 sm:gap-6 transition-all duration-300 ${showComparisonView && compareTools.length > 0 ? (isComparisonMaximized ? 'pb-[95vh]' : 'pb-[52vh]') : ''}`}>
         {/* Controls */}
-        <div className="rounded-2xl border border-blue-200/50 dark:border-blue-700/50 p-4 bg-white/80 dark:bg-slate-900/60 shadow-lg backdrop-blur" style={{ boxShadow: '0 10px 15px -3px rgba(0, 64, 161, 0.1), 0 4px 6px -2px rgba(0, 64, 161, 0.05)' }}>
-          <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
+        <div className="rounded-2xl border border-blue-200/50 dark:border-blue-700/50 p-3 sm:p-4 bg-white/80 dark:bg-slate-900/60 shadow-lg backdrop-blur" style={{ boxShadow: '0 10px 15px -3px rgba(0, 64, 161, 0.1), 0 4px 6px -2px rgba(0, 64, 161, 0.05)' }}>
+          <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
             <div className="relative flex-1">
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: BRAND.colors.primary }} />
               <input
                 value={query}
-                onChange={e => setQuery(e.target.value)}
+                onChange={e => {
+                  const newQuery = e.target.value
+                  setQuery(newQuery)
+                  // Track search after user stops typing (debounced)
+                  if (newQuery.length >= 3) {
+                    setTimeout(() => {
+                      analytics.trackSearch(newQuery, filtered.length)
+                    }, 1000)
+                  }
+                }}
                 placeholder={t.searchPlaceholder}
-                className="pl-9 h-11 rounded-2xl w-full border border-blue-200 dark:border-blue-700 bg-white/80 dark:bg-slate-800/80 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                className="pl-9 h-11 sm:h-12 rounded-2xl w-full border border-blue-200 dark:border-blue-700 bg-white/80 dark:bg-slate-800/80 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm sm:text-base touch-manipulation"
               />
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <Globe className="w-4 h-4" />
-              <div className="rounded-2xl border border-blue-200 dark:border-blue-700 overflow-hidden flex">
+              <div className="rounded-2xl border border-blue-200 dark:border-blue-700 overflow-hidden flex flex-1 sm:flex-initial">
                 {(['all','internal','external'] as const).map(s => (
-                  <button key={s} onClick={() => setScope(s)}
-                    className={"px-3 h-11 transition-all duration-300 hover:scale-105 hover:z-10 relative group " + (scope===s ? "text-white shadow-lg hover:shadow-xl" : "bg-white/50 dark:bg-slate-800/50 hover:text-blue-700 dark:hover:text-blue-300")}
+                  <button key={s} onClick={() => {
+                    setScope(s)
+                    analytics.trackFilter('scope', s)
+                  }}
+                    className={"px-2 sm:px-3 h-10 sm:h-11 transition-all duration-300 hover:scale-105 hover:z-10 relative group text-xs sm:text-base touch-manipulation flex-1 sm:flex-initial " + (scope===s ? "text-white shadow-lg hover:shadow-xl" : "bg-white/50 dark:bg-slate-800/50 hover:text-blue-700 dark:hover:text-blue-300")}
                     style={scope === s ? { background: BRAND.colors.gradient } : {}}
                     onMouseEnter={(e) => {
                       if (scope !== s) {
@@ -1103,7 +1150,7 @@ const App: React.FC = () => {
             <div className="border rounded-2xl p-6 text-center text-slate-500">{t.noMatches}</div>
           )}
 
-          <div className={`grid md:grid-cols-2 gap-4 ${showComparisonView && compareTools.length > 0 ? (isComparisonMaximized ? 'overflow-y-auto max-h-[calc(10vh-60px)]' : 'overflow-y-auto max-h-[calc(45vh-60px)]') : ''}`}>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 ${showComparisonView && compareTools.length > 0 ? (isComparisonMaximized ? 'overflow-y-auto max-h-[calc(10vh-60px)]' : 'overflow-y-auto max-h-[calc(45vh-60px)]') : ''}`}>
             {filtered.map(tool => {
               const key = (tool.name||'').toLowerCase()
               const isNew = newNames.has(key)
@@ -1117,13 +1164,13 @@ const App: React.FC = () => {
                     key={tool.name} 
                     className={`rounded-xl border p-3 transition-all duration-300 bg-white/80 dark:bg-slate-900/60 hover:shadow-lg ${isInComparison ? 'border-blue-500 dark:border-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : 'border-slate-200 dark:border-slate-700'}`}
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 flex-1">
-                        <span className={"text-xs px-2 py-0.5 rounded-lg font-medium " + (tool.type==='internal' ? "bg-emerald-500 text-white" : "bg-orange-500 text-white")}>
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2 flex-1 min-w-0">
+                        <span className={"text-xs px-2 py-0.5 rounded-lg font-medium whitespace-nowrap " + (tool.type==='internal' ? "bg-emerald-500 text-white" : "bg-orange-500 text-white")}>
                           {tool.type==='internal' ? t.internal : t.external}
                         </span>
-                        <h3 className="text-sm font-semibold">{tool.name}</h3>
-                        {isInComparison && <GitCompare className="w-4 h-4 text-blue-500" />}
+                        <h3 className="text-sm font-semibold truncate">{tool.name}</h3>
+                        {isInComparison && <GitCompare className="w-4 h-4 text-blue-500 flex-shrink-0" />}
                       </div>
                       {tool.logoUrl && (
                         <img 
@@ -1152,28 +1199,28 @@ const App: React.FC = () => {
               
               // Full card view when not in comparison mode
               return (
-              <div key={tool.name} className="rounded-2xl border border-blue-200/50 dark:border-blue-700/50 p-4 hover:shadow-2xl transition-all duration-300 bg-white/80 dark:bg-slate-900/60 backdrop-blur hover:-translate-y-2 hover:scale-105 hover:border-blue-400/80 dark:hover:border-blue-500/80 cursor-pointer group" style={{ boxShadow: 'var(--hover-shadow, 0 25px 50px -12px rgba(0, 0, 0, 0.25))' }} onMouseEnter={(e) => e.currentTarget.style.setProperty('--hover-shadow', '0 25px 50px -12px rgba(0, 64, 161, 0.3)')} onMouseLeave={(e) => e.currentTarget.style.removeProperty('--hover-shadow')}>
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className={"text-xs px-2 py-1 rounded-xl font-medium transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg " + (tool.type==='internal' ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md group-hover:from-emerald-400 group-hover:to-teal-400" : "bg-gradient-to-r from-orange-500 to-pink-500 text-white shadow-md group-hover:from-orange-400 group-hover:to-pink-400")}>
+              <div key={tool.name} className="rounded-2xl border border-blue-200/50 dark:border-blue-700/50 p-3 sm:p-4 hover:shadow-2xl transition-all duration-300 bg-white/80 dark:bg-slate-900/60 backdrop-blur sm:hover:-translate-y-2 sm:hover:scale-105 hover:border-blue-400/80 dark:hover:border-blue-500/80 cursor-pointer group" style={{ boxShadow: 'var(--hover-shadow, 0 25px 50px -12px rgba(0, 0, 0, 0.25))' }} onMouseEnter={(e) => e.currentTarget.style.setProperty('--hover-shadow', '0 25px 50px -12px rgba(0, 64, 161, 0.3)')} onMouseLeave={(e) => e.currentTarget.style.removeProperty('--hover-shadow')}>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:justify-between">
+                  <div className="flex-1 min-w-0 w-full">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className={"text-xs px-2 py-1 rounded-xl font-medium transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg whitespace-nowrap " + (tool.type==='internal' ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md group-hover:from-emerald-400 group-hover:to-teal-400" : "bg-gradient-to-r from-orange-500 to-pink-500 text-white shadow-md group-hover:from-orange-400 group-hover:to-pink-400")}>
                         {tool.type==='internal' ? t.internal : t.external}
                       </span>
-                      <h3 className="text-lg font-semibold flex items-center gap-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                      <h3 className="text-base sm:text-lg font-semibold flex items-center gap-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                         {tool.name}
-                        {isNew && <span className="text-xs px-2 py-0.5 rounded-xl bg-emerald-600 text-white animate-pulse">{t.new}</span>}
-                        {isUpdated && <span className="text-xs px-2 py-0.5 rounded-xl border group-hover:border-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{t.updated}</span>}
+                        {isNew && <span className="text-xs px-2 py-0.5 rounded-xl bg-emerald-600 text-white animate-pulse whitespace-nowrap">{t.new}</span>}
+                        {isUpdated && <span className="text-xs px-2 py-0.5 rounded-xl border group-hover:border-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors whitespace-nowrap">{t.updated}</span>}
                       </h3>
                     </div>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{tool.primaryPurpose}</p>
+                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">{tool.primaryPurpose}</p>
                   </div>
                   {/* Company Logo for Tools with logoUrl */}
                   {tool.logoUrl && (
-                    <div className="flex-shrink-0 ml-4">
+                    <div className="flex-shrink-0 sm:ml-4">
                       <img 
                         src={resolveLogoUrl(tool.logoUrl) || tool.logoUrl} 
                         alt={`${tool.name} logo`}
-                        className="w-12 h-12 rounded-xl object-contain bg-white/50 p-2 border border-slate-200 dark:border-slate-700 group-hover:scale-110 transition-transform duration-300"
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-contain bg-white/50 p-1.5 sm:p-2 border border-slate-200 dark:border-slate-700 group-hover:scale-110 transition-transform duration-300"
                         onError={(e) => {
                           console.log(`Failed to load logo for ${tool.name}:`, tool.logoUrl)
                           e.currentTarget.style.display = 'none'
@@ -1184,15 +1231,23 @@ const App: React.FC = () => {
                       />
                     </div>
                   )}
-                  <div className="flex items-center gap-2">
-                    <button className={"px-3 h-9 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg " + (compareList.includes(tool.name) ? "bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-md hover:from-red-400 hover:to-pink-400 hover:shadow-red-500/30" : "border border-purple-200 dark:border-purple-700 hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 hover:text-white hover:border-transparent hover:shadow-purple-500/30")}
-                      onClick={() => setCompareList(prev => prev.includes(tool.name) ? prev.filter(n => n !== tool.name) : [...prev, tool.name])}>
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                    <button className={"px-2 sm:px-3 h-9 sm:h-10 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg text-xs sm:text-sm touch-manipulation flex-1 sm:flex-initial " + (compareList.includes(tool.name) ? "bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-md hover:from-red-400 hover:to-pink-400 hover:shadow-red-500/30" : "border border-purple-200 dark:border-purple-700 hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 hover:text-white hover:border-transparent hover:shadow-purple-500/30")}
+                      onClick={() => {
+                        const isAdding = !compareList.includes(tool.name)
+                        setCompareList(prev => prev.includes(tool.name) ? prev.filter(n => n !== tool.name) : [...prev, tool.name])
+                        analytics.trackEvent(isAdding ? 'tool_added_to_compare' : 'tool_removed_from_compare', {
+                          tool_name: tool.name,
+                          tool_type: tool.type,
+                          event_category: 'Comparison'
+                        })
+                      }}>
                       <GitCompare className="w-4 h-4 inline mr-2 transition-transform group-hover:rotate-12" />
                       {compareList.includes(tool.name) ? t.remove : t.addToCompare}
                     </button>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-2 mt-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">
                   <InfoRow label={t.targetUsers} value={tool.targetUsers} />
                   <InfoRow label={t.bestUseCase} value={tool.bestUseCase} />
                   <InfoRow label={t.tech} value={tool.technology} />
@@ -1205,18 +1260,18 @@ const App: React.FC = () => {
                     <div className="text-xs text-slate-500 dark:text-slate-400 mb-2">
                       {tool.type === 'internal' ? t.quickAccess : t.externalLinks}
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
                       {tool.accessLink && (
-                        <AccessLink href={tool.accessLink} label={tool.type === 'internal' ? t.access : t.website} />
+                        <AccessLink href={tool.accessLink} label={tool.type === 'internal' ? t.access : t.website} toolName={tool.name} linkType="access" />
                       )}
                       {tool.documentationLink && (
-                        <AccessLink href={tool.documentationLink} label={t.docs} />
+                        <AccessLink href={tool.documentationLink} label={t.docs} toolName={tool.name} linkType="documentation" />
                       )}
                       {tool.trainingLink && (
-                        <AccessLink href={tool.trainingLink} label={t.training} />
+                        <AccessLink href={tool.trainingLink} label={t.training} toolName={tool.name} linkType="training" />
                       )}
                       {tool.supportLink && (
-                        <AccessLink href={tool.supportLink} label={t.support} />
+                        <AccessLink href={tool.supportLink} label={t.support} toolName={tool.name} linkType="support" />
                       )}
                     </div>
                     {tool.modules && (
@@ -1571,7 +1626,10 @@ const App: React.FC = () => {
               <div className="relative h-24 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center">
                 <div className="text-6xl">{popupContent.emoji}</div>
                 <button
-                  onClick={() => setShowWelcomePopup(false)}
+                  onClick={() => {
+                    setShowWelcomePopup(false)
+                    analytics.trackWelcomePopup('closed', popupContent.type)
+                  }}
                   className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all duration-200 hover:scale-110"
                   aria-label="Close popup"
                 >
@@ -1593,7 +1651,10 @@ const App: React.FC = () => {
                 
                 {/* Action Button */}
                 <button
-                  onClick={() => setShowWelcomePopup(false)}
+                  onClick={() => {
+                    setShowWelcomePopup(false)
+                    analytics.trackWelcomePopup('action_clicked', popupContent.type)
+                  }}
                   className="w-full h-12 rounded-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg"
                   style={{ 
                     background: BRAND.colors.gradient,
@@ -1618,9 +1679,16 @@ const InfoRow: React.FC<{label: string, value: any}> = ({ label, value }) => (
   </div>
 )
 
-const AccessLink: React.FC<{href: string, label: string}> = ({ href, label }) => {
+const AccessLink: React.FC<{href: string, label: string, toolName?: string, linkType?: string}> = ({ href, label, toolName, linkType }) => {
   const isValidLink = href.startsWith('http')
   const isDisabled = !isValidLink || href === '#'
+  
+  const handleClick = () => {
+    if (toolName && linkType) {
+      analytics.trackToolAccess(toolName, href)
+      analytics.trackExternalLink(href, `${toolName} - ${label}`)
+    }
+  }
   
   if (isDisabled) {
     return (
@@ -1635,6 +1703,7 @@ const AccessLink: React.FC<{href: string, label: string}> = ({ href, label }) =>
       href={href} 
       target="_blank"
       rel="noopener noreferrer"
+      onClick={handleClick}
       className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-lg border border-blue-200 dark:border-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
       style={{ color: BRAND.colors.primary }}
     >

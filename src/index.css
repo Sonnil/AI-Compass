@@ -4,6 +4,48 @@
 
 :root { color-scheme: light dark; }
 
+/* Mobile-optimized touch targets */
+@media (max-width: 640px) {
+  button, a, input, select {
+    min-height: 44px; /* Apple's recommended minimum touch target size */
+  }
+}
+
+/* Prevent zoom on input focus for iOS */
+@media screen and (max-width: 640px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Smooth scrolling for mobile */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Better touch feedback */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Line clamping utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -45,4 +87,11 @@
 
 .animate-slideUp {
   animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Mobile optimization for scroll containers */
+@media (max-width: 640px) {
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+  }
 }
