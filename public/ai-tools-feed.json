@@ -1,7 +1,37 @@
 {
-  "lastUpdated": "2025-10-22T15:26:03.812Z",
-  "totalTools": 25,
+  "lastUpdated": "2025-10-23T20:11:53.107Z",
+  "totalTools": 26,
   "tools": [
+    {
+      "name": "AI Compass",
+      "type": "internal",
+      "primaryPurpose": "AI tools catalog, discovery, and comparison platform",
+      "targetUsers": "All Sanofi employees",
+      "technology": "React + TypeScript, AI-powered chatbot (SONA)",
+      "bestUseCase": "Discovering, comparing, and learning about AI tools at Sanofi",
+      "cost": "Free for all employees",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": false,
+      "accessLink": "https://sonnil.github.io/AI-Compass/",
+      "documentationLink": "https://github.com/Sonnil/AI-Compass",
+      "logoUrl": "/favicon.svg",
+      "trainingRequired": "No training required - intuitive interface",
+      "complianceAwareness": "Built with Sanofi compliance standards",
+      "tags": [
+        "internal",
+        "catalog",
+        "discovery",
+        "platform",
+        "sanofi",
+        "comparison"
+      ],
+      "modules": "Tool Discovery, Side-by-Side Comparison, SONA AI Chatbot, Analytics Dashboard, Multi-language Support (8 languages), Dark/Light Theme",
+      "office365Integration": false,
+      "accessToSanofiSystems": true,
+      "knowledgeBase": true,
+      "generalKnowledge": true
+    },
     {
       "name": "Concierge",
       "type": "internal",
