@@ -1373,6 +1373,518 @@ function getSmallTalkResponse(userInput: string, profile: UserProfile): string |
 }
 
 // Enhanced AI Agent with real intelligence and personality awareness
+// Analytics and Data Analysis Functions
+function getAnalyticsInsights(input: string, toolsCatalog: any[], detectedIntents: string[]): string {
+  const lowerInput = input.toLowerCase()
+  
+  // Calculate comprehensive tool statistics
+  const stats = calculateToolStatistics(toolsCatalog)
+  
+  // Check what specific analytics they're asking about
+  if (lowerInput.includes('capability') || lowerInput.includes('score') || lowerInput.includes('performance')) {
+    return getCapabilityAnalysis(toolsCatalog, stats)
+  } else if (lowerInput.includes('comparison') || lowerInput.includes('compare data') || lowerInput.includes('internal vs external')) {
+    return getComparisonAnalytics(toolsCatalog, stats)
+  } else if (lowerInput.includes('breakdown') || lowerInput.includes('distribution') || lowerInput.includes('use case')) {
+    return getDistributionAnalysis(toolsCatalog, stats)
+  } else if (lowerInput.includes('top') || lowerInput.includes('best') || lowerInput.includes('leading') || lowerInput.includes('highest')) {
+    return getTopPerformersAnalysis(toolsCatalog, stats)
+  } else if (lowerInput.includes('dashboard') || lowerInput.includes('how to view') || lowerInput.includes('where')) {
+    return getAnalyticsDashboardGuide()
+  } else {
+    // General analytics overview
+    return getGeneralAnalyticsOverview(toolsCatalog, stats)
+  }
+}
+
+function calculateToolStatistics(toolsCatalog: any[]) {
+  const internal = toolsCatalog.filter(t => t.type === 'internal')
+  const external = toolsCatalog.filter(t => t.type === 'external')
+  
+  // Calculate capability scores for each tool
+  const toolsWithScores = toolsCatalog.map(tool => {
+    const capabilities = {
+      codeGeneration: getCapabilityScore(tool, 'code'),
+      dataAnalysis: getCapabilityScore(tool, 'data'),
+      contentCreation: getCapabilityScore(tool, 'content'),
+      collaboration: getCapabilityScore(tool, 'collaboration'),
+      compliance: getCapabilityScore(tool, 'compliance'),
+      realTimeSearch: getCapabilityScore(tool, 'search'),
+      visualization: getCapabilityScore(tool, 'visual'),
+      automation: getCapabilityScore(tool, 'automation')
+    }
+    
+    const scores = Object.values(capabilities)
+    const avgScore = scores.reduce((a, b) => a + b, 0) / scores.length
+    
+    return {
+      ...tool,
+      capabilities,
+      avgScore: Math.round(avgScore * 10) / 10
+    }
+  })
+  
+  // Calculate average capabilities
+  const capabilities = ['codeGeneration', 'dataAnalysis', 'contentCreation', 'collaboration', 'compliance', 'realTimeSearch', 'visualization', 'automation']
+  const capabilityAverages = capabilities.map(cap => {
+    const allScores = toolsWithScores.map(t => t.capabilities[cap])
+    const internalScores = toolsWithScores.filter(t => t.type === 'internal').map(t => t.capabilities[cap])
+    const externalScores = toolsWithScores.filter(t => t.type === 'external').map(t => t.capabilities[cap])
+    
+    return {
+      name: cap.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()),
+      overall: Math.round((allScores.reduce((a, b) => a + b, 0) / allScores.length) * 10) / 10,
+      internal: Math.round((internalScores.reduce((a, b) => a + b, 0) / internalScores.length) * 10) / 10,
+      external: Math.round((externalScores.reduce((a, b) => a + b, 0) / externalScores.length) * 10) / 10
+    }
+  })
+  
+  // Use case distribution
+  const useCases = toolsCatalog.reduce((acc, tool) => {
+    const useCase = tool.bestUseCase || 'Other'
+    acc[useCase] = (acc[useCase] || 0) + 1
+    return acc
+  }, {} as Record<string, number>)
+  
+  const useCaseDistribution = Object.entries(useCases)
+    .map(([name, count]) => ({
+      name,
+      count: count as number,
+      percentage: Math.round((count as number / toolsCatalog.length) * 100)
+    }))
+    .sort((a, b) => b.count - a.count)
+  
+  // Technology breakdown
+  const technologies = toolsCatalog.reduce((acc, tool) => {
+    const tech = tool.technology || 'Unknown'
+    acc[tech] = (acc[tech] || 0) + 1
+    return acc
+  }, {} as Record<string, number>)
+  
+  const technologyBreakdown = Object.entries(technologies)
+    .map(([name, count]) => ({
+      name,
+      count: count as number,
+      percentage: Math.round((count as number / toolsCatalog.length) * 100)
+    }))
+    .sort((a, b) => b.count - a.count)
+  
+  return {
+    total: toolsCatalog.length,
+    internalCount: internal.length,
+    externalCount: external.length,
+    toolsWithScores,
+    capabilityAverages,
+    useCaseDistribution,
+    technologyBreakdown,
+    topPerformers: toolsWithScores.sort((a, b) => b.avgScore - a.avgScore).slice(0, 10)
+  }
+}
+
+function getCapabilityScore(tool: any, capability: string): number {
+  let score = 0
+  const tags = tool.tags?.join(' ').toLowerCase() || ''
+  const purpose = tool.primaryPurpose?.toLowerCase() || ''
+  const useCase = tool.bestUseCase?.toLowerCase() || ''
+  const combined = `${tags} ${purpose} ${useCase}`
+
+  switch (capability) {
+    case 'code':
+      if (combined.includes('code') || combined.includes('programming') || combined.includes('development')) score += 3
+      if (tool.name.includes('GitHub') || tool.name.includes('Copilot')) score += 2
+      if (combined.includes('script') || combined.includes('automation')) score += 1
+      break
+    case 'data':
+      if (combined.includes('data') || combined.includes('analytics') || combined.includes('intelligence')) score += 3
+      if (combined.includes('dashboard') || combined.includes('visualization') || combined.includes('insights')) score += 2
+      if (tool.name.includes('Plai') || combined.includes('decision')) score += 2
+      break
+    case 'content':
+      if (combined.includes('writing') || combined.includes('content') || combined.includes('creative')) score += 3
+      if (combined.includes('document') || combined.includes('text') || combined.includes('assistant')) score += 2
+      if (combined.includes('general') || combined.includes('productivity')) score += 1
+      break
+    case 'collaboration':
+      if (combined.includes('collaboration') || combined.includes('meeting') || combined.includes('team')) score += 3
+      if (combined.includes('office') || combined.includes('productivity') || combined.includes('workplace')) score += 2
+      if (tool.name.includes('Concierge') || tool.name.includes('Microsoft')) score += 1
+      break
+    case 'compliance':
+      if (combined.includes('compliance') || combined.includes('medical') || combined.includes('regulatory')) score += 4
+      if (combined.includes('sanofi') || tool.type === 'internal') score += 2
+      if (combined.includes('enterprise') || combined.includes('security')) score += 1
+      break
+    case 'search':
+      if (combined.includes('search') || combined.includes('web') || combined.includes('real-time')) score += 3
+      if (combined.includes('knowledge') || combined.includes('research') || combined.includes('literature')) score += 2
+      break
+    case 'visual':
+      if (combined.includes('image') || combined.includes('visual') || combined.includes('diagram')) score += 3
+      if (combined.includes('design') || combined.includes('creative') || combined.includes('generation')) score += 2
+      if (combined.includes('dashboard') || combined.includes('chart')) score += 1
+      break
+    case 'automation':
+      if (combined.includes('automation') || combined.includes('workflow') || combined.includes('process')) score += 3
+      if (combined.includes('productivity') || combined.includes('integration') || combined.includes('platform')) score += 2
+      break
+  }
+  return Math.min(5, Math.max(0, score))
+}
+
+function getCapabilityAnalysis(toolsCatalog: any[], stats: any): string {
+  let response = `## 📊 Capability Analysis
+
+`
+  response += `Analyzing **${stats.total} AI tools** across 8 key capability dimensions:
+
+`
+  
+  response += `### Overall Capability Scores (0-5 scale)
+
+`
+  stats.capabilityAverages.forEach((cap: any) => {
+    const bar = '█'.repeat(Math.round(cap.overall)) + '░'.repeat(5 - Math.round(cap.overall))
+    response += `**${cap.name}:** ${bar} ${cap.overall}/5\n`
+    response += `  • Internal: ${cap.internal}/5 | External: ${cap.external}/5\n\n`
+  })
+  
+  response += `### Key Insights:
+
+`
+  
+  // Find strongest and weakest capabilities
+  const strongest = stats.capabilityAverages.reduce((max: any, cap: any) => cap.overall > max.overall ? cap : max)
+  const weakest = stats.capabilityAverages.reduce((min: any, cap: any) => cap.overall < min.overall ? cap : min)
+  
+  response += `🏆 **Strongest Capability:** ${strongest.name} (${strongest.overall}/5)\n`
+  response += `  Tools in our catalog excel at ${strongest.name.toLowerCase()}\n\n`
+  
+  response += `📈 **Growth Opportunity:** ${weakest.name} (${weakest.overall}/5)\n`
+  response += `  Consider exploring more tools for ${weakest.name.toLowerCase()}\n\n`
+  
+  // Internal vs External comparison
+  const internalStrength = stats.capabilityAverages.reduce((sum: number, cap: any) => sum + cap.internal, 0) / stats.capabilityAverages.length
+  const externalStrength = stats.capabilityAverages.reduce((sum: number, cap: any) => sum + cap.external, 0) / stats.capabilityAverages.length
+  
+  response += `🔵 **Internal Tools Average:** ${Math.round(internalStrength * 10) / 10}/5\n`
+  response += `🔗 **External Tools Average:** ${Math.round(externalStrength * 10) / 10}/5\n\n`
+  
+  response += `---\n\n`
+  response += `💡 **Pro Tip:** Click the **Analytics** button in the header to explore interactive capability charts and detailed breakdowns!\n\n`
+  response += `📊 **Source:** AI Compass Analytics Engine - Real-time capability scoring based on tool features, purpose, and use cases`
+  
+  return response
+}
+
+function getComparisonAnalytics(toolsCatalog: any[], stats: any): string {
+  let response = `## 🔄 Internal vs External Tools Analysis
+
+`
+  
+  response += `### Tool Distribution
+`
+  response += `• **Total Tools:** ${stats.total}\n`
+  response += `• **Internal (Sanofi):** ${stats.internalCount} (${Math.round((stats.internalCount / stats.total) * 100)}%)\n`
+  response += `• **External (Market):** ${stats.externalCount} (${Math.round((stats.externalCount / stats.total) * 100)}%)\n\n`
+  
+  response += `### Capability Comparison
+
+`
+  response += `| Capability | Internal | External | Winner |\n`
+  response += `|-----------|----------|----------|--------|\n`
+  
+  stats.capabilityAverages.forEach((cap: any) => {
+    const winner = cap.internal > cap.external ? '🔵 Internal' : cap.external > cap.internal ? '🔗 External' : '🤝 Tie'
+    response += `| ${cap.name} | ${cap.internal} | ${cap.external} | ${winner} |\n`
+  })
+  
+  response += `\n### Strategic Insights
+
+`
+  
+  // Find where internal tools excel
+  const internalAdvantages = stats.capabilityAverages.filter((cap: any) => cap.internal > cap.external)
+  const externalAdvantages = stats.capabilityAverages.filter((cap: any) => cap.external > cap.internal)
+  
+  if (internalAdvantages.length > 0) {
+    response += `🔵 **Internal Tools Excel At:**\n`
+    internalAdvantages.forEach((cap: any) => {
+      response += `  • ${cap.name}: ${cap.internal}/5 (vs ${cap.external}/5 external)\n`
+    })
+    response += `\n`
+  }
+  
+  if (externalAdvantages.length > 0) {
+    response += `🔗 **External Tools Excel At:**\n`
+    externalAdvantages.forEach((cap: any) => {
+      response += `  • ${cap.name}: ${cap.external}/5 (vs ${cap.internal}/5 internal)\n`
+    })
+    response += `\n`
+  }
+  
+  response += `### Recommendations
+
+`
+  response += `✅ **For Compliance & Security:** Use internal tools (higher compliance scores)\n`
+  response += `✅ **For Innovation & Features:** Leverage external tools (broader capabilities)\n`
+  response += `✅ **Hybrid Approach:** Combine internal data security with external AI power\n\n`
+  
+  response += `---\n\n`
+  response += `📊 **View Interactive Comparison:** Click **Analytics** → Select **Comparison** view\n`
+  response += `📈 **Source:** AI Compass Analytics Dashboard - Comprehensive tool benchmarking`
+  
+  return response
+}
+
+function getDistributionAnalysis(toolsCatalog: any[], stats: any): string {
+  let response = `## 📈 Tool Distribution Analysis
+
+`
+  
+  response += `### Use Case Distribution
+
+`
+  response += `Analyzing how our ${stats.total} tools are distributed across different use cases:\n\n`
+  
+  stats.useCaseDistribution.slice(0, 8).forEach((useCase: any, index: number) => {
+    const bar = '█'.repeat(Math.round(useCase.percentage / 5)) + '░'.repeat(20 - Math.round(useCase.percentage / 5))
+    response += `**${index + 1}. ${useCase.name}**\n`
+    response += `${bar} ${useCase.percentage}% (${useCase.count} tools)\n\n`
+  })
+  
+  response += `### Technology Breakdown
+
+`
+  response += `Distribution of AI technologies powering our tools:\n\n`
+  
+  stats.technologyBreakdown.slice(0, 6).forEach((tech: any) => {
+    response += `• **${tech.name}:** ${tech.count} tools (${tech.percentage}%)\n`
+  })
+  
+  response += `\n### Key Findings
+
+`
+  
+  const topUseCase = stats.useCaseDistribution[0]
+  response += `🎯 **Most Common Use Case:** ${topUseCase.name} (${topUseCase.count} tools)\n`
+  response += `  This represents ${topUseCase.percentage}% of all available tools\n\n`
+  
+  const topTech = stats.technologyBreakdown[0]
+  response += `⚡ **Leading Technology:** ${topTech.name} (${topTech.count} tools)\n`
+  response += `  ${topTech.percentage}% of tools use this technology\n\n`
+  
+  response += `💡 **Insight:** Our catalog provides diverse coverage across multiple use cases and technologies, ensuring you have options for any AI need!\n\n`
+  
+  response += `---\n\n`
+  response += `📊 **Explore Visually:** Click **Analytics** button → View pie charts and detailed distributions\n`
+  response += `📈 **Source:** AI Compass Analytics - Real-time tool categorization and classification`
+  
+  return response
+}
+
+function getTopPerformersAnalysis(toolsCatalog: any[], stats: any): string {
+  let response = `## 🏆 Top Performing AI Tools
+
+`
+  
+  response += `Based on comprehensive capability analysis across 8 dimensions:\n\n`
+  
+  stats.topPerformers.slice(0, 10).forEach((tool: any, index: number) => {
+    const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`
+    const typeIcon = tool.type === 'internal' ? '🔵' : '🔗'
+    
+    response += `### ${medal} ${tool.name} ${typeIcon}\n`
+    response += `**Overall Score:** ${tool.avgScore}/5 | **Type:** ${tool.type === 'internal' ? 'Internal' : 'External'}\n\n`
+    response += `**Best For:** ${tool.bestUseCase}\n`
+    response += `**Technology:** ${tool.technology}\n\n`
+    
+    // Show top 3 capabilities for this tool
+    const topCapabilities = Object.entries(tool.capabilities)
+      .sort(([, a], [, b]) => (b as number) - (a as number))
+      .slice(0, 3)
+      .map(([name, score]) => {
+        const displayName = (name as string).replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())
+        return `${displayName}: ${score}/5`
+      })
+    
+    response += `**Top Capabilities:** ${topCapabilities.join(' | ')}\n\n`
+  })
+  
+  response += `### Performance Insights
+
+`
+  
+  const avgTopScore = stats.topPerformers.slice(0, 10).reduce((sum: number, tool: any) => sum + tool.avgScore, 0) / 10
+  response += `📊 **Top 10 Average Score:** ${Math.round(avgTopScore * 10) / 10}/5\n`
+  response += `🎯 **Excellence Threshold:** Tools scoring ${Math.round(avgTopScore * 10) / 10}+ are considered high-performers\n\n`
+  
+  const internalInTop10 = stats.topPerformers.slice(0, 10).filter((t: any) => t.type === 'internal').length
+  const externalInTop10 = 10 - internalInTop10
+  
+  response += `🔵 **Internal in Top 10:** ${internalInTop10} tools\n`
+  response += `🔗 **External in Top 10:** ${externalInTop10} tools\n\n`
+  
+  response += `💡 **Pro Tip:** These tools represent the best balance of capabilities. Consider them first for critical projects!\n\n`
+  
+  response += `---\n\n`
+  response += `📊 **See Full Rankings:** Click **Analytics** → Filter by category to see top performers in each area\n`
+  response += `📈 **Source:** AI Compass Analytics - Multi-dimensional capability scoring algorithm`
+  
+  return response
+}
+
+function getAnalyticsDashboardGuide(): string {
+  let response = `## 📊 AI Tools Analytics Dashboard Guide
+
+`
+  
+  response += `### How to Access
+
+`
+  response += `1. **Click the Analytics button** in the top header (bar chart icon 📊)\n`
+  response += `2. You'll be taken to the comprehensive Analytics Dashboard\n`
+  response += `3. Use filters and view modes to explore different perspectives\n\n`
+  
+  response += `### Dashboard Features
+
+`
+  
+  response += `#### 📈 Key Metrics Cards
+`
+  response += `• **Total Tools:** See overall catalog size\n`
+  response += `• **Internal Tools:** Count of Sanofi-built tools\n`
+  response += `• **External Tools:** Count of market AI solutions\n`
+  response += `• **Avg Capability:** Overall performance score\n\n`
+  
+  response += `#### 🎯 View Modes (Switch between tabs)
+
+`
+  response += `**1. Overview Mode** (Default)\n`
+  response += `  • Capability Analysis: Bar charts showing 8 capability dimensions\n`
+  response += `  • Use Case Distribution: Pie chart of tool purposes\n`
+  response += `  • Technology Breakdown: Tech stack analysis\n`
+  response += `  • Top Performers: Highest-scoring tools\n\n`
+  
+  response += `**2. Comparison Mode**\n`
+  response += `  • Internal vs External side-by-side comparison\n`
+  response += `  • Capability score comparisons\n`
+  response += `  • Strength/weakness analysis\n`
+  response += `  • Strategic recommendations\n\n`
+  
+  response += `**3. Trends Mode**\n`
+  response += `  • Historical tool adoption\n`
+  response += `  • Capability evolution over time\n`
+  response += `  • Emerging technology patterns\n`
+  response += `  • Future predictions\n\n`
+  
+  response += `#### 🔍 Filter Options
+
+`
+  response += `Use the **Category dropdown** to filter by:\n`
+  response += `• All tools (default)\n`
+  response += `• Internal only\n`
+  response += `• External only\n`
+  response += `• Specific tags (productivity, creative, data, etc.)\n\n`
+  
+  response += `### Understanding Capability Scores
+
+`
+  response += `Tools are scored 0-5 across 8 capabilities:\n`
+  response += `• **Code Generation:** Programming & development assistance\n`
+  response += `• **Data Analysis:** Analytics, insights, and intelligence\n`
+  response += `• **Content Creation:** Writing, documents, and creative work\n`
+  response += `• **Collaboration:** Team features and shared workflows\n`
+  response += `• **Compliance:** Regulatory awareness and security\n`
+  response += `• **Real-Time Search:** Web access and current information\n`
+  response += `• **Visualization:** Charts, images, and diagrams\n`
+  response += `• **Automation:** Workflow optimization and efficiency\n\n`
+  
+  response += `### Mobile-Responsive Design
+
+`
+  response += `📱 The Analytics Dashboard is **fully mobile-friendly:**\n`
+  response += `• Responsive grid layout (2 columns on mobile, 4 on desktop)\n`
+  response += `• Touch-optimized controls\n`
+  response += `• Compact cards that stack vertically\n`
+  response += `• Easy navigation and filtering\n\n`
+  
+  response += `### Tips for Best Use
+
+`
+  response += `✅ **Start with Overview** to understand the landscape\n`
+  response += `✅ **Use Comparison** to evaluate internal vs external options\n`
+  response += `✅ **Filter by category** to focus on specific needs\n`
+  response += `✅ **Check Top Performers** for high-quality tool recommendations\n`
+  response += `✅ **Export data** (coming soon) for presentations and reports\n\n`
+  
+  response += `---\n\n`
+  response += `🎯 **Ready to explore?** Click the **Analytics** button in the header to dive into the data!\n`
+  response += `💬 **Questions?** Ask me about specific metrics, capabilities, or tool comparisons!`
+  
+  return response
+}
+
+function getGeneralAnalyticsOverview(toolsCatalog: any[], stats: any): string {
+  let response = `## 📊 AI Tools Analytics Overview
+
+`
+  
+  response += `Welcome to comprehensive analytics for Sanofi's AI tools catalog!\n\n`
+  
+  response += `### Quick Stats
+
+`
+  response += `📦 **Total Tools:** ${stats.total}\n`
+  response += `🔵 **Internal (Sanofi):** ${stats.internalCount}\n`
+  response += `🔗 **External (Market):** ${stats.externalCount}\n`
+  response += `⭐ **Avg Capability:** ${Math.round(stats.capabilityAverages.reduce((sum: number, cap: any) => sum + cap.overall, 0) / stats.capabilityAverages.length * 10) / 10}/5\n\n`
+  
+  response += `### What I Can Analyze for You
+
+`
+  response += `🎯 **Capability Analysis**\n`
+  response += `  Ask: "Show me capability scores" or "What are the tool capabilities?"\n`
+  response += `  Get detailed breakdowns of 8 capability dimensions\n\n`
+  
+  response += `🔄 **Comparison Analytics**\n`
+  response += `  Ask: "Compare internal vs external" or "Show comparison data"\n`
+  response += `  Get side-by-side analysis with strategic insights\n\n`
+  
+  response += `📈 **Distribution Analysis**\n`
+  response += `  Ask: "Show use case breakdown" or "Technology distribution"\n`
+  response += `  See how tools are categorized and distributed\n\n`
+  
+  response += `🏆 **Top Performers**\n`
+  response += `  Ask: "What are the best tools?" or "Show top performers"\n`
+  response += `  Get ranked list of highest-scoring tools\n\n`
+  
+  response += `📊 **Dashboard Guide**\n`
+  response += `  Ask: "How to use analytics dashboard?" or "Where is analytics?"\n`
+  response += `  Learn how to navigate the interactive dashboard\n\n`
+  
+  response += `### Featured Insights
+
+`
+  
+  const topTool = stats.topPerformers[0]
+  response += `🥇 **#1 Ranked Tool:** ${topTool.name} (${topTool.avgScore}/5)\n`
+  response += `  ${topTool.bestUseCase}\n\n`
+  
+  const topCapability = stats.capabilityAverages.reduce((max: any, cap: any) => cap.overall > max.overall ? cap : max)
+  response += `💪 **Strongest Capability:** ${topCapability.name} (${topCapability.overall}/5)\n`
+  response += `  Our tools excel at ${topCapability.name.toLowerCase()}\n\n`
+  
+  const topUseCase = stats.useCaseDistribution[0]
+  response += `🎯 **Most Common Use Case:** ${topUseCase.name}\n`
+  response += `  ${topUseCase.count} tools (${topUseCase.percentage}% of catalog)\n\n`
+  
+  response += `---\n\n`
+  response += `💡 **Pro Tip:** For visual analytics, click the **Analytics** button in the header (📊 icon)\n`
+  response += `💬 **Ask me anything:** I can provide detailed analysis on any aspect of our tools catalog!`
+  
+  return response
+}
+
 function getSmartAIResponse(userInput: string, toolsCatalog: any[], conversationHistory: Msg[]): string {
   // Update user profile based on interaction
   const userProfile = updateUserProfile(userInput, conversationHistory, toolsCatalog)
@@ -1556,6 +2068,7 @@ function generateIntelligentResponse(systemPrompt: string, userInput: string, to
     educational: /\b(how to|guide|tutorial|learn|teach|explain|educate|understand)\b.*\b(ai|prompt|use ai|work with ai)\b/i,
     new_tools: /\b(new|latest|recent|updated|just added|what's new|discover)\b.*\b(tool|tools|feature|capability)\b/i,
     about_platform: /\b(about|what is|tell me about|explain|mission|purpose|value|benefit|stakeholder)\b.*\b(ai compass|platform|sona)\b/i,
+    analytics: /\b(analytics|analyze|analysis|data|statistics|stats|metrics|insights|dashboard|report|capability score|performance|comparison data|tool data|breakdown|distribution)\b/i,
     comparison: /\b(compare|difference|vs|versus|better|best)\b/i,
     recommendation: /\b(recommend|suggest|need|want|looking for|help with|best for)\b/i,
     specific_tool: new RegExp(`\\b(${toolsCatalog.map(t => t.name.toLowerCase()).join('|')})\\b`, 'i'),
@@ -1781,6 +2294,12 @@ function generateIntelligentResponse(systemPrompt: string, userInput: string, to
     }
     
     return response + getSuggestedQuestions('about_platform')
+  }
+
+  // Analytics and Data Analysis
+  if (detectedIntents.includes('analytics')) {
+    const analyticsResponse = getAnalyticsInsights(input, toolsCatalog, detectedIntents)
+    return analyticsResponse + getSuggestedQuestions('analytics')
   }
 
   // Tool comparison logic
@@ -2060,6 +2579,14 @@ function getSuggestedQuestions(responseType: string, mentionedTools: string[] = 
       "What's the mission of AI Compass?",
       "How do I contact the team?",
       "Show me tools for data analysis"
+    ],
+    analytics: [
+      "Show me capability scores",
+      "What are the top performing tools?",
+      "Analyze use case distribution",
+      "Compare internal vs external analytics",
+      "How do I access the analytics dashboard?",
+      "Show me technology breakdown"
     ],
     comparison: [
       "Tell me more about [TOOL] features",
