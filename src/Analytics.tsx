@@ -29,6 +29,19 @@ interface AnalyticsProps {
   onBack: () => void
 }
 
+// Helper function to resolve logo URLs with base path
+function resolveLogoUrl(url?: string): string | undefined {
+  if (!url) return undefined
+  const trimmed = url.trim()
+  // External or data URLs: return as-is
+  if (/^(https?:)?\/\//i.test(trimmed) || trimmed.startsWith('data:')) return trimmed
+  // Normalize relative paths against the base URL
+  const base = (import.meta as any)?.env?.BASE_URL || '/'
+  const normalizedBase = base.endsWith('/') ? base : base + '/'
+  const relative = trimmed.startsWith('/') ? trimmed.slice(1) : trimmed
+  return normalizedBase + relative
+}
+
 export default function Analytics({ tools, onBack }: AnalyticsProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [selectedMetric, setSelectedMetric] = useState<string>('capabilities')
@@ -188,41 +201,42 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Header */}
       <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-700 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+            <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
               <button 
                 onClick={onBack}
-                className="p-2 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                className="p-2 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors touch-manipulation flex-shrink-0"
+                aria-label="Go back"
               >
                 ←
               </button>
-              <div>
-                <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-                  <BarChart3 className="w-8 h-8 text-blue-600" />
-                  AI Tools Analytics
+              <div className="min-w-0">
+                <h1 className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2 sm:gap-3">
+                  <BarChart3 className="w-5 h-5 sm:w-8 sm:h-8 text-blue-600 flex-shrink-0" />
+                  <span className="truncate">AI Tools Analytics</span>
                 </h1>
-                <p className="text-slate-600 dark:text-slate-400">Comprehensive insights into the AI tools landscape</p>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 hidden sm:block">Comprehensive insights into the AI tools landscape</p>
               </div>
             </div>
             
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
               <select 
                 value={selectedCategory} 
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
+                className="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white text-sm sm:text-base touch-manipulation w-full sm:w-auto"
               >
                 {categories.map(cat => (
                   <option key={cat} value={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</option>
                 ))}
               </select>
               
-              <div className="flex bg-slate-100 dark:bg-slate-700 rounded-xl p-1">
+              <div className="flex bg-slate-100 dark:bg-slate-700 rounded-xl p-1 w-full sm:w-auto">
                 {(['overview', 'comparison', 'trends'] as const).map(mode => (
                   <button
                     key={mode}
                     onClick={() => setViewMode(mode)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                    className={`px-2 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all touch-manipulation flex-1 sm:flex-initial ${
                       viewMode === mode 
                         ? 'bg-white dark:bg-slate-600 text-blue-600 dark:text-blue-400 shadow-sm' 
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -237,41 +251,41 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
         {/* Key Metrics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+          <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-slate-200 dark:border-slate-700">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-slate-600 dark:text-slate-400 text-sm">Total Tools</p>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white">{enhancedTools.length}</p>
+              <div className="min-w-0">
+                <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm truncate">Total Tools</p>
+                <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{enhancedTools.length}</p>
               </div>
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center">
-                <Zap className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
               </div>
             </div>
           </div>
           
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+          <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-slate-200 dark:border-slate-700">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-slate-600 dark:text-slate-400 text-sm">Internal Tools</p>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white">{enhancedTools.filter(t => t.type === 'internal').length}</p>
+              <div className="min-w-0">
+                <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm truncate">Internal Tools</p>
+                <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{enhancedTools.filter(t => t.type === 'internal').length}</p>
               </div>
-              <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-green-600 dark:text-green-400" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Users className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
               </div>
             </div>
           </div>
           
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+          <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-slate-200 dark:border-slate-700">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-slate-600 dark:text-slate-400 text-sm">External Tools</p>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white">{enhancedTools.filter(t => t.type === 'external').length}</p>
+              <div className="min-w-0">
+                <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm truncate">External Tools</p>
+                <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{enhancedTools.filter(t => t.type === 'external').length}</p>
               </div>
-              <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center">
-                <TrendingUp className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center flex-shrink-0">
+                <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400" />
               </div>
             </div>
           </div>
@@ -366,7 +380,12 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
                       {idx + 1}
                     </div>
                     {tool.logoUrl && (
-                      <img src={tool.logoUrl} alt={tool.name} className="w-8 h-8 rounded-lg object-contain" />
+                      <img 
+                        src={resolveLogoUrl(tool.logoUrl) || tool.logoUrl} 
+                        alt={tool.name} 
+                        className="w-8 h-8 rounded-lg object-contain bg-white/50 p-1"
+                        onError={(e) => e.currentTarget.style.display = 'none'}
+                      />
                     )}
                     <div className="flex-1">
                       <div className="font-medium text-slate-900 dark:text-white">{tool.name}</div>
@@ -407,7 +426,12 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
                         <td className="p-3">
                           <div className="flex items-center gap-3">
                             {tool.logoUrl && (
-                              <img src={tool.logoUrl} alt={tool.name} className="w-6 h-6 rounded object-contain" />
+                              <img 
+                                src={resolveLogoUrl(tool.logoUrl) || tool.logoUrl} 
+                                alt={tool.name} 
+                                className="w-6 h-6 rounded object-contain bg-white/50 p-0.5"
+                                onError={(e) => e.currentTarget.style.display = 'none'}
+                              />
                             )}
                             <div>
                               <div className="font-medium text-slate-900 dark:text-white">{tool.name}</div>
