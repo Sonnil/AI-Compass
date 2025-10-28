@@ -1,8 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { MessageSquare, X, Send, Bot, Sparkles, Maximize2, Minimize2, ArrowDown, ThumbsUp, ThumbsDown } from 'lucide-react'
 import type { Msg, UserProfile } from '../../features/sona/types'
-import { generateIntelligentResponse, decideToolCall, executeTool, storeFeedback } from '../../features/sona/agent'
-import feedbackHelper from '../../features/sona/feedback'
+import { generateIntelligentResponse, decideToolCall, executeTool, storeFeedback, getLearningInsights } from '../../features/sona/agent'
 import { getGreeting, streamResponse } from '../../features/sona/utils'
 import { getAITipOfTheDay } from '../../features/sona/knowledge'
 
@@ -41,8 +40,8 @@ function updateUserProfile(userInput: string, conversationHistory: Msg[], toolsC
 
   // Track tools asked about
   toolsCatalog.forEach(tool => {
-    if (input.includes(tool.id.toLowerCase()) && !profile.toolsAskedAbout.includes(tool.id)) {
-      profile.toolsAskedAbout.push(tool.id)
+    if (input.includes(tool.name.toLowerCase()) && !profile.toolsAskedAbout.includes(tool.name)) {
+      profile.toolsAskedAbout.push(tool.name)
       if (profile.toolsAskedAbout.length > 10) profile.toolsAskedAbout.shift()
     }
   })
@@ -69,7 +68,6 @@ export default function ChatWidget({ toolsCatalog }: Props) {
   const [isLoading, setIsLoading] = useState(false)
   const [userProfile, setUserProfile] = useState<UserProfile>({ name: 'There', interests: [], commonQueries: [], toolsAskedAbout: [], conversationStyle: 'casual' })
   const [showScroll, setShowScroll] = useState(false)
-  const [feedbackState, setFeedbackState] = useState<{ ack?: string } | null>(null)
   const chatEndRef = useRef<HTMLDivElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
 
@@ -156,6 +154,36 @@ export default function ChatWidget({ toolsCatalog }: Props) {
     setIsMaximized(!isMaximized)
   }
 
+  const handleFeedback = (messageIndex: number, feedback: 'positive' | 'negative') => {
+    const message = messages[messageIndex]
+    if (message.role !== 'assistant' || message.feedback) return // Already has feedback
+    
+    // Find the corresponding user message
+    const userMessage = messages[messageIndex - 1]
+    if (!userMessage || userMessage.role !== 'user') return
+    
+    // Store feedback for ML
+    storeFeedback(userMessage.content, message.content, feedback)
+    
+    // Update message with feedback
+    setMessages(prev => {
+      const newMessages = [...prev]
+      newMessages[messageIndex] = { ...newMessages[messageIndex], feedback, timestamp: new Date().toISOString() }
+      return newMessages
+    })
+    
+    // Show thank you message
+    const thankYouMessage: Msg = {
+      role: 'assistant',
+      content: feedback === 'positive' 
+        ? "Thank you for the positive feedback! 🎉 I'm learning and improving with every interaction!"
+        : "Thank you for the feedback. I'll work on improving my responses. Your input helps me learn! 📚"
+    }
+    setTimeout(() => {
+      setMessages(prev => [...prev, thankYouMessage])
+    }, 500)
+  }
+
   if (!isOpen) {
     return (
       <button
@@ -186,77 +214,43 @@ export default function ChatWidget({ toolsCatalog }: Props) {
       </div>
       <div ref={chatContainerRef} onScroll={handleScroll} className="h-[calc(100%-140px)] overflow-y-auto p-4 flex flex-col space-y-4 bg-gray-50 dark:bg-gray-900">
         {messages.map((msg, index) => (
-          <div key={index} className={`flex items-end ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+          <div key={index} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
             <div className={`max-w-xs md:max-w-md lg:max-w-lg p-3 rounded-lg ${msg.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200'}`}>
               <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
-
-              {/* Feedback buttons for assistant messages */}
-              {msg.role === 'assistant' && (
-                <div className="mt-2 flex items-center space-x-2">
-                  <button
-                    onClick={async () => {
-                      // Find the most recent user message before this assistant message
-                      const prevUserIndex = (() => {
-                        for (let i = index - 1; i >= 0; i--) {
-                          if (messages[i].role === 'user') return i
-                        }
-                        return -1
-                      })()
-
-                      const userQuery = prevUserIndex !== -1 ? messages[prevUserIndex].content : ''
-                      try {
-                        storeFeedback(userQuery, msg.content, 'positive')
-                        setFeedbackState({ ack: 'Thanks — your thumbs-up helps SONA learn!' })
-                        setTimeout(() => setFeedbackState(null), 2500)
-                      } catch (err) {
-                        setFeedbackState({ ack: 'Could not save feedback locally.' })
-                        setTimeout(() => setFeedbackState(null), 2500)
-                      }
-                    }}
-                    title="Thumbs up"
-                    className="p-1 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600"
-                  >
-                    <ThumbsUp size={16} />
-                  </button>
-
-                  <button
-                    onClick={async () => {
-                      // Find the most recent user message before this assistant message
-                      const prevUserIndex = (() => {
-                        for (let i = index - 1; i >= 0; i--) {
-                          if (messages[i].role === 'user') return i
-                        }
-                        return -1
-                      })()
-
-                      const userQuery = prevUserIndex !== -1 ? messages[prevUserIndex].content : ''
-                      // Ask for optional reason
-                      const reason = window.prompt('Tell us (briefly) what was wrong with the response (optional):') || undefined
-                      const userProfileRaw = localStorage.getItem('ai_compass_user_profile')
-                      const userId = userProfileRaw ? JSON.parse(userProfileRaw).name || undefined : undefined
-                      const messageId = `msg_${Date.now()}_${Math.floor(Math.random() * 1000)}`
-
-                      try {
-                        await feedbackHelper.recordThumbsDown({ query: userQuery, response: msg.content, reason, userId, messageId })
-                        setFeedbackState({ ack: 'Thanks — your feedback has been recorded for review.' })
-                        setTimeout(() => setFeedbackState(null), 3000)
-                      } catch (err) {
-                        setFeedbackState({ ack: 'Could not save feedback locally.' })
-                        setTimeout(() => setFeedbackState(null), 2500)
-                      }
-                    }}
-                    title="Report problem / Thumbs down"
-                    className="p-1 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600"
-                  >
-                    <ThumbsDown size={16} />
-                  </button>
-
-                  {feedbackState?.ack && (
-                    <span className="text-xs text-gray-600 dark:text-gray-300 ml-2">{feedbackState.ack}</span>
-                  )}
-                </div>
-              )}
             </div>
+            {msg.role === 'assistant' && !msg.content.includes('Thank you for') && (
+              <div className="flex items-center gap-2 mt-2 ml-2">
+                <button
+                  onClick={() => handleFeedback(index, 'positive')}
+                  disabled={!!msg.feedback}
+                  className={`p-1.5 rounded-lg transition-all ${
+                    msg.feedback === 'positive'
+                      ? 'bg-green-500 text-white'
+                      : 'bg-gray-200 dark:bg-gray-600 hover:bg-green-100 dark:hover:bg-green-900 text-gray-600 dark:text-gray-300'
+                  } disabled:opacity-50 disabled:cursor-not-allowed`}
+                  title="This was helpful"
+                >
+                  <ThumbsUp className="w-3 h-3" />
+                </button>
+                <button
+                  onClick={() => handleFeedback(index, 'negative')}
+                  disabled={!!msg.feedback}
+                  className={`p-1.5 rounded-lg transition-all ${
+                    msg.feedback === 'negative'
+                      ? 'bg-red-500 text-white'
+                      : 'bg-gray-200 dark:bg-gray-600 hover:bg-red-100 dark:hover:bg-red-900 text-gray-600 dark:text-gray-300'
+                  } disabled:opacity-50 disabled:cursor-not-allowed`}
+                  title="This needs improvement"
+                >
+                  <ThumbsDown className="w-3 h-3" />
+                </button>
+                {msg.feedback && (
+                  <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">
+                    {msg.feedback === 'positive' ? '✓ Helpful' : '✗ Needs work'}
+                  </span>
+                )}
+              </div>
+            )}
           </div>
         ))}
         {isLoading && (

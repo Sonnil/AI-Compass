@@ -3,7 +3,7 @@ import { Download, Search, Languages, Compass, Sparkles, GitCompare, Send, Refre
 import { BRAND } from './branding'
 import Analytics from './Analytics'
 import Authentication from './Authentication'
-import ChatWidget from './components/AI_ChatBot/ChatWidget'
+import ChatWidget from './features/sona/ChatWidget'
 import AboutAICompass from './components/AboutAICompass'
 import * as analytics from './utils/analytics'
 
@@ -1620,8 +1620,17 @@ const App: React.FC = () => {
       {showWelcomePopup && (() => {
         const popupContent = getWelcomePopupContent()
         return (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fadeIn">
-            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden animate-slideUp">
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fadeIn"
+            onClick={() => {
+              setShowWelcomePopup(false)
+              analytics.trackWelcomePopup('closed', popupContent.type)
+            }}
+          >
+            <div 
+              className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden animate-slideUp"
+              onClick={(e) => e.stopPropagation()}
+            >
               {/* Header */}
               <div className="relative h-24 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center">
                 <div className="text-6xl">{popupContent.emoji}</div>
