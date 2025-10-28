@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2025-10-27
+
+### Added
+- **Advanced Sorting Capabilities**: Users can now sort tools at "Scope: all" view
+  - Sort by name (A-Z or Z-A)
+  - Sort by type (Internal tools first or External tools first)
+  - Sort by rating (highest rated tools first based on feature scores)
+  - Sort by category (highest ranking categories first)
+  - Full internationalization support for all sorting options (8 languages)
+  - Visual sorting dropdown with icon next to scope filter
+
+### Enhanced
+- Rating calculation system for tools based on features (0-10 point scale)
+  - Web search capability: +1 point
+  - Code generation: +1 point
+  - Image generation: +1 point
+  - Knowledge base: +1 point
+  - General knowledge: +1 point
+  - Sanofi systems access: +1 point
+  - O365 integration: +1 point
+  - Documentation available: +0.5 points
+  - Training available: +0.5 points
+  - Internal tool bonus: +0.5 points
+
+### Fixed
+- Greeting message no longer shows "undefined" for unidentified users
+  - Now displays clean time-based greeting: "Good evening!" instead of "Good evening, undefined!"
+  - Improved user profile validation before name interpolation
+
+### Technical
+- Added `calculateRating()` function to compute tool ratings dynamically
+- Extended `filtered` memo with comprehensive sorting logic
+- Added `sortBy` state management with 6 sorting options
+- Implemented conditional greeting templates in agent.ts
+- Added userName validation to prevent undefined values in UI
+
 ## [2.0.0] - 2025-10-27
 
 ### Added - Major Features

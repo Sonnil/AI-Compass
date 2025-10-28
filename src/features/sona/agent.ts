@@ -1390,11 +1390,24 @@ export async function generateIntelligentResponse(query: string, history: Msg[],
     const greeting = greetingOptions[Math.floor(Math.random() * greetingOptions.length)]
     const intro = SONA_INTRO[detectedLang]
     
+    // Use user name if available, otherwise just use time greeting or generic greeting
+    const userName = userProfile.name && userProfile.name !== 'undefined' ? userProfile.name : ''
+    
     let response = ''
     if (timeGreeting && detectedLang === 'en') {
-      response = `${timeGreeting}, ${userProfile.name}! ${greeting}\n\n${intro}\n\n`
+      // If we have a user name, include it; otherwise just use time greeting
+      if (userName) {
+        response = `${timeGreeting}, ${userName}! ${greeting}\n\n${intro}\n\n`
+      } else {
+        response = `${timeGreeting}! ${greeting}\n\n${intro}\n\n`
+      }
     } else {
-      response = `${greeting} ${userProfile.name}!\n\n${intro}\n\n`
+      // For non-English or when no time greeting
+      if (userName) {
+        response = `${greeting} ${userName}!\n\n${intro}\n\n`
+      } else {
+        response = `${greeting}\n\n${intro}\n\n`
+      }
     }
     
     // Add language-specific capabilities list

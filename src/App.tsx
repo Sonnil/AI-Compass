@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react'
-import { Download, Search, Languages, Compass, Sparkles, GitCompare, Send, RefreshCw, ListFilter, X, Lightbulb, Database, Globe, Moon, Sun, Heart, Mail, BarChart3, LogOut, User, Info, Settings } from 'lucide-react'
+import { Download, Search, Languages, Compass, Sparkles, GitCompare, Send, RefreshCw, ListFilter, X, Lightbulb, Database, Globe, Moon, Sun, Heart, Mail, BarChart3, LogOut, User, Info, Settings, ArrowUpDown } from 'lucide-react'
 import { BRAND } from './branding'
 import Analytics from './Analytics'
 import Authentication from './Authentication'
@@ -77,6 +77,13 @@ const translations = {
     new: "New",
     updated: "Updated",
     analytics: "Analytics",
+    sortBy: "Sort by",
+    sortNameAsc: "Name (A-Z)",
+    sortNameDesc: "Name (Z-A)",
+    sortTypeInternal: "Internal First",
+    sortTypeExternal: "External First",
+    sortRating: "Highest Rated",
+    sortCategory: "Category",
     refresh: "Refresh",
     addToCompare: "Add to compare",
     remove: "Remove",
@@ -118,6 +125,13 @@ const translations = {
     new: "Nouveau",
     updated: "Mis à jour",
     analytics: "Analytique",
+    sortBy: "Trier par",
+    sortNameAsc: "Nom (A-Z)",
+    sortNameDesc: "Nom (Z-A)",
+    sortTypeInternal: "Internes d'abord",
+    sortTypeExternal: "Externes d'abord",
+    sortRating: "Mieux notés",
+    sortCategory: "Catégorie",
     refresh: "Actualiser",
     addToCompare: "Ajouter pour comparer",
     remove: "Retirer",
@@ -159,6 +173,13 @@ const translations = {
     new: "Nuevo",
     updated: "Actualizado",
     analytics: "Analítica",
+    sortBy: "Ordenar por",
+    sortNameAsc: "Nombre (A-Z)",
+    sortNameDesc: "Nombre (Z-A)",
+    sortTypeInternal: "Internos primero",
+    sortTypeExternal: "Externos primero",
+    sortRating: "Mejor valorados",
+    sortCategory: "Categoría",
     refresh: "Actualizar",
     addToCompare: "Agregar para comparar",
     remove: "Quitar",
@@ -200,6 +221,13 @@ const translations = {
     new: "Neu",
     updated: "Aktualisiert",
     analytics: "Analytik",
+    sortBy: "Sortieren nach",
+    sortNameAsc: "Name (A-Z)",
+    sortNameDesc: "Name (Z-A)",
+    sortTypeInternal: "Interne zuerst",
+    sortTypeExternal: "Externe zuerst",
+    sortRating: "Höchstbewertet",
+    sortCategory: "Kategorie",
     refresh: "Aktualisieren",
     addToCompare: "Zum Vergleich hinzufügen",
     remove: "Entfernen",
@@ -241,6 +269,13 @@ const translations = {
     new: "Novo",
     updated: "Atualizado",
     analytics: "Análise",
+    sortBy: "Ordenar por",
+    sortNameAsc: "Nome (A-Z)",
+    sortNameDesc: "Nome (Z-A)",
+    sortTypeInternal: "Internos primeiro",
+    sortTypeExternal: "Externos primeiro",
+    sortRating: "Mais bem avaliados",
+    sortCategory: "Categoria",
     refresh: "Atualizar",
     addToCompare: "Adicionar para comparar",
     remove: "Remover",
@@ -282,6 +317,13 @@ const translations = {
     new: "新",
     updated: "已更新",
     analytics: "分析",
+    sortBy: "排序方式",
+    sortNameAsc: "名称 (A-Z)",
+    sortNameDesc: "名称 (Z-A)",
+    sortTypeInternal: "内部优先",
+    sortTypeExternal: "外部优先",
+    sortRating: "评分最高",
+    sortCategory: "类别",
     refresh: "刷新",
     addToCompare: "添加到比较",
     remove: "移除",
@@ -323,6 +365,13 @@ const translations = {
     new: "新規",
     updated: "更新済み",
     analytics: "分析",
+    sortBy: "並び替え",
+    sortNameAsc: "名前 (A-Z)",
+    sortNameDesc: "名前 (Z-A)",
+    sortTypeInternal: "内部優先",
+    sortTypeExternal: "外部優先",
+    sortRating: "評価が高い順",
+    sortCategory: "カテゴリ",
     refresh: "更新",
     addToCompare: "比較に追加",
     remove: "削除",
@@ -364,6 +413,13 @@ const translations = {
     new: "Mới",
     updated: "Đã cập nhật",
     analytics: "Phân tích",
+    sortBy: "Sắp xếp theo",
+    sortNameAsc: "Tên (A-Z)",
+    sortNameDesc: "Tên (Z-A)",
+    sortTypeInternal: "Nội bộ trước",
+    sortTypeExternal: "Bên ngoài trước",
+    sortRating: "Đánh giá cao nhất",
+    sortCategory: "Danh mục",
     refresh: "Làm mới",
     addToCompare: "Thêm vào so sánh",
     remove: "Xóa",
@@ -628,6 +684,7 @@ const App: React.FC = () => {
 
   const [query, setQuery] = useState('')
   const [scope, setScope] = useState<'all'|'internal'|'external'>('all')
+  const [sortBy, setSortBy] = useState<'name-asc'|'name-desc'|'type-internal'|'type-external'|'rating'|'category'>('name-asc')
   const [currentView, setCurrentView] = useState<'main' | 'analytics' | 'about'>('main')
   const baseTools = useMemo(() => seededTools, [])
   const [externalTools, setExternalTools] = useLocalStorage<Tool[]>('aihub_external', [])
@@ -745,7 +802,7 @@ const App: React.FC = () => {
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase()
-    return tools.filter(tool => {
+    const results = tools.filter(tool => {
       if (scope !== 'all' && tool.type !== scope) return false
       if (!q) return true
       const hay = [
@@ -753,7 +810,54 @@ const App: React.FC = () => {
       ].concat(Object.values(tool).filter(v => typeof v === 'string') as string[]).join(' ').toLowerCase()
       return hay.includes(q)
     })
-  }, [tools, scope, query])
+    
+    // Apply sorting
+    return results.sort((a, b) => {
+      switch (sortBy) {
+        case 'name-asc':
+          return (a.name || '').localeCompare(b.name || '')
+        case 'name-desc':
+          return (b.name || '').localeCompare(a.name || '')
+        case 'type-internal':
+          if (a.type === 'internal' && b.type !== 'internal') return -1
+          if (a.type !== 'internal' && b.type === 'internal') return 1
+          return (a.name || '').localeCompare(b.name || '')
+        case 'type-external':
+          if (a.type === 'external' && b.type !== 'external') return -1
+          if (a.type !== 'external' && b.type === 'external') return 1
+          return (a.name || '').localeCompare(b.name || '')
+        case 'rating':
+          // Calculate average rating based on available boolean/numeric fields
+          const ratingA = calculateRating(a)
+          const ratingB = calculateRating(b)
+          return ratingB - ratingA // Highest first
+        case 'category':
+          // Sort by primary purpose (category), then by name
+          return (a.primaryPurpose || '').localeCompare(b.primaryPurpose || '') || (a.name || '').localeCompare(b.name || '')
+        default:
+          return 0
+      }
+    })
+  }, [tools, scope, query, sortBy])
+  
+  // Helper function to calculate a tool's "rating" based on features
+  function calculateRating(tool: Tool): number {
+    let score = 0
+    // Add points for key features
+    if (tool.realTimeWebSearch) score += 1
+    if (tool.codeGeneration) score += 1
+    if (tool.imageGeneration) score += 1
+    if (tool.knowledgeBase) score += 1
+    if (tool.generalKnowledge) score += 1
+    if (tool.accessToSanofiSystems) score += 1
+    if (tool.office365Integration) score += 1
+    // Add points for having documentation/training
+    if (tool.documentationLink) score += 0.5
+    if (tool.trainingLink) score += 0.5
+    // Bonus for internal tools
+    if (tool.type === 'internal') score += 0.5
+    return score
+  }
 
   const defaultFeedUrls = useMemo(() => {
     try {
@@ -1098,6 +1202,25 @@ const App: React.FC = () => {
                   </button>
                 ))}
               </div>
+              
+              {/* Sort Dropdown */}
+              <ArrowUpDown className="w-4 h-4 ml-2" />
+              <select
+                value={sortBy}
+                onChange={(e) => {
+                  const newSort = e.target.value as typeof sortBy
+                  setSortBy(newSort)
+                  analytics.trackFilter('sort', newSort)
+                }}
+                className="px-2 sm:px-3 h-10 sm:h-11 rounded-2xl border border-blue-200 dark:border-blue-700 bg-white/80 dark:bg-slate-800/80 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-xs sm:text-sm touch-manipulation cursor-pointer hover:bg-blue-50 dark:hover:bg-slate-700"
+              >
+                <option value="name-asc">{t.sortNameAsc}</option>
+                <option value="name-desc">{t.sortNameDesc}</option>
+                <option value="type-internal">{t.sortTypeInternal}</option>
+                <option value="type-external">{t.sortTypeExternal}</option>
+                <option value="rating">{t.sortRating}</option>
+                <option value="category">{t.sortCategory}</option>
+              </select>
             </div>
             <div className="flex items-center gap-2">
               <button className="px-3 h-11 rounded-2xl border border-slate-300 dark:border-slate-600 hover:bg-gradient-to-r hover:from-slate-100 hover:to-slate-200 dark:hover:from-slate-700 dark:hover:to-slate-600 transition-all duration-300 hover:scale-105 hover:shadow-lg group" onClick={() => setCompareList([])}>
