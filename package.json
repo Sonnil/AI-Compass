@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run gen:feed && tsc && vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "gen:feed": "node scripts/generate-feed.mjs",
     "deploy": "npm run build && gh-pages -d dist",
