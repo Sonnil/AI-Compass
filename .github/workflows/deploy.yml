@@ -25,9 +25,6 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Generate feed
-      run: npm run gen:feed
-      
     - name: Build
       run: npm run build
       
