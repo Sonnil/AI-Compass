@@ -14,7 +14,7 @@
  * Supported languages: EN, FR, ES, DE, PT, ZH, JA (Vietnamese may have limited support)
  */
 
-import { setDeepLApiKey } from '../features/sona/agent'
+import { setDeepLApiKey } from '../features/sona/translations.js';
 
 export function initializeDeepL() {
   // Replace with your actual DeepL API key

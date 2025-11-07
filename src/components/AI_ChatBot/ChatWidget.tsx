@@ -1,10 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { MessageSquare, X, Send, Bot, Sparkles, Maximize2, Minimize2, ArrowDown, ThumbsUp, ThumbsDown } from 'lucide-react'
 import type { Msg, UserProfile } from '../../features/sona/types'
-import { generateIntelligentResponse, decideToolCall, executeTool, storeFeedback } from '../../features/sona/agent'
-import feedbackHelper from '../../features/sona/feedback'
-import { getGreeting, streamResponse } from '../../features/sona/utils'
-import { getAITipOfTheDay } from '../../features/sona/knowledge'
+import { generateIntelligentResponse, decideToolCall, executeTool } from '../../features/sona/agent.js'
+import { storeFeedback } from '../../features/sona/learning.js';
+import feedbackHelper from '../../features/sona/feedback.js';
+import { getGreeting, streamResponse } from '../../features/sona/utils.js';
+import { getAITipOfTheDay } from '../../features/sona/knowledge.js';
+import { callAiChatStream } from '../../services/aiChatClient.js'
 
 type Props = {
   toolsCatalog: any[]
@@ -121,24 +123,45 @@ export default function ChatWidget({ toolsCatalog }: Props) {
     const toolCall = decideToolCall(input, toolsCatalog)
     let responseContent = ''
 
-    if (toolCall) {
-      const toolResult = await executeTool(toolCall.toolName, toolCall.toolInput, toolsCatalog, updatedProfile)
-      responseContent = await generateIntelligentResponse(input, currentMessages, updatedProfile, { ...toolResult, meta: { toolName: toolCall.toolName, toolInput: toolCall.toolInput } })
-    } else {
-      responseContent = await generateIntelligentResponse(input, currentMessages, updatedProfile)
-    }
-
+    // Always add placeholder assistant message to stream into
     const assistantMessage: Msg = { role: 'assistant', content: '' }
     setMessages(prev => [...prev, assistantMessage])
 
-    // Stream the final response
-    const stream = streamResponse(responseContent)
-    for await (const chunk of stream) {
-      setMessages(prev => {
-        const newMessages = [...prev]
-        newMessages[newMessages.length - 1].content = chunk
-        return newMessages
-      })
+    if (toolCall) {
+      // Use existing local generation path when a specific tool is invoked
+      const toolResult = await executeTool(toolCall.toolName, toolCall.toolInput, toolsCatalog, updatedProfile)
+      responseContent = await generateIntelligentResponse(input, currentMessages, updatedProfile, { ...toolResult, meta: { toolName: toolCall.toolName, toolInput: toolCall.toolInput } })
+      const stream = streamResponse(responseContent)
+      for await (const chunk of stream) {
+        setMessages(prev => {
+          const newMessages = [...prev]
+          newMessages[newMessages.length - 1].content = chunk
+          return newMessages
+        })
+      }
+    } else {
+      // Real streaming from backend agent via SSE
+      try {
+        for await (const delta of callAiChatStream(currentMessages, toolsCatalog)) {
+          setMessages(prev => {
+            const newMessages = [...prev]
+            const last = newMessages[newMessages.length - 1]
+            last.content = (last.content || '') + delta
+            return newMessages
+          })
+        }
+      } catch (e) {
+        // Fallback to local generator if backend fails
+        responseContent = await generateIntelligentResponse(input, currentMessages, updatedProfile)
+        const stream = streamResponse(responseContent)
+        for await (const chunk of stream) {
+          setMessages(prev => {
+            const newMessages = [...prev]
+            newMessages[newMessages.length - 1].content = chunk
+            return newMessages
+          })
+        }
+      }
     }
 
     setIsLoading(false)

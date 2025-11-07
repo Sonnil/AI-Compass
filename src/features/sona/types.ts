@@ -5,6 +5,8 @@ export type Msg = {
   timestamp?: string
 }
 
+export type LanguageCode = 'en' | 'fr' | 'es' | 'de' | 'pt' | 'zh' | 'ja' | 'vi';
+
 export type FeedbackEntry = {
   query: string
   response: string

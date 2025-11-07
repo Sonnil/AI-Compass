@@ -1,32 +1,18 @@
 import React, { useState, useMemo } from 'react'
-import { BarChart3, PieChart, TrendingUp, Users, Zap, Filter, Download, RefreshCw } from 'lucide-react'
-
-interface AnalyticsTool {
-  name: string
-  type?: 'internal' | 'external'
-  primaryPurpose?: string
-  targetUsers?: string
-  bestUseCase?: string
-  technology?: string
-  cost?: string
-  tags?: string[]
-  logoUrl?: string
-  // Capability scores (0-5 scale)
-  capabilities?: {
-    codeGeneration?: number
-    dataAnalysis?: number
-    contentCreation?: number
-    collaboration?: number
-    compliance?: number
-    realTimeSearch?: number
-    visualization?: number
-    automation?: number
-  }
-}
+import { BarChart3, PieChart, TrendingUp, Users, Zap, Filter, Download, RefreshCw, X, ChevronRight } from 'lucide-react'
+import { Tool } from '../types';
 
 interface AnalyticsProps {
-  tools: AnalyticsTool[]
+  tools: Tool[]
   onBack: () => void
+}
+
+interface KPIDetails {
+  title: string
+  value: number
+  description: string
+  breakdown: Array<{ label: string; value: number; percentage: number }>
+  insights: string[]
 }
 
 // Helper function to resolve logo URLs with base path
@@ -46,6 +32,8 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [selectedMetric, setSelectedMetric] = useState<string>('capabilities')
   const [viewMode, setViewMode] = useState<'overview' | 'comparison' | 'trends'>('overview')
+  const [showKPIModal, setShowKPIModal] = useState(false)
+  const [selectedKPI, setSelectedKPI] = useState<KPIDetails | null>(null)
 
   // Enhanced tools with capability scores
   const enhancedTools = useMemo(() => {
@@ -64,7 +52,7 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
     }))
   }, [tools])
 
-  function getCapabilityScore(tool: AnalyticsTool, capability: string): number {
+  function getCapabilityScore(tool: Tool, capability: string): number {
     // Smart scoring based on tool properties and tags
     let score = 0
     const tags = tool.tags?.join(' ').toLowerCase() || ''
@@ -74,37 +62,43 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
 
     switch (capability) {
       case 'code':
-        if (combined.includes('code') || combined.includes('programming') || combined.includes('development')) score += 3
-        if (tool.name.includes('GitHub') || tool.name.includes('Copilot')) score += 2
+        if (tool.capabilities?.codeGeneration) score += 3;
+        if (combined.includes('code') || combined.includes('programming') || combined.includes('development')) score += 2
+        if (tool.name.includes('GitHub') || tool.name.includes('Copilot')) score += 1
         if (combined.includes('script') || combined.includes('automation')) score += 1
         break
       case 'data':
-        if (combined.includes('data') || combined.includes('analytics') || combined.includes('intelligence')) score += 3
-        if (combined.includes('dashboard') || combined.includes('visualization') || combined.includes('insights')) score += 2
-        if (tool.name.includes('Plai') || combined.includes('decision')) score += 2
+        if (tool.capabilities?.dataAnalysis) score += 3;
+        if (combined.includes('data') || combined.includes('analytics') || combined.includes('intelligence')) score += 2
+        if (combined.includes('dashboard') || combined.includes('visualization') || combined.includes('insights')) score += 1
+        if (tool.name.includes('Plai') || combined.includes('decision')) score += 1
         break
       case 'content':
-        if (combined.includes('writing') || combined.includes('content') || combined.includes('creative')) score += 3
-        if (combined.includes('document') || combined.includes('text') || combined.includes('assistant')) score += 2
-        if (combined.includes('general') || combined.includes('productivity')) score += 1
+        if (tool.capabilities?.textGeneration) score += 3;
+        if (combined.includes('writing') || combined.includes('content') || combined.includes('creative')) score += 2
+        if (combined.includes('document') || combined.includes('text') || combined.includes('assistant')) score += 1
         break
       case 'collaboration':
-        if (combined.includes('collaboration') || combined.includes('meeting') || combined.includes('team')) score += 3
-        if (combined.includes('office') || combined.includes('productivity') || combined.includes('workplace')) score += 2
+        if (tool.capabilities?.chat) score += 2;
+        if (combined.includes('collaboration') || combined.includes('meeting') || combined.includes('team')) score += 2
+        if (combined.includes('office') || combined.includes('productivity') || combined.includes('workplace')) score += 1
         if (tool.name.includes('Concierge') || tool.name.includes('Microsoft')) score += 1
         break
       case 'compliance':
-        if (combined.includes('compliance') || combined.includes('medical') || combined.includes('regulatory')) score += 4
-        if (combined.includes('sanofi') || tool.type === 'internal') score += 2
+        if (tool.complianceAwareness) score += 2;
+        if (combined.includes('compliance') || combined.includes('medical') || combined.includes('regulatory')) score += 2
+        if (tool.type === 'internal') score += 2
         if (combined.includes('enterprise') || combined.includes('security')) score += 1
         break
       case 'search':
-        if (combined.includes('search') || combined.includes('web') || combined.includes('real-time')) score += 3
-        if (combined.includes('knowledge') || combined.includes('research') || combined.includes('literature')) score += 2
+        if (tool.capabilities?.realTimeSearch) score += 3;
+        if (combined.includes('search') || combined.includes('web') || combined.includes('real-time')) score += 2
+        if (combined.includes('knowledge') || combined.includes('research') || combined.includes('literature')) score += 1
         break
       case 'visual':
-        if (combined.includes('image') || combined.includes('visual') || combined.includes('diagram')) score += 3
-        if (combined.includes('design') || combined.includes('creative') || combined.includes('generation')) score += 2
+        if (tool.capabilities?.imageGeneration || tool.capabilities?.vision) score += 3;
+        if (combined.includes('image') || combined.includes('visual') || combined.includes('diagram')) score += 2
+        if (combined.includes('design') || combined.includes('creative') || combined.includes('generation')) score += 1
         if (combined.includes('dashboard') || combined.includes('chart')) score += 1
         break
       case 'automation':
@@ -197,6 +191,121 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
     }).sort((a, b) => b.avgScore - a.avgScore).slice(0, 10)
   }, [filteredTools])
 
+  // Generate detailed KPI data for drill-through
+  const getKPIDetails = (kpiType: 'total' | 'internal' | 'external' | 'capability'): KPIDetails => {
+    switch (kpiType) {
+      case 'total':
+        const statusBreakdown = enhancedTools.reduce((acc, tool) => {
+          const status = tool.projectStatus || 'Unknown'
+          acc[status] = (acc[status] || 0) + 1
+          return acc
+        }, {} as Record<string, number>)
+        
+        return {
+          title: 'Total Tools Overview',
+          value: enhancedTools.length,
+          description: 'Complete inventory of AI tools across the organization',
+          breakdown: Object.entries(statusBreakdown).map(([label, value]) => ({
+            label,
+            value,
+            percentage: Math.round((value / enhancedTools.length) * 100)
+          })).sort((a, b) => b.value - a.value),
+          insights: [
+            `${enhancedTools.filter(t => t.type === 'internal').length} internal tools (${Math.round((enhancedTools.filter(t => t.type === 'internal').length / enhancedTools.length) * 100)}%)`,
+            `${enhancedTools.filter(t => t.type === 'external').length} external tools (${Math.round((enhancedTools.filter(t => t.type === 'external').length / enhancedTools.length) * 100)}%)`,
+            `Most common use case: ${useCaseDistribution[0]?.name || 'Various'}`,
+            `Average tool rating: ${(topPerformers.reduce((sum, t) => sum + t.avgScore, 0) / topPerformers.length).toFixed(1)}/5.0`
+          ]
+        }
+      
+      case 'internal':
+        const internalTools = enhancedTools.filter(t => t.type === 'internal')
+        const internalByPhase = internalTools.reduce((acc, tool) => {
+          const phase = tool.deploymentPhase || 'Unknown'
+          acc[phase] = (acc[phase] || 0) + 1
+          return acc
+        }, {} as Record<string, number>)
+        
+        return {
+          title: 'Internal Tools Analysis',
+          value: internalTools.length,
+          description: 'Sanofi-developed and managed AI tools',
+          breakdown: Object.entries(internalByPhase).map(([label, value]) => ({
+            label,
+            value,
+            percentage: Math.round((value / internalTools.length) * 100)
+          })).sort((a, b) => b.value - a.value),
+          insights: [
+            `${internalTools.filter(t => t.projectStatus === 'Production').length} tools in production`,
+            `${internalTools.filter(t => t.deploymentPhase?.includes('Pilot')).length} tools in pilot phase`,
+            `Compliance-aware tools: ${internalTools.filter(t => t.complianceAwareness).length}`,
+            `Tools with training required: ${internalTools.filter(t => t.trainingRequired).length}`
+          ]
+        }
+      
+      case 'external':
+        const externalTools = enhancedTools.filter(t => t.type === 'external')
+        const originalExternalTools = tools.filter(t => t.type === 'external')
+        const externalByTech = externalTools.reduce((acc, tool) => {
+          const tech = tool.technology || 'Unknown'
+          acc[tech] = (acc[tech] || 0) + 1
+          return acc
+        }, {} as Record<string, number>)
+        
+        return {
+          title: 'External Tools Analysis',
+          value: externalTools.length,
+          description: 'Third-party AI tools and services',
+          breakdown: Object.entries(externalByTech).map(([label, value]) => ({
+            label,
+            value,
+            percentage: Math.round((value / externalTools.length) * 100)
+          })).sort((a, b) => b.value - a.value).slice(0, 5),
+          insights: [
+            `${originalExternalTools.filter(t => t.capabilities?.codeGeneration).length} tools with code generation`,
+            `${originalExternalTools.filter(t => t.capabilities?.imageGeneration || t.imageGeneration).length} tools with image generation`,
+            `${originalExternalTools.filter(t => t.capabilities?.realTimeSearch || t.realTimeWebSearch).length} tools with real-time search`,
+            `AI-powered tools: ${originalExternalTools.filter(t => t.technology?.toLowerCase().includes('ai') || t.technology?.toLowerCase().includes('genai')).length}`
+          ]
+        }
+      
+      case 'capability':
+        const avgCapability = Math.round(capabilityData.reduce((a, b) => a + b.average, 0) / capabilityData.length * 10) / 10
+        
+        return {
+          title: 'Average Capability Score',
+          value: avgCapability,
+          description: 'Overall capability maturity across all tools',
+          breakdown: capabilityData.slice(0, 5).map(cap => ({
+            label: cap.name,
+            value: cap.average,
+            percentage: Math.round((cap.average / 5) * 100)
+          })),
+          insights: [
+            `Highest capability: ${capabilityData[0]?.name} (${capabilityData[0]?.average}/5)`,
+            `Lowest capability: ${capabilityData[capabilityData.length - 1]?.name} (${capabilityData[capabilityData.length - 1]?.average}/5)`,
+            `Internal avg: ${(capabilityData.reduce((sum, cap) => sum + cap.internal, 0) / capabilityData.length).toFixed(1)}/5`,
+            `External avg: ${(capabilityData.reduce((sum, cap) => sum + cap.external, 0) / capabilityData.length).toFixed(1)}/5`
+          ]
+        }
+      
+      default:
+        return {
+          title: 'Unknown',
+          value: 0,
+          description: '',
+          breakdown: [],
+          insights: []
+        }
+    }
+  }
+
+  const handleKPIClick = (kpiType: 'total' | 'internal' | 'external' | 'capability') => {
+    const details = getKPIDetails(kpiType)
+    setSelectedKPI(details)
+    setShowKPIModal(true)
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Header */}
@@ -254,43 +363,64 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
         {/* Key Metrics Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
-          <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+          <button 
+            onClick={() => handleKPIClick('total')}
+            className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-slate-200 dark:border-slate-700 hover:shadow-xl hover:scale-105 transition-all cursor-pointer text-left group"
+          >
             <div className="flex items-center justify-between">
               <div className="min-w-0">
                 <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm truncate">Total Tools</p>
                 <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{enhancedTools.length}</p>
               </div>
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
+              <div className="flex flex-col items-center gap-1">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
+                </div>
+                <ChevronRight className="w-3 h-3 text-slate-400 group-hover:text-blue-600 transition-colors" />
               </div>
             </div>
-          </div>
+          </button>
           
-          <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+          <button 
+            onClick={() => handleKPIClick('internal')}
+            className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-slate-200 dark:border-slate-700 hover:shadow-xl hover:scale-105 transition-all cursor-pointer text-left group"
+          >
             <div className="flex items-center justify-between">
               <div className="min-w-0">
                 <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm truncate">Internal Tools</p>
                 <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{enhancedTools.filter(t => t.type === 'internal').length}</p>
               </div>
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Users className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
+              <div className="flex flex-col items-center gap-1">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Users className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
+                </div>
+                <ChevronRight className="w-3 h-3 text-slate-400 group-hover:text-green-600 transition-colors" />
               </div>
             </div>
-          </div>
+          </button>
           
-          <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+          <button 
+            onClick={() => handleKPIClick('external')}
+            className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-slate-200 dark:border-slate-700 hover:shadow-xl hover:scale-105 transition-all cursor-pointer text-left group"
+          >
             <div className="flex items-center justify-between">
               <div className="min-w-0">
                 <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm truncate">External Tools</p>
                 <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{enhancedTools.filter(t => t.type === 'external').length}</p>
               </div>
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center flex-shrink-0">
-                <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400" />
+              <div className="flex flex-col items-center gap-1">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400" />
+                </div>
+                <ChevronRight className="w-3 h-3 text-slate-400 group-hover:text-purple-600 transition-colors" />
               </div>
             </div>
-          </div>
+          </button>
           
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+          <button 
+            onClick={() => handleKPIClick('capability')}
+            className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-200 dark:border-slate-700 hover:shadow-xl hover:scale-105 transition-all cursor-pointer text-left group"
+          >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-slate-600 dark:text-slate-400 text-sm">Avg Capability</p>
@@ -298,11 +428,14 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
                   {Math.round(capabilityData.reduce((a, b) => a + b.average, 0) / capabilityData.length * 10) / 10}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-xl flex items-center justify-center">
-                <BarChart3 className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+              <div className="flex flex-col items-center gap-1">
+                <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-xl flex items-center justify-center">
+                  <BarChart3 className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+                </div>
+                <ChevronRight className="w-3 h-3 text-slate-400 group-hover:text-orange-600 transition-colors" />
               </div>
             </div>
-          </div>
+          </button>
         </div>
 
         {viewMode === 'overview' && (
@@ -337,17 +470,17 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6">Use Case Distribution</h3>
               <div className="space-y-3">
                 {useCaseDistribution.slice(0, 8).map((useCase, idx) => (
-                  <div key={idx} className="flex items-center justify-between">
-                    <div className="flex items-center gap-3 flex-1">
-                      <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${
+                  <div key={idx} className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-3 flex-1 min-w-0">
+                      <div className={`w-4 h-4 rounded-full flex-shrink-0 mt-0.5 bg-gradient-to-r ${
                         idx % 4 === 0 ? 'from-blue-400 to-blue-600' :
                         idx % 4 === 1 ? 'from-green-400 to-green-600' :
                         idx % 4 === 2 ? 'from-purple-400 to-purple-600' :
                         'from-orange-400 to-orange-600'
                       }`} />
-                      <span className="text-sm text-slate-700 dark:text-slate-300 truncate">{useCase.name}</span>
+                      <span className="text-sm text-slate-700 dark:text-slate-300 break-words">{useCase.name}</span>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right flex-shrink-0">
                       <div className="text-sm font-medium text-slate-900 dark:text-white">{useCase.count}</div>
                       <div className="text-xs text-slate-500">{useCase.percentage}%</div>
                     </div>
@@ -406,7 +539,12 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
           <div className="space-y-8">
             {/* Capability Comparison Matrix */}
             <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Capability Comparison Matrix</h3>
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
+                Capability Comparison Matrix
+                <span className="text-sm font-normal text-slate-500 dark:text-slate-400 ml-3">
+                  ({filteredTools.length} tools)
+                </span>
+              </h3>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -421,7 +559,7 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredTools.slice(0, 15).map((tool, idx) => (
+                    {filteredTools.map((tool, idx) => (
                       <tr key={idx} className="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700">
                         <td className="p-3">
                           <div className="flex items-center gap-3">
@@ -435,7 +573,7 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
                             )}
                             <div>
                               <div className="font-medium text-slate-900 dark:text-white">{tool.name}</div>
-                              <div className={`text-xs px-2 py-1 rounded-full ${
+                              <div className={`text-xs px-2 py-1 rounded-full inline-block ${
                                 tool.type === 'internal' 
                                   ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300'
                                   : 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
@@ -616,6 +754,90 @@ export default function Analytics({ tools, onBack }: AnalyticsProps) {
           </div>
         )}
       </div>
+
+      {/* KPI Drill-Through Modal */}
+      {showKPIModal && selectedKPI && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-700">
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white">{selectedKPI.title}</h2>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{selectedKPI.description}</p>
+              </div>
+              <button
+                onClick={() => setShowKPIModal(false)}
+                className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="w-6 h-6 text-slate-600 dark:text-slate-400" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+              {/* Main Metric */}
+              <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl p-6 text-center">
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">Current Value</p>
+                <p className="text-5xl font-bold text-slate-900 dark:text-white">{selectedKPI.value}</p>
+              </div>
+
+              {/* Breakdown */}
+              {selectedKPI.breakdown.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Breakdown</h3>
+                  <div className="space-y-3">
+                    {selectedKPI.breakdown.map((item, idx) => (
+                      <div key={idx} className="bg-slate-50 dark:bg-slate-700/50 rounded-xl p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-medium text-slate-900 dark:text-white">{item.label}</span>
+                          <div className="flex items-center gap-3">
+                            <span className="text-sm text-slate-600 dark:text-slate-400">{item.value}</span>
+                            <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">{item.percentage}%</span>
+                          </div>
+                        </div>
+                        <div className="w-full bg-slate-200 dark:bg-slate-600 rounded-full h-2">
+                          <div 
+                            className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-500"
+                            style={{ width: `${item.percentage}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Insights */}
+              {selectedKPI.insights.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Key Insights</h3>
+                  <div className="grid gap-3">
+                    {selectedKPI.insights.map((insight, idx) => (
+                      <div key={idx} className="flex items-start gap-3 p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
+                        <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <span className="text-xs font-bold text-blue-600 dark:text-blue-400">{idx + 1}</span>
+                        </div>
+                        <p className="text-sm text-slate-700 dark:text-slate-300">{insight}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-6 border-t border-slate-200 dark:border-slate-700 flex justify-end gap-3">
+              <button
+                onClick={() => setShowKPIModal(false)}
+                className="px-6 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors font-medium"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

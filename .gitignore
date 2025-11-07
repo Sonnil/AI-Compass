@@ -14,6 +14,9 @@ build/
 .env.test.local
 .env.production.local
 
+# Secure credentials (API keys, secrets)
+secure/
+
 # IDE and editor files
 .vscode/
 .idea/
@@ -100,3 +103,4 @@ env/
 # Temporary files
 tmp/
 temp/
+src/data/powerbi-analytics.json

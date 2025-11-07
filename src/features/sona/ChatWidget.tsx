@@ -1,9 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { MessageSquare, X, Send, Bot, Sparkles, Maximize2, Minimize2, ArrowDown, ThumbsUp, ThumbsDown } from 'lucide-react'
 import type { Msg, UserProfile } from '../../features/sona/types'
-import { generateIntelligentResponse, decideToolCall, executeTool, storeFeedback, getLearningInsights } from '../../features/sona/agent'
+import { generateIntelligentResponse, decideToolCall, executeTool } from '../../features/sona/agent.js'
+import { storeFeedback, getLearningInsights } from '../../features/sona/learning.js'
 import { getGreeting, streamResponse } from '../../features/sona/utils'
 import { getAITipOfTheDay } from '../../features/sona/knowledge'
+import { callAiChatStream } from '../../services/aiChatClient.js'
+import { createEnhancedAgent } from './enhancedAgent'
+import { generateSuggestedPrompts, getWelcomePrompts, type SuggestedPrompt } from './suggestedPrompts'
 
 type Props = {
   toolsCatalog: any[]
@@ -68,8 +72,21 @@ export default function ChatWidget({ toolsCatalog }: Props) {
   const [isLoading, setIsLoading] = useState(false)
   const [userProfile, setUserProfile] = useState<UserProfile>({ name: 'There', interests: [], commonQueries: [], toolsAskedAbout: [], conversationStyle: 'casual' })
   const [showScroll, setShowScroll] = useState(false)
+  const [suggestedPrompts, setSuggestedPrompts] = useState<SuggestedPrompt[]>(getWelcomePrompts())
   const chatEndRef = useRef<HTMLDivElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  
+  // Initialize enhanced agent - will be updated when toolsCatalog changes
+  const enhancedAgent = useRef(createEnhancedAgent(toolsCatalog))
+
+  // Update enhanced agent when tools catalog changes
+  useEffect(() => {
+    if (toolsCatalog && toolsCatalog.length > 0) {
+      console.log('🔄 [ChatWidget] Updating enhanced agent with', toolsCatalog.length, 'tools')
+      enhancedAgent.current = createEnhancedAgent(toolsCatalog)
+    }
+  }, [toolsCatalog])
 
   useEffect(() => {
     const storedProfile = localStorage.getItem('ai_compass_user_profile')
@@ -101,45 +118,122 @@ export default function ChatWidget({ toolsCatalog }: Props) {
       setShowScroll(isScrolledUp)
     }
   }
+  
+  const handleSuggestedPromptClick = (promptText: string) => {
+    // Directly send the suggested prompt
+    handleSend(promptText)
+  }
 
-  const handleSend = async () => {
-    if (input.trim() === '' || isLoading) return
+  const handleSend = async (customText?: string) => {
+    const textToSend = customText || input
+    if (textToSend.trim() === '' || isLoading) return
 
-    const userMessage: Msg = { role: 'user', content: input }
+    const userMessage: Msg = { role: 'user', content: textToSend }
     const currentMessages = [...messages, userMessage]
     setMessages(currentMessages)
     setInput('')
     setIsLoading(true)
 
     // Update user profile
-    const updatedProfile = updateUserProfile(input, messages, toolsCatalog)
+    const updatedProfile = updateUserProfile(textToSend, messages, toolsCatalog)
     setUserProfile(updatedProfile)
 
-    // Agentic logic
-    const toolCall = decideToolCall(input, toolsCatalog)
-    let responseContent = ''
-
-    if (toolCall) {
-      const toolResult = await executeTool(toolCall.toolName, toolCall.toolInput, toolsCatalog, updatedProfile)
-      responseContent = await generateIntelligentResponse(input, currentMessages, updatedProfile, { ...toolResult, meta: { toolName: toolCall.toolName, toolInput: toolCall.toolInput } })
-    } else {
-      responseContent = await generateIntelligentResponse(input, currentMessages, updatedProfile)
-    }
-
+    // Always add placeholder assistant message to stream into
     const assistantMessage: Msg = { role: 'assistant', content: '' }
     setMessages(prev => [...prev, assistantMessage])
 
-    // Stream the final response
-    const stream = streamResponse(responseContent)
-    for await (const chunk of stream) {
-      setMessages(prev => {
-        const newMessages = [...prev]
-        newMessages[newMessages.length - 1].content = chunk
-        return newMessages
-      })
+    // Check if we should use enhanced agent
+    const useEnhanced = enhancedAgent.current.shouldUseEnhancedAgent(textToSend)
+    console.log('🧠 [ChatWidget] Use enhanced agent:', useEnhanced)
+
+    if (useEnhanced) {
+      // Use enhanced agent with intent classification
+      console.log('✨ [ChatWidget] Using enhanced agent')
+      try {
+        const responseContent = await enhancedAgent.current.processMessage(textToSend, currentMessages, updatedProfile)
+        console.log('📝 [ChatWidget] Enhanced response:', responseContent.slice(0, 200))
+        
+        // Stream the response
+        const stream = streamResponse(responseContent)
+        for await (const chunk of stream) {
+          setMessages(prev => {
+            const newMessages = [...prev]
+            newMessages[newMessages.length - 1].content = chunk
+            return newMessages
+          })
+        }
+      } catch (error) {
+        console.error('❌ [ChatWidget] Enhanced agent error:', error)
+        // Fallback to original logic
+        const responseContent = await generateIntelligentResponse(textToSend, currentMessages, updatedProfile)
+        const stream = streamResponse(responseContent)
+        for await (const chunk of stream) {
+          setMessages(prev => {
+            const newMessages = [...prev]
+            newMessages[newMessages.length - 1].content = chunk
+            return newMessages
+          })
+        }
+      }
+    } else {
+      // Use original agentic logic for other queries
+      const toolCall = decideToolCall(textToSend, toolsCatalog)
+      console.log('🔍 [ChatWidget] toolCall decision:', toolCall)
+      let responseContent = ''
+
+      if (toolCall) {
+        console.log('🛠️ [ChatWidget] Executing tool:', toolCall.toolName)
+        const toolResult = await executeTool(toolCall.toolName, toolCall.toolInput, toolsCatalog, updatedProfile)
+        console.log('🛠️ [ChatWidget] Tool result:', toolResult)
+        responseContent = await generateIntelligentResponse(textToSend, currentMessages, updatedProfile, { ...toolResult, meta: { toolName: toolCall.toolName, toolInput: toolCall.toolInput } })
+        console.log('📝 [ChatWidget] Response content:', responseContent.slice(0, 200))
+        const stream = streamResponse(responseContent)
+        for await (const chunk of stream) {
+          setMessages(prev => {
+            const newMessages = [...prev]
+            newMessages[newMessages.length - 1].content = chunk
+            return newMessages
+          })
+        }
+      } else {
+        console.log('🌐 [ChatWidget] No tool call, trying external API')
+        try {
+          for await (const delta of callAiChatStream(currentMessages, toolsCatalog)) {
+            setMessages(prev => {
+              const newMessages = [...prev]
+              const last = newMessages[newMessages.length - 1]
+              last.content = (last.content || '') + delta
+              return newMessages
+            })
+          }
+          console.log('✅ [ChatWidget] External API succeeded')
+        } catch (e) {
+          console.log('❌ [ChatWidget] External API failed, using fallback:', e)
+          responseContent = await generateIntelligentResponse(textToSend, currentMessages, updatedProfile)
+          console.log('📝 [ChatWidget] Fallback response:', responseContent.slice(0, 200))
+          const stream = streamResponse(responseContent)
+          for await (const chunk of stream) {
+            setMessages(prev => {
+              const newMessages = [...prev]
+              newMessages[newMessages.length - 1].content = chunk
+              return newMessages
+            })
+          }
+        }
+      }
     }
 
     setIsLoading(false)
+
+    // Update suggested prompts based on the new conversation context
+    setTimeout(() => {
+      setSuggestedPrompts(generateSuggestedPrompts(messages, toolsCatalog))
+    }, 500)
+    
+    // Refocus the input field so user can continue typing
+    setTimeout(() => {
+      inputRef.current?.focus()
+    }, 100)
   }
 
   const toggleOpen = () => {
@@ -147,6 +241,10 @@ export default function ChatWidget({ toolsCatalog }: Props) {
     if (!isOpen) {
       // Reset to default state when opening
       setIsMaximized(false)
+      // Focus input when opening
+      setTimeout(() => {
+        inputRef.current?.focus()
+      }, 100)
     }
   }
 
@@ -197,8 +295,8 @@ export default function ChatWidget({ toolsCatalog }: Props) {
   }
 
   return (
-    <div className={`fixed bottom-5 right-5 bg-white dark:bg-gray-800 shadow-2xl rounded-lg transition-all duration-300 z-50 ${isMaximized ? 'w-[95vw] h-[90vh]' : 'w-96 h-[600px]'}`}>
-      <div className="flex justify-between items-center p-4 bg-purple-600 text-white rounded-t-lg">
+    <div className={`fixed bottom-5 right-5 bg-white dark:bg-gray-800 shadow-2xl rounded-lg transition-all duration-300 z-50 flex flex-col ${isMaximized ? 'w-[95vw] h-[90vh]' : 'w-96 h-[600px]'}`}>
+      <div className="flex justify-between items-center p-4 bg-purple-600 text-white rounded-t-lg flex-shrink-0">
         <div className="flex items-center">
           <Bot size={24} className="mr-2" />
           <h3 className="font-bold text-lg">SONA Assistant</h3>
@@ -212,7 +310,7 @@ export default function ChatWidget({ toolsCatalog }: Props) {
           </button>
         </div>
       </div>
-      <div ref={chatContainerRef} onScroll={handleScroll} className="h-[calc(100%-140px)] overflow-y-auto p-4 flex flex-col space-y-4 bg-gray-50 dark:bg-gray-900">
+      <div ref={chatContainerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto p-4 flex flex-col space-y-4 bg-gray-50 dark:bg-gray-900">
         {messages.map((msg, index) => (
           <div key={index} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
             <div className={`max-w-xs md:max-w-md lg:max-w-lg p-3 rounded-lg ${msg.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200'}`}>
@@ -271,9 +369,27 @@ export default function ChatWidget({ toolsCatalog }: Props) {
           <ArrowDown size={20} />
         </button>
       )}
-      <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex-shrink-0">
+        {/* Suggested Prompts */}
+        {!isLoading && suggestedPrompts.length > 0 && (
+          <div className="mb-3 flex flex-wrap gap-2 max-h-24 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-300 dark:scrollbar-thumb-purple-600">
+            {suggestedPrompts.map((prompt, index) => (
+              <button
+                key={index}
+                onClick={() => handleSuggestedPromptClick(prompt.text)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-all duration-200 border border-purple-200 dark:border-purple-700 hover:scale-105 flex-shrink-0"
+                title={`Click to ask: ${prompt.text}`}
+              >
+                <span className="text-sm">{prompt.icon}</span>
+                <span className="whitespace-nowrap">{prompt.text}</span>
+              </button>
+            ))}
+          </div>
+        )}
+        
         <div className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-lg">
           <input
+            ref={inputRef}
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -282,7 +398,7 @@ export default function ChatWidget({ toolsCatalog }: Props) {
             className="flex-grow p-2 bg-transparent focus:outline-none text-gray-800 dark:text-gray-200"
             disabled={isLoading}
           />
-          <button onClick={handleSend} disabled={isLoading} className="p-3 text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 disabled:text-gray-400">
+          <button onClick={() => handleSend()} disabled={isLoading} className="p-3 text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 disabled:text-gray-400">
             {isLoading ? <Sparkles size={20} className="animate-spin" /> : <Send size={20} />}
           </button>
         </div>

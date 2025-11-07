@@ -1,4 +1,4 @@
-import { storeFeedback } from './agent'
+import { storeFeedback } from './learning.js'
 import type { FeedbackEntry } from './types'
 
 // Lightweight client-side feedback helper module.

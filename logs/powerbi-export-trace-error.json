@@ -1,0 +1,96 @@
+[
+  {
+    "timestamp": "2025-10-30T21:29:02.111Z",
+    "operation": "exportPowerBIData",
+    "status": "started"
+  },
+  {
+    "timestamp": "2025-10-30T21:29:02.112Z",
+    "operation": "loadPowerBIToken",
+    "status": "started"
+  },
+  {
+    "timestamp": "2025-10-30T21:29:02.112Z",
+    "operation": "loadPowerBIToken",
+    "status": "success",
+    "details": {
+      "tokenLength": 2282,
+      "user": "Sonnil.Le@sanofi.com",
+      "expiresAt": "2025-10-30T22:28:14.000Z"
+    },
+    "duration": 0
+  },
+  {
+    "timestamp": "2025-10-30T21:29:02.123Z",
+    "operation": "getWorkspaces",
+    "status": "started"
+  },
+  {
+    "timestamp": "2025-10-30T21:29:02.547Z",
+    "operation": "getWorkspaces",
+    "status": "success",
+    "details": {
+      "count": 24
+    },
+    "duration": 424
+  },
+  {
+    "timestamp": "2025-10-30T21:29:02.548Z",
+    "operation": "getReportsInWorkspace",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:29:02.692Z",
+    "operation": "getReportsInWorkspace",
+    "status": "success",
+    "details": {
+      "count": 73
+    },
+    "duration": 144
+  },
+  {
+    "timestamp": "2025-10-30T21:29:02.694Z",
+    "operation": "getDatasets",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:29:02.855Z",
+    "operation": "getDatasets",
+    "status": "success",
+    "details": {
+      "count": 75
+    },
+    "duration": 161
+  },
+  {
+    "timestamp": "2025-10-30T21:29:02.855Z",
+    "operation": "getDatasetTables",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "aca434f4-8e9d-450f-867c-c16807cf19ee"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:29:02.993Z",
+    "operation": "getDatasetTables",
+    "status": "error",
+    "details": {
+      "error": "HTTP 404: {\"error\":{\"code\":\"ItemNotFound\",\"message\":\"Dataset aca434f4-8e9d-450f-867c-c16807cf19ee is not Push API dataset.\"}}"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:29:02.993Z",
+    "operation": "exportPowerBIData",
+    "status": "error",
+    "details": {
+      "error": "HTTP 404: {\"error\":{\"code\":\"ItemNotFound\",\"message\":\"Dataset aca434f4-8e9d-450f-867c-c16807cf19ee is not Push API dataset.\"}}"
+    }
+  }
+]

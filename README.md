@@ -35,8 +35,6 @@ SONA can now analyze tool data and provide comprehensive insights:
 **Example Queries:**
 - "Show me analytics data"
 - "What are the top performing tools?"
-- "Compare internal vs external analytics"
-- "Analyze capability scores"
 - "How do I use the analytics dashboard?"
 
 See [SONA_ANALYTICS.md](./SONA_ANALYTICS.md) for complete documentation.
@@ -46,6 +44,30 @@ See [SONA_ANALYTICS.md](./SONA_ANALYTICS.md) for complete documentation.
 npm install
 npm run dev
 ```
+
+## Power BI Integration (QMS Dashboard)
+
+The QMS Dashboard connects directly to Power BI FDA_483_Response workspace for real-time data.
+
+**Setup Guide:** See [POWERBI_SETUP.md](./POWERBI_SETUP.md) for complete configuration instructions.
+
+**Quick Setup:**
+1. Register Azure AD app with Power BI permissions
+2. Get workspace and dataset IDs from Power BI portal
+3. Configure `.env` file with credentials
+4. Restart dev server
+
+**Required Tables:**
+- `DEVIATION_LI_HR` - Deviation tracking records
+- `CAPA_Snowflake` - CAPA (Corrective and Preventive Actions) records
+
+**Discovery Tool:**
+Open browser console and run:
+```javascript
+powerBIDiscovery.discoverFDA483Configuration()
+```
+
+This will automatically find your workspace, dataset, and table structure.
 
 ## Build & Preview
 ```bash

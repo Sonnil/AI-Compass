@@ -16,7 +16,7 @@ export function getAITipOfTheDay(): string {
     "📚 **Tip:** Use AI to learn new skills faster - ask it to explain concepts, generate practice problems, or review your work.",
     "⏱️ **Tip:** Set time limits when working with AI to avoid over-reliance. Use it strategically, not constantly.",
     "🎓 **Tip:** Complete Sanofi's RAISE training to understand responsible AI practices and compliance requirements.",
-    "🔄 **Tip:** If an AI tool isn't working well, try a different one! AI Compass has 25+ tools to choose from.",
+    "🔄 **Tip:** If an AI tool isn't working well, try a different one! AI Compass has 43+ tools to choose from.",
     "📈 **Tip:** Track your time savings when using AI tools - it helps justify their value to your team!",
     "🌐 **Tip:** Many AI tools support multiple languages. Explore multilingual capabilities for global collaboration.",
     "🎪 **Tip:** Use AI for brainstorming! Generate 10 ideas quickly, then refine the best ones with your expertise.",
@@ -649,11 +649,35 @@ export function getAICompassFeatures(): {
   chatbot: { description: string; capabilities: string[]; howTo: string }
   themes: { description: string; options: string[]; howTo: string }
   languages: { description: string; supported: string[]; howTo: string }
-  analytics: { description: string; metrics: string[]; howTo: string; whatItDoes: string; howToAccess: string }
+  projectStatusBadges: {
+    description: string
+    location: string
+    statusTypes: Array<{ status: string; color: string; meaning: string }>
+    deploymentPhase: { description: string; purpose: string }
+    statusLastUpdated: { description: string; format: string }
+    howToInterpret: string[]
+  }
+  analytics: { 
+    description: string
+    metrics: string[]
+    howTo: string
+    whatItDoes: string
+    howToAccess: string
+    detailedMetrics: {
+      toolDistribution: { description: string; insights: string[]; useCase: string }
+      featureCoverage: { description: string; insights: string[]; useCase: string }
+      targetAudience: { description: string; insights: string[]; useCase: string }
+      categoryBreakdown: { description: string; insights: string[]; useCase: string }
+      technologyStack: { description: string; insights: string[]; useCase: string }
+      costAnalysis: { description: string; insights: string[]; useCase: string }
+      maturityLevels: { description: string; insights: string[]; useCase: string }
+      usagePatterns: { description: string; insights: string[]; useCase: string }
+    }
+  }
   about: { description: string; sections: string[]; howTo: string }
 } {
   return {
-    overview: "AI Compass is Sanofi's comprehensive AI tools catalog platform with 25+ internal and external AI tools, featuring smart search, comparison tools, analytics dashboard, multilingual support, and an intelligent chatbot assistant (me, SONA!).",
+    overview: "AI Compass is Sanofi's comprehensive AI tools catalog platform with 43+ internal and external AI tools, featuring smart search, comparison tools, analytics dashboard, multilingual support, and an intelligent chatbot assistant (me, SONA!).",
     coreFeatures: [
       {
         name: "Smart Search & Filters",
@@ -663,9 +687,9 @@ export function getAICompassFeatures(): {
       },
       {
         name: "Tool Comparison",
-        description: "Side-by-side comparison of multiple AI tools with detailed feature breakdown",
-        location: "Click 'Compare' button in header; comparison panel appears at bottom",
-        howTo: "Click '+ Add to compare' on tool cards. Once 2+ tools selected, click 'Compare' button. View appears in split-screen: top shows tool cards, bottom shows comparison table. Use maximize/minimize button to adjust view size."
+        description: "Side-by-side comparison of multiple AI tools with detailed feature breakdown in a full comparison modal",
+        location: "Click 'Add to compare' on tool cards; comparison bar appears at bottom",
+        howTo: "Click '+ Add to compare' on up to 4 tool cards. Comparison bar appears at bottom showing selected tools. Click 'Compare Now' button to open full-screen comparison modal with detailed side-by-side analysis including Type, Primary Purpose, Target Users, Technology, Best Use Case, Cost, Capabilities (Web Search, Code Generation, Image Generation), Access Link, and Tags. Click 'X' or backdrop to close modal."
       },
       {
         name: "SONA Chatbot",
@@ -714,6 +738,12 @@ export function getAICompassFeatures(): {
         description: "Sync with external feeds to get latest tool updates",
         location: "Settings dropdown in header",
         howTo: "Click 'Settings' → 'Refresh Catalog'. Fetches latest tool data from configured feeds and updates the catalog."
+      },
+      {
+        name: "Project Status Badges",
+        description: "Color-coded status indicators on tool cards showing project lifecycle stage (Production, Scaling, Development, External), deployment phase, and last update date",
+        location: "Front of each tool card, below tool name and above description",
+        howTo: "Status badges appear automatically on each tool card. Green = Production-ready, Blue = Scaling, Orange = Development, Gray = External tool. Also displays deployment phase (🚀) and status last updated (📅). Use these to quickly assess tool maturity and readiness for your use case."
       }
     ],
     headerButtons: [
@@ -731,7 +761,7 @@ export function getAICompassFeatures(): {
         "Scope filters: All tools, Internal only, or External only",
         "Results count displayed in real-time",
         "Instant filtering as you type",
-        "Search across 25+ tools with comprehensive metadata"
+        "Search across 43+ tools with comprehensive metadata"
       ],
       howTo: "1. Locate search bar at top of main page. 2. Type keywords (e.g., 'code', 'medical', 'writing'). 3. Use scope buttons to filter by Internal/External/All. 4. Click 'Clear' to reset filters."
     },
@@ -771,6 +801,48 @@ export function getAICompassFeatures(): {
       supported: ["🇺🇸 English", "🇫🇷 Français", "🇪🇸 Español", "🇩🇪 Deutsch", "🇧🇷 Português (BR)", "🇨🇳 中文", "🇯🇵 日本語", "🇻🇳 Tiếng Việt"],
       howTo: "Settings → Select language from dropdown menu. Interface translates instantly and preference is saved."
     },
+    projectStatusBadges: {
+      description: "Color-coded status badges on tool cards showing project lifecycle stage, deployment phase, and last update date",
+      location: "Front of each tool card, displayed below the tool name and above the primary purpose description",
+      statusTypes: [
+        {
+          status: "Production",
+          color: "Green gradient (emerald-500 to green-600)",
+          meaning: "Tool is live, stable, and ready for enterprise use. Fully supported and production-ready."
+        },
+        {
+          status: "Scaling",
+          color: "Blue gradient (blue-500 to cyan-500)",
+          meaning: "Tool is operational and being scaled for broader adoption. May have limited availability or expanding features."
+        },
+        {
+          status: "Development",
+          color: "Amber/Orange gradient (amber-500 to orange-500)",
+          meaning: "Tool is in active development, pilot phase, or experimental stage. May have limited features or instability."
+        },
+        {
+          status: "External Tool - Not Applicable",
+          color: "Gray gradient (gray-500 to slate-500)",
+          meaning: "External commercial tool not developed internally. Status tracking does not apply."
+        }
+      ],
+      deploymentPhase: {
+        description: "Shows the current deployment phase or stage of the tool's lifecycle",
+        purpose: "Provides context about where the tool is in its journey - e.g., 'Enterprise Deployment', 'Pilot Program', 'Beta Testing', etc. Indicated with 🚀 rocket emoji."
+      },
+      statusLastUpdated: {
+        description: "Shows when the project status was last verified or updated",
+        format: "YYYY-MM format (e.g., 2025-01). Indicated with 📅 calendar emoji."
+      },
+      howToInterpret: [
+        "Green badges = Production-ready tools you can confidently use for critical work",
+        "Blue badges = Scaling tools that are operational but may have growing pains or limited access",
+        "Orange badges = Development/experimental tools - use with caution, expect changes",
+        "Gray badges = External tools - status managed by third-party vendors, not tracked internally",
+        "Check deployment phase for specific stage info (e.g., 'Enterprise Rollout', 'Pilot Testing')",
+        "Status last updated shows freshness of information - recent dates mean current tracking"
+      ]
+    },
     analytics: {
       description: "Visual dashboard showing tool catalog insights and metrics",
       metrics: [
@@ -783,7 +855,49 @@ export function getAICompassFeatures(): {
       ],
       howTo: "Click 'Analytics' button in header (bar chart icon). View interactive charts and metrics. Return to main view anytime.",
       whatItDoes: "The Analytics dashboard provides data-driven insights into the AI tool catalog including: distribution by type (internal/external), feature coverage (which tools have real-time search, code generation, image generation, etc.), capability metrics, technology breakdown, cost analysis, and target user segmentation. Use it to understand tool landscape, identify gaps, and make informed decisions about tool adoption.",
-      howToAccess: "Click the 'Analytics' button (📊 bar chart icon) in the top header. The dashboard opens with interactive visualizations. You can filter by tool type, explore specific metrics, and export insights."
+      howToAccess: "Click the 'Analytics' button (📊 bar chart icon) in the top header. The dashboard opens with interactive visualizations. You can filter by tool type, explore specific metrics, and export insights.",
+      detailedMetrics: {
+        toolDistribution: {
+          description: "Breakdown of tools by type (internal Sanofi tools vs external commercial tools)",
+          insights: ["See which tools are built in-house vs licensed", "Understand internal vs external tool balance", "Identify over-reliance on external vendors"],
+          useCase: "Strategic planning for tool portfolio management"
+        },
+        featureCoverage: {
+          description: "Analysis of which tools have specific capabilities (code generation, image creation, data analysis, etc.)",
+          insights: ["Identify capability gaps", "See which features are most/least covered", "Find overlapping capabilities"],
+          useCase: "Feature gap analysis and redundancy detection"
+        },
+        targetAudience: {
+          description: "Segmentation showing which tools serve which user groups (R&D, manufacturing, clinical, IT, etc.)",
+          insights: ["See tool availability per department", "Identify underserved audiences", "Balance tool coverage across teams"],
+          useCase: "Ensuring equitable tool access across Sanofi"
+        },
+        categoryBreakdown: {
+          description: "Distribution across categories (productivity, research, creative, data, collaboration)",
+          insights: ["Most/least represented categories", "Category gaps in portfolio", "Category-specific tool density"],
+          useCase: "Portfolio diversification and strategic investment"
+        },
+        technologyStack: {
+          description: "Technologies powering the tools (GPT-4, Claude, Gemini, LLaMA, custom models)",
+          insights: ["See which AI models are most used", "Technology diversity in portfolio", "Vendor concentration risk"],
+          useCase: "Technology strategy and vendor diversification"
+        },
+        costAnalysis: {
+          description: "Free vs paid tools breakdown with cost structure insights",
+          insights: ["Budget allocation across tools", "Cost-benefit analysis opportunities", "Free alternative identification"],
+          useCase: "Financial planning and cost optimization"
+        },
+        maturityLevels: {
+          description: "Tool maturity stages (pilot, production, enterprise-scale)",
+          insights: ["Production-ready vs experimental tools", "Maturity distribution", "Risk assessment"],
+          useCase: "Risk management and adoption planning"
+        },
+        usagePatterns: {
+          description: "Insights into how tools are being discovered and compared",
+          insights: ["Most searched categories", "Common comparison pairs", "Popular feature filters"],
+          useCase: "Understanding user needs and platform optimization"
+        }
+      }
     },
     about: {
       description: "Comprehensive platform information with dual-tab view",
@@ -1069,24 +1183,118 @@ export function getAICompassFeaturesResponse(query: string): string {
     return response
   }
   
-  // Analytics queries
+  // Analytics queries - provide detailed insights from detailedMetrics
   if (lowerQuery.includes('analytics') || lowerQuery.includes('dashboard') || lowerQuery.includes('metrics') || lowerQuery.includes('statistics') || (lowerQuery.includes('data') && lowerQuery.includes('tool'))) {
-    const feature = features.coreFeatures.find(f => f.name.includes('Analytics'))!
-    let response = `## 📊 Analytics Dashboard\n\n`
+    const dm = features.analytics.detailedMetrics
+    let response = `## 📊 Analytics Dashboard - Key Insights\n\n`
+    
+    // Special handling for "show me analytics dashboard insights" - show comparison calculations
+    if (lowerQuery.includes('show') && lowerQuery.includes('analytics') && lowerQuery.includes('dashboard') && lowerQuery.includes('insights')) {
+      response += `**📊 Comparison Calculations in AI Tools Analytics:**\n\n`
+      response += `**1. Tool Distribution Comparison:**\n`
+      response += `• ${dm.toolDistribution.insights[0]}\n`
+      response += `• ${dm.toolDistribution.insights[1]}\n\n`
+      response += `**2. Feature Coverage Analysis:**\n`
+      response += `• ${dm.featureCoverage.insights[0]}\n`
+      response += `• ${dm.featureCoverage.insights[1]}\n\n`
+      response += `**3. Target Audience Breakdown:**\n`
+      response += `• ${dm.targetAudience.insights[0]}\n\n`
+      response += `**4. Cost Analysis:**\n`
+      response += `• ${dm.costAnalysis.insights[0]}\n\n`
+      response += `🔍 **Pro Tip:** Click the 📊 Analytics button in the header to see interactive visualizations and detailed comparisons!\n`
+      return response
+    }
+    
+    // Check for specific metric queries
+    if (lowerQuery.includes('tool distribution') || lowerQuery.includes('internal') || lowerQuery.includes('external') || lowerQuery.includes('view tool') || lowerQuery.includes("what's the tool distribution")) {
+      response += `### ${dm.toolDistribution.description}\n\n`
+      response += `**📊 Internal vs External Tools Comparison:**\n\n`
+      dm.toolDistribution.insights.forEach(i => response += `• ${i}\n`)
+      response += `\n**💡 Use Case:** ${dm.toolDistribution.useCase}\n\n`
+      response += `🔍 **Pro Tip:** Click the 📊 Analytics button in the header to see the full comparison breakdown and visualizations!\n`
+      return response
+    }
+    
+    if (lowerQuery.includes('feature coverage') || lowerQuery.includes('analyze feature')) {
+      response += `### ${dm.featureCoverage.description}\n\n`
+      response += `**📈 Analytics Trending & Comparison Points:**\n\n`
+      dm.featureCoverage.insights.forEach(i => response += `• ${i}\n`)
+      response += `\n**💡 Use Case:** ${dm.featureCoverage.useCase}\n\n`
+      response += `📊 **View Details:** Check the Analytics Dashboard to compare feature coverage across all tools and identify capability gaps.\n`
+      return response
+    }
+    
+    if (lowerQuery.includes('capability') || lowerQuery.includes('understand capability')) {
+      response += `### ${dm.featureCoverage.description}\n\n`
+      response += `**📈 Analytics Trending & Comparison Points:**\n\n`
+      response += `**Capability Matrix Breakdown:**\n`
+      dm.featureCoverage.insights.forEach(i => response += `✓ ${i}\n`)
+      response += `\n**💡 Use Case:** ${dm.featureCoverage.useCase}\n\n`
+      response += `📊 **View Analytics:** Click the Analytics Dashboard button to see detailed capability comparisons and trending data.\n`
+      return response
+    }
+    
+    if (lowerQuery.includes('target audience') || lowerQuery.includes('who') || lowerQuery.includes('department') || lowerQuery.includes('availability per department') || lowerQuery.includes('tool availability')) {
+      response += `### ${dm.targetAudience.description}\n\n`
+      response += `**🏢 Tool Breakdown by Department:**\n\n`
+      dm.targetAudience.insights.forEach(i => response += `• ${i}\n`)
+      response += `\n**💡 Use Case:** ${dm.targetAudience.useCase}\n\n`
+      response += `📊 **View Full Breakdown:** Check the Analytics Dashboard to see complete tool availability and distribution across all departments.\n`
+      return response
+    }
+    
+    if (lowerQuery.includes('category') || lowerQuery.includes('breakdown')) {
+      response += `### ${dm.categoryBreakdown.description}\n\n`
+      dm.categoryBreakdown.insights.forEach(i => response += `• ${i}\n`)
+      response += `\n**💡 Use Case:** ${dm.categoryBreakdown.useCase}\n`
+      return response
+    }
+    
+    if (lowerQuery.includes('technology') || lowerQuery.includes('stack') || lowerQuery.includes('tech')) {
+      response += `### ${dm.technologyStack.description}\n\n`
+      dm.technologyStack.insights.forEach(i => response += `• ${i}\n`)
+      response += `\n**💡 Use Case:** ${dm.technologyStack.useCase}\n`
+      return response
+    }
+    
+    if (lowerQuery.includes('cost') || lowerQuery.includes('price') || lowerQuery.includes('paid') || lowerQuery.includes('free') || lowerQuery.includes('cost analysis')) {
+      response += `### ${dm.costAnalysis.description}\n\n`
+      response += `**📈 Analytics Trending & Comparison Points:**\n\n`
+      dm.costAnalysis.insights.forEach(i => response += `• ${i}\n`)
+      response += `\n**💡 Use Case:** ${dm.costAnalysis.useCase}\n\n`
+      response += `📊 **View Cost Breakdown:** Check the Analytics Dashboard for detailed cost analysis and budget planning insights.\n`
+      return response
+    }
+    
+    if (lowerQuery.includes('maturity') || lowerQuery.includes('production') || lowerQuery.includes('experimental')) {
+      response += `### ${dm.maturityLevels.description}\n\n`
+      dm.maturityLevels.insights.forEach(i => response += `• ${i}\n`)
+      response += `\n**💡 Use Case:** ${dm.maturityLevels.useCase}\n`
+      return response
+    }
+    
+    if (lowerQuery.includes('usage') || lowerQuery.includes('pattern') || lowerQuery.includes('adoption') || lowerQuery.includes('gap') || lowerQuery.includes('identify gap') || lowerQuery.includes('data-driven') || lowerQuery.includes('data driven') || lowerQuery.includes('usage patterns')) {
+      response += `### ${dm.usagePatterns.description}\n\n`
+      response += `**📈 Analytics Trending & Comparison Points:**\n\n`
+      dm.usagePatterns.insights.forEach(i => response += `• ${i}\n`)
+      response += `\n**💡 Use Case:** ${dm.usagePatterns.useCase}\n\n`
+      response += `📊 **See Trending Data:** Visit the Analytics Dashboard to explore usage patterns and adoption trends across all tools.\n`
+      return response
+    }
+    
+    // Generic analytics query - provide overview
     response += `${features.analytics.whatItDoes}\n\n`
-    response += `**📍 How to Access:**\n${features.analytics.howToAccess}\n\n`
-    response += `**Available Insights & Metrics:**\n`
-    features.analytics.metrics.forEach(m => {
-      response += `📈 ${m}\n`
-    })
-    response += `\n**💡 What You Can Do:**\n`
-    response += `• View tool distribution by type (internal vs external)\n`
-    response += `• Analyze feature coverage across all tools\n`
-    response += `• Understand capability matrix (which tools have what features)\n`
-    response += `• Identify gaps in the tool catalog\n`
-    response += `• Make data-driven decisions about tool adoption\n`
-    response += `• Export insights for reporting\n\n`
-    response += `🔍 **Looking for the Analytics Dashboard?** Click the 📊 Analytics button in the header!`
+    response += `**📊 Quick Overview:**\n\n`
+    response += `**Tool Distribution:**\n${dm.toolDistribution.insights[0]}\n\n`
+    response += `**Feature Coverage:**\n${dm.featureCoverage.insights[0]}\n\n`
+    response += `**Target Audiences:**\n${dm.targetAudience.insights[0]}\n\n`
+    response += `**� Ask me for specific insights:**\n`
+    response += `• "View tool distribution by type"\n`
+    response += `• "Analyze feature coverage across all tools"\n`
+    response += `• "Understand capability matrix"\n`
+    response += `• "Show me cost analysis"\n`
+    response += `• "What are the usage patterns?"\n\n`
+    response += `🔍 **Pro Tip:** Click the 📊 Analytics button in the header for interactive visualizations!`
     return response
   }
   
@@ -1115,6 +1323,54 @@ export function getAICompassFeaturesResponse(query: string): string {
       response += `${lang}\n`
     })
     response += `\n**How to Change Language:**\n${feature.howTo}`
+    return response
+  }
+  
+  // Project Status Badge queries
+  if (lowerQuery.includes('status badge') || lowerQuery.includes('project status') || 
+      lowerQuery.includes('color badge') || lowerQuery.includes('colored badge') ||
+      lowerQuery.includes('deployment phase') || lowerQuery.includes('status last updated') ||
+      lowerQuery.includes('green badge') || lowerQuery.includes('blue badge') || 
+      lowerQuery.includes('orange badge') || lowerQuery.includes('amber badge') ||
+      (lowerQuery.includes('what') && lowerQuery.includes('badge')) ||
+      (lowerQuery.includes('what does') && (lowerQuery.includes('production') || lowerQuery.includes('scaling') || lowerQuery.includes('development'))) ||
+      lowerQuery.includes('badge mean')) {
+    const badges = features.projectStatusBadges
+    let response = `## 📊 Project Status Badges\n\n`
+    response += `${badges.description}\n\n`
+    response += `**📍 Location:** ${badges.location}\n\n`
+    response += `### Status Badge Colors & Meanings:\n\n`
+    
+    badges.statusTypes.forEach(type => {
+      const icon = type.status === 'Production' ? '🟢' : 
+                   type.status === 'Scaling' ? '🔵' : 
+                   type.status === 'Development' ? '🟠' : '⚪'
+      response += `**${icon} ${type.status}**\n`
+      response += `_Color: ${type.color}_\n`
+      response += `${type.meaning}\n\n`
+    })
+    
+    response += `### Additional Status Information:\n\n`
+    response += `**🚀 Deployment Phase**\n`
+    response += `${badges.deploymentPhase.description}\n`
+    response += `_${badges.deploymentPhase.purpose}_\n\n`
+    
+    response += `**📅 Status Last Updated**\n`
+    response += `${badges.statusLastUpdated.description}\n`
+    response += `_Format: ${badges.statusLastUpdated.format}_\n\n`
+    
+    response += `### 💡 How to Interpret Status Badges:\n\n`
+    badges.howToInterpret.forEach(tip => {
+      response += `✓ ${tip}\n`
+    })
+    
+    response += `\n**Quick Reference:**\n`
+    response += `• 🟢 **Green** = Production-ready, use with confidence\n`
+    response += `• 🔵 **Blue** = Scaling, operational but expanding\n`
+    response += `• 🟠 **Orange** = Development, experimental phase\n`
+    response += `• ⚪ **Gray** = External tool, not tracked internally\n\n`
+    response += `💬 **Need more help?** Ask me about specific tools or statuses!`
+    
     return response
   }
   
@@ -1153,21 +1409,199 @@ export function getAICompassFeaturesResponse(query: string): string {
     return response
   }
   
-  // General features overview
-  let response = `## 🧭 AI Compass Features Overview\n\n`
-  response += `${features.overview}\n\n`
-  response += `**🎯 Core Features:**\n\n`
+  // General features overview - provide comprehensive information
+  let response = `## 🧭 AI Compass - Complete Feature Guide\n\n`
+  response += `**Quick Summary:**\n${features.overview}\n\n`
+  response += `---\n\n`
   
-  features.coreFeatures.slice(0, 6).forEach((feature, i) => {
-    response += `**${i + 1}. ${feature.name}**\n${feature.description}\n_${feature.location}_\n\n`
-  })
+  // 1. Centralized Tool Catalog
+  response += `### 1️⃣ Centralized Tool Catalog\n`
+  response += `A searchable registry of all approved AI tools (internal and approved external).\n\n`
+  response += `**What's Included:**\n`
+  response += `• Tool name, primary purpose, target users\n`
+  response += `• Core capabilities and best use cases\n`
+  response += `• Cost/licensing and access instructions\n`
+  response += `• Project status badges (Production, Scaling, Development)\n`
+  response += `• Deployment phase and last updated date\n\n`
+  response += `**How to Use:**\n`
+  response += `Browse all tools on the main page. Use filters (All/Internal/External) and search by keywords, capabilities, or departments.\n\n`
+  response += `---\n\n`
   
-  response += `💡 **Need help with a specific feature?** Ask me:\n`
-  response += `• "How do I use search?"\n`
-  response += `• "How does comparison work?"\n`
-  response += `• "How do I change language?"\n`
-  response += `• "Where is the analytics dashboard?"\n`
-  response += `• "How do I submit suggestions?"`
+  // 2. Smart Search & Filters
+  response += `### 2️⃣ Smart Search & Filters\n`
+  response += `${features.searchAndFilter.description}\n\n`
+  response += `**Features:**\n`
+  features.searchAndFilter.features.forEach(f => response += `✓ ${f}\n`)
+  response += `\n**How to Use:**\n${features.searchAndFilter.howTo}\n\n`
+  response += `**Pro Tips:**\n`
+  response += `• Try specific capability keywords: "code generation", "image creation", "clinical text summarization"\n`
+  response += `• Use department names: "R&D", "medical", "manufacturing"\n`
+  response += `• Search by use case: "research", "writing", "data analysis"\n\n`
+  response += `---\n\n`
+  
+  // 3. Compare Tools (Side-by-side)
+  response += `### 3️⃣ Compare Tools (Side-by-Side)\n`
+  response += `${features.comparison.description}\n\n`
+  response += `**Features:**\n`
+  features.comparison.features.forEach(f => response += `✓ ${f}\n`)
+  response += `\n**How to Use:**\n${features.comparison.howTo}\n\n`
+  response += `**What You Can Compare:**\n`
+  response += `• Type (internal vs external)\n`
+  response += `• Primary purpose and target users\n`
+  response += `• Core capabilities (code gen, image gen, web search)\n`
+  response += `• Technology stack and cost\n`
+  response += `• Access links and best use cases\n\n`
+  response += `💡 **Pro Tip:** You can also ask me directly: "Compare Plai and Concierge"\n\n`
+  response += `---\n\n`
+  
+  // 4. SONA Assistant
+  response += `### 4️⃣ SONA Assistant (That's Me! 👋)\n`
+  response += `${features.chatbot.description}\n\n`
+  response += `**My Capabilities:**\n`
+  features.chatbot.capabilities.forEach(cap => response += `✨ ${cap}\n`)
+  response += `\n**How to Use Me:**\n${features.chatbot.howTo}\n\n`
+  response += `**Example Questions:**\n`
+  response += `• "Recommend a tool for research"\n`
+  response += `• "How do I access Plai?"\n`
+  response += `• "Compare Plai and Concierge"\n`
+  response += `• "Tell me about Sanofi's latest news"\n`
+  response += `• "What's an AI fun fact?"\n\n`
+  response += `---\n\n`
+  
+  // 5. Analytics Dashboard
+  response += `### 5️⃣ Analytics Dashboard\n`
+  response += `${features.analytics.description}\n\n`
+  response += `**What You'll See:**\n`
+  features.analytics.metrics.forEach(m => response += `📊 ${m}\n`)
+  response += `\n**Key Insights:**\n`
+  response += `• Tool distribution: Internal vs External breakdown\n`
+  response += `• Feature coverage: Which tools have code gen, image gen, etc.\n`
+  response += `• Target audience: Tool availability per department\n`
+  response += `• Cost analysis: Free vs paid tools\n`
+  response += `• Maturity levels: Production vs experimental tools\n\n`
+  response += `**How to Access:**\n${features.analytics.howToAccess}\n\n`
+  response += `💡 **Ask me for specific insights:** "View tool distribution by type" or "Show me cost analysis"\n\n`
+  response += `---\n\n`
+  
+  // 6. Project Status Badges
+  response += `### 6️⃣ Project Status Badges\n`
+  response += `Color-coded indicators showing tool lifecycle stage, deployment phase, and last update.\n\n`
+  response += `**Status Types:**\n`
+  response += `• 🟢 **Production** - Stable, enterprise-ready\n`
+  response += `• � **Scaling** - Operational, expanding access\n`
+  response += `• 🟠 **Development** - Experimental, pilot phase\n`
+  response += `• ⚪ **External** - Third-party tool\n\n`
+  response += `**Additional Info:**\n`
+  response += `• 🚀 Deployment Phase (e.g., "Enterprise Deployment")\n`
+  response += `• 📅 Status Last Updated (YYYY-MM format)\n\n`
+  response += `**How to Use:**\n`
+  response += `Badges appear on each tool card. Green badges = safe for production work. Orange = use with caution.\n\n`
+  response += `---\n\n`
+  
+  // 7. Access & Provisioning Guidance
+  response += `### 7️⃣ Access & Provisioning Guidance\n`
+  response += `Each tool page shows how to request access:\n\n`
+  response += `• Self-service links for immediate access\n`
+  response += `• Request forms for approval-required tools\n`
+  response += `• Contact information for help\n`
+  response += `• Notes on company-wide vs pilot access\n`
+  response += `• Required training or approvals\n\n`
+  response += `💡 **Quick Access:** Ask me "How do I access [tool name]?"\n\n`
+  response += `---\n\n`
+  
+  // 8. Suggest & Feedback
+  response += `### 8️⃣ Suggest & Feedback\n`
+  response += `Help shape AI Compass by sharing your ideas!\n\n`
+  response += `**What You Can Do:**\n`
+  response += `• Suggest new AI tools for evaluation\n`
+  response += `• Request new features or improvements\n`
+  response += `• Provide feedback on SONA responses (👍 👎)\n`
+  response += `• Share use cases and success stories\n\n`
+  response += `**How to Submit:**\n`
+  response += `Click 💡 Suggest button in header → Type your idea → Submit via email to the team\n\n`
+  response += `---\n\n`
+  
+  // 9. Settings & Personalization
+  response += `### 9️⃣ Settings & Personalization\n`
+  response += `Customize your AI Compass experience:\n\n`
+  response += `**🌓 Dark/Light Mode:**\n`
+  features.themes.options.forEach(opt => response += `• ${opt}\n`)
+  response += `\n**🌍 Language Selection (8 languages):**\n`
+  features.languages.supported.forEach(lang => response += `${lang}  `)
+  response += `\n\n**🔄 Catalog Refresh:**\n`
+  response += `Sync with external feeds for latest tool updates\n\n`
+  response += `**How to Access:**\n`
+  response += `Click ⚙️ Settings button in header → Select your preferences\n\n`
+  response += `---\n\n`
+  
+  // 10. About & Team Info
+  response += `### 🔟 About & Team Information\n`
+  response += `Learn about the platform and meet the team.\n\n`
+  response += `**What's Inside:**\n`
+  features.about.sections.forEach(sec => response += `📄 ${sec}\n`)
+  response += `\n**Two Perspectives:**\n`
+  response += `• **For Users:** Features, team, contact info\n`
+  response += `• **For Stakeholders:** Strategy, value proposition, ROI, governance\n\n`
+  response += `**How to Access:**\n${features.about.howTo}\n\n`
+  response += `---\n\n`
+  
+  // Practical Examples
+  response += `## 💡 Practical Usage Examples\n\n`
+  response += `**Scenario 1: Finding the Right Tool**\n`
+  response += `1. Use search bar: "code generation"\n`
+  response += `2. Filter: Internal only\n`
+  response += `3. Review results and status badges\n`
+  response += `4. Click tool card for details\n`
+  response += `5. Click access link or ask me "How do I access [tool]?"\n\n`
+  
+  response += `**Scenario 2: Comparing Two Tools**\n`
+  response += `1. Ask me: "Compare Plai and Concierge"\n`
+  response += `2. OR: Click "+ Add to compare" on both tool cards\n`
+  response += `3. Click "Compare Now" button\n`
+  response += `4. Review side-by-side comparison modal\n`
+  response += `5. Make informed decision\n\n`
+  
+  response += `**Scenario 3: Understanding Tool Landscape**\n`
+  response += `1. Click 📊 Analytics button\n`
+  response += `2. View tool distribution charts\n`
+  response += `3. Ask me: "Show me cost analysis" or "View tool distribution by type"\n`
+  response += `4. Identify gaps or opportunities\n\n`
+  
+  response += `**Scenario 4: Getting Help**\n`
+  response += `1. Click purple chat bubble (me!)\n`
+  response += `2. Ask specific questions:\n`
+  response += `   • "Recommend a tool for clinical research"\n`
+  response += `   • "Which tools support image generation?"\n`
+  response += `   • "Tell me about AI Compass features"\n`
+  response += `3. Follow suggested prompts for deeper exploration\n\n`
+  
+  response += `---\n\n`
+  
+  // Quick Reference
+  response += `## 🚀 Quick Reference Card\n\n`
+  response += `**🔍 Search:** Type keywords → Filter by scope → Results update instantly\n\n`
+  response += `**⚖️ Compare:** Add to compare (2-4 tools) → Click "Compare Now" → Review modal\n\n`
+  response += `**💬 Ask SONA:** Click chat bubble → Ask questions → Get instant answers\n\n`
+  response += `**📊 Analytics:** Header button → View insights → Ask for specific metrics\n\n`
+  response += `**⚙️ Settings:** Gear icon → Theme, language, refresh options\n\n`
+  response += `**💡 Suggest:** Lightbulb icon → Share ideas → Email to team\n\n`
+  response += `**ℹ️ About:** Info button → Learn more → Two tabs (Users & Stakeholders)\n\n`
+  response += `---\n\n`
+  
+  response += `## 🎯 Next Steps\n\n`
+  response += `1️⃣ **Explore the catalog** - Browse all 43+ tools and discover what's available\n\n`
+  response += `2️⃣ **Try the comparison** - Pick 2-3 tools and see detailed feature breakdown\n\n`
+  response += `3️⃣ **Check analytics** - Understand the tool landscape and identify opportunities\n\n`
+  response += `4️⃣ **Chat with me** - Ask questions, get recommendations, learn best practices\n\n`
+  response += `5️⃣ **Share feedback** - Use 👍 👎 buttons and suggestion box to help improve the platform\n\n`
+  response += `---\n\n`
+  
+  response += `💬 **Need more help?** Just ask me! I'm here to guide you through every feature. Try:\n`
+  response += `• "How do I compare tools?"\n`
+  response += `• "What do the status badges mean?"\n`
+  response += `• "Show me analytics dashboard insights"\n`
+  response += `• "How do I access [specific tool]?"\n`
+  response += `• "Recommend a tool for [your use case]"`
   
   return response
 }

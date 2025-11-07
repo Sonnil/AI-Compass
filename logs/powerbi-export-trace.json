@@ -1,0 +1,3482 @@
+[
+  {
+    "timestamp": "2025-10-30T21:36:56.027Z",
+    "operation": "exportPowerBIData",
+    "status": "started"
+  },
+  {
+    "timestamp": "2025-10-30T21:36:56.028Z",
+    "operation": "loadPowerBIToken",
+    "status": "started"
+  },
+  {
+    "timestamp": "2025-10-30T21:36:56.029Z",
+    "operation": "loadPowerBIToken",
+    "status": "success",
+    "details": {
+      "tokenLength": 2282,
+      "user": "Sonnil.Le@sanofi.com",
+      "expiresAt": "2025-10-30T22:28:14.000Z"
+    },
+    "duration": 1
+  },
+  {
+    "timestamp": "2025-10-30T21:36:56.037Z",
+    "operation": "getWorkspaces",
+    "status": "started"
+  },
+  {
+    "timestamp": "2025-10-30T21:36:56.478Z",
+    "operation": "getWorkspaces",
+    "status": "success",
+    "details": {
+      "count": 24
+    },
+    "duration": 441
+  },
+  {
+    "timestamp": "2025-10-30T21:36:56.479Z",
+    "operation": "getReportsInWorkspace",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:36:56.638Z",
+    "operation": "getReportsInWorkspace",
+    "status": "success",
+    "details": {
+      "count": 73
+    },
+    "duration": 159
+  },
+  {
+    "timestamp": "2025-10-30T21:36:56.639Z",
+    "operation": "getDatasets",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:36:56.801Z",
+    "operation": "getDatasets",
+    "status": "success",
+    "details": {
+      "count": 75
+    },
+    "duration": 162
+  },
+  {
+    "timestamp": "2025-10-30T21:36:56.802Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:36:59.238Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 188
+    },
+    "duration": 2436
+  },
+  {
+    "timestamp": "2025-10-30T21:36:59.241Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:36:59.888Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1
+    },
+    "duration": 647
+  },
+  {
+    "timestamp": "2025-10-30T21:36:59.889Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:01.772Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1883
+  },
+  {
+    "timestamp": "2025-10-30T21:37:01.773Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:02.465Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 692
+  },
+  {
+    "timestamp": "2025-10-30T21:37:02.465Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:03.608Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1143
+  },
+  {
+    "timestamp": "2025-10-30T21:37:03.608Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:09.535Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 5927
+  },
+  {
+    "timestamp": "2025-10-30T21:37:09.535Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:11.570Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 2035
+  },
+  {
+    "timestamp": "2025-10-30T21:37:11.570Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:18.660Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 7090
+  },
+  {
+    "timestamp": "2025-10-30T21:37:18.660Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:21.332Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 2672
+  },
+  {
+    "timestamp": "2025-10-30T21:37:21.332Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:52.590Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 31258
+  },
+  {
+    "timestamp": "2025-10-30T21:37:52.590Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:53.369Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 779
+  },
+  {
+    "timestamp": "2025-10-30T21:37:53.370Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:54.088Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 718
+  },
+  {
+    "timestamp": "2025-10-30T21:37:54.088Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:54.768Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 680
+  },
+  {
+    "timestamp": "2025-10-30T21:37:54.768Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:55.519Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 751
+  },
+  {
+    "timestamp": "2025-10-30T21:37:55.519Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:56.403Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 884
+  },
+  {
+    "timestamp": "2025-10-30T21:37:56.404Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:57.097Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 693
+  },
+  {
+    "timestamp": "2025-10-30T21:37:57.098Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:57.977Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 879
+  },
+  {
+    "timestamp": "2025-10-30T21:37:57.977Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:58.634Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 657
+  },
+  {
+    "timestamp": "2025-10-30T21:37:58.634Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:37:59.588Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 954
+  },
+  {
+    "timestamp": "2025-10-30T21:37:59.588Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:00.484Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 896
+  },
+  {
+    "timestamp": "2025-10-30T21:38:00.485Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:01.736Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1251
+  },
+  {
+    "timestamp": "2025-10-30T21:38:01.737Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:02.483Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 746
+  },
+  {
+    "timestamp": "2025-10-30T21:38:02.483Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:03.914Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1431
+  },
+  {
+    "timestamp": "2025-10-30T21:38:03.914Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:09.876Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 5962
+  },
+  {
+    "timestamp": "2025-10-30T21:38:09.876Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:10.871Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 995
+  },
+  {
+    "timestamp": "2025-10-30T21:38:10.871Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:36.677Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 25806
+  },
+  {
+    "timestamp": "2025-10-30T21:38:36.678Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:38.892Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 2214
+  },
+  {
+    "timestamp": "2025-10-30T21:38:38.892Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:40.062Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1170
+  },
+  {
+    "timestamp": "2025-10-30T21:38:40.062Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:41.473Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1411
+  },
+  {
+    "timestamp": "2025-10-30T21:38:41.473Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:43.371Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1898
+  },
+  {
+    "timestamp": "2025-10-30T21:38:43.372Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:48.506Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 5134
+  },
+  {
+    "timestamp": "2025-10-30T21:38:48.506Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:51.373Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 2867
+  },
+  {
+    "timestamp": "2025-10-30T21:38:51.373Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:38:53.196Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1823
+  },
+  {
+    "timestamp": "2025-10-30T21:38:53.196Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:39:02.707Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 9511
+  },
+  {
+    "timestamp": "2025-10-30T21:39:02.707Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:39:24.435Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 21728
+  },
+  {
+    "timestamp": "2025-10-30T21:39:24.435Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:39:25.560Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1125
+  },
+  {
+    "timestamp": "2025-10-30T21:39:25.560Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:39:26.860Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1300
+  },
+  {
+    "timestamp": "2025-10-30T21:39:26.861Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:39:27.758Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 897
+  },
+  {
+    "timestamp": "2025-10-30T21:39:27.759Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:39:28.732Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 973
+  },
+  {
+    "timestamp": "2025-10-30T21:39:28.732Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:39:34.775Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 6043
+  },
+  {
+    "timestamp": "2025-10-30T21:39:34.776Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:39:37.925Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 3149
+  },
+  {
+    "timestamp": "2025-10-30T21:39:37.926Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:39:38.902Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 976
+  },
+  {
+    "timestamp": "2025-10-30T21:39:38.902Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:39:40.071Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1169
+  },
+  {
+    "timestamp": "2025-10-30T21:39:40.071Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:39:43.077Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 3006
+  },
+  {
+    "timestamp": "2025-10-30T21:39:43.077Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:39:44.362Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1285
+  },
+  {
+    "timestamp": "2025-10-30T21:39:44.363Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:03.105Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 18742
+  },
+  {
+    "timestamp": "2025-10-30T21:40:03.106Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:04.646Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1540
+  },
+  {
+    "timestamp": "2025-10-30T21:40:04.647Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:05.627Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 980
+  },
+  {
+    "timestamp": "2025-10-30T21:40:05.627Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:09.238Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 3611
+  },
+  {
+    "timestamp": "2025-10-30T21:40:09.238Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:10.394Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1156
+  },
+  {
+    "timestamp": "2025-10-30T21:40:10.395Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:11.818Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1423
+  },
+  {
+    "timestamp": "2025-10-30T21:40:11.818Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:13.337Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 1519
+  },
+  {
+    "timestamp": "2025-10-30T21:40:13.337Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:14.143Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 806
+  },
+  {
+    "timestamp": "2025-10-30T21:40:14.143Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:15.055Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 912
+  },
+  {
+    "timestamp": "2025-10-30T21:40:15.055Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:18.328Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 3273
+  },
+  {
+    "timestamp": "2025-10-30T21:40:18.328Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:19.377Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 1049
+  },
+  {
+    "timestamp": "2025-10-30T21:40:19.377Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:20.566Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1189
+  },
+  {
+    "timestamp": "2025-10-30T21:40:20.567Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:21.761Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 1194
+  },
+  {
+    "timestamp": "2025-10-30T21:40:21.762Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:24.607Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 2845
+  },
+  {
+    "timestamp": "2025-10-30T21:40:24.608Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:25.742Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1134
+  },
+  {
+    "timestamp": "2025-10-30T21:40:25.742Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:26.873Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1131
+  },
+  {
+    "timestamp": "2025-10-30T21:40:26.873Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:28.403Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1530
+  },
+  {
+    "timestamp": "2025-10-30T21:40:28.404Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:28.989Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1
+    },
+    "duration": 585
+  },
+  {
+    "timestamp": "2025-10-30T21:40:28.990Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:30.142Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 365
+    },
+    "duration": 1152
+  },
+  {
+    "timestamp": "2025-10-30T21:40:30.142Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:34.036Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 3894
+  },
+  {
+    "timestamp": "2025-10-30T21:40:34.036Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:35.772Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1736
+  },
+  {
+    "timestamp": "2025-10-30T21:40:35.772Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:37.004Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1232
+  },
+  {
+    "timestamp": "2025-10-30T21:40:37.004Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:38.334Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1330
+  },
+  {
+    "timestamp": "2025-10-30T21:40:38.335Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:46.332Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 963
+    },
+    "duration": 7997
+  },
+  {
+    "timestamp": "2025-10-30T21:40:46.332Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:40:47.195Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 863
+  },
+  {
+    "timestamp": "2025-10-30T21:40:47.195Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:09.389Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 22194
+  },
+  {
+    "timestamp": "2025-10-30T21:41:09.390Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:11.631Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 2241
+  },
+  {
+    "timestamp": "2025-10-30T21:41:11.631Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:12.902Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1271
+  },
+  {
+    "timestamp": "2025-10-30T21:41:12.903Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:14.647Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1744
+  },
+  {
+    "timestamp": "2025-10-30T21:41:14.647Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:21.430Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 767
+    },
+    "duration": 6783
+  },
+  {
+    "timestamp": "2025-10-30T21:41:21.430Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:22.381Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 951
+  },
+  {
+    "timestamp": "2025-10-30T21:41:22.382Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:23.115Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 733
+  },
+  {
+    "timestamp": "2025-10-30T21:41:23.115Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:23.835Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 720
+  },
+  {
+    "timestamp": "2025-10-30T21:41:23.835Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:24.744Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 909
+  },
+  {
+    "timestamp": "2025-10-30T21:41:24.744Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:25.736Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 992
+  },
+  {
+    "timestamp": "2025-10-30T21:41:25.736Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:26.558Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 822
+  },
+  {
+    "timestamp": "2025-10-30T21:41:26.558Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:27.323Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 765
+  },
+  {
+    "timestamp": "2025-10-30T21:41:27.325Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:28.250Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 925
+  },
+  {
+    "timestamp": "2025-10-30T21:41:28.250Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:28.949Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 699
+  },
+  {
+    "timestamp": "2025-10-30T21:41:28.950Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:29.860Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 910
+  },
+  {
+    "timestamp": "2025-10-30T21:41:29.860Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:30.598Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 738
+  },
+  {
+    "timestamp": "2025-10-30T21:41:30.598Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:31.327Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 729
+  },
+  {
+    "timestamp": "2025-10-30T21:41:31.328Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:32.055Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 727
+  },
+  {
+    "timestamp": "2025-10-30T21:41:32.056Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:32.877Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 821
+  },
+  {
+    "timestamp": "2025-10-30T21:41:32.877Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:33.936Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1059
+  },
+  {
+    "timestamp": "2025-10-30T21:41:33.936Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:34.855Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 919
+  },
+  {
+    "timestamp": "2025-10-30T21:41:34.856Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:35.785Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 929
+  },
+  {
+    "timestamp": "2025-10-30T21:41:35.786Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:36.841Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 1055
+  },
+  {
+    "timestamp": "2025-10-30T21:41:36.842Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:37.545Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 703
+  },
+  {
+    "timestamp": "2025-10-30T21:41:37.545Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:38.246Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 701
+  },
+  {
+    "timestamp": "2025-10-30T21:41:38.246Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:39.182Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 936
+  },
+  {
+    "timestamp": "2025-10-30T21:41:39.182Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:40.137Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 955
+  },
+  {
+    "timestamp": "2025-10-30T21:41:40.138Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:40.844Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 706
+  },
+  {
+    "timestamp": "2025-10-30T21:41:40.845Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:41.564Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 719
+  },
+  {
+    "timestamp": "2025-10-30T21:41:41.564Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:42.110Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 546
+  },
+  {
+    "timestamp": "2025-10-30T21:41:42.111Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:50.271Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 515
+    },
+    "duration": 8160
+  },
+  {
+    "timestamp": "2025-10-30T21:41:50.271Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:50.977Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 706
+  },
+  {
+    "timestamp": "2025-10-30T21:41:50.977Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:51.911Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 934
+  },
+  {
+    "timestamp": "2025-10-30T21:41:51.911Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:52.664Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 365
+    },
+    "duration": 753
+  },
+  {
+    "timestamp": "2025-10-30T21:41:52.664Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:53.445Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 365
+    },
+    "duration": 781
+  },
+  {
+    "timestamp": "2025-10-30T21:41:53.445Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:41:54.147Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 702
+  },
+  {
+    "timestamp": "2025-10-30T21:41:54.148Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:02.622Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 8474
+  },
+  {
+    "timestamp": "2025-10-30T21:42:02.623Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:03.419Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 796
+  },
+  {
+    "timestamp": "2025-10-30T21:42:03.419Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:04.127Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 708
+  },
+  {
+    "timestamp": "2025-10-30T21:42:04.128Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:04.851Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 723
+  },
+  {
+    "timestamp": "2025-10-30T21:42:04.852Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:05.779Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 927
+  },
+  {
+    "timestamp": "2025-10-30T21:42:05.779Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:06.607Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 828
+  },
+  {
+    "timestamp": "2025-10-30T21:42:06.607Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:07.310Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 703
+  },
+  {
+    "timestamp": "2025-10-30T21:42:07.310Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:08.245Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 935
+  },
+  {
+    "timestamp": "2025-10-30T21:42:08.245Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:09.274Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1029
+  },
+  {
+    "timestamp": "2025-10-30T21:42:09.275Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:10.044Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 769
+  },
+  {
+    "timestamp": "2025-10-30T21:42:10.045Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:11.272Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1227
+  },
+  {
+    "timestamp": "2025-10-30T21:42:11.272Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:12.235Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 963
+  },
+  {
+    "timestamp": "2025-10-30T21:42:12.236Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:13.187Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 951
+  },
+  {
+    "timestamp": "2025-10-30T21:42:13.188Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:14.132Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 944
+  },
+  {
+    "timestamp": "2025-10-30T21:42:14.132Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:14.832Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 700
+  },
+  {
+    "timestamp": "2025-10-30T21:42:14.832Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:15.565Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 733
+  },
+  {
+    "timestamp": "2025-10-30T21:42:15.565Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:16.541Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 976
+  },
+  {
+    "timestamp": "2025-10-30T21:42:16.541Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:17.945Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1404
+  },
+  {
+    "timestamp": "2025-10-30T21:42:17.945Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:18.685Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 740
+  },
+  {
+    "timestamp": "2025-10-30T21:42:18.685Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:19.526Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 841
+  },
+  {
+    "timestamp": "2025-10-30T21:42:19.526Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:20.440Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 914
+  },
+  {
+    "timestamp": "2025-10-30T21:42:20.441Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:21.356Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 915
+  },
+  {
+    "timestamp": "2025-10-30T21:42:21.357Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:22.165Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 808
+  },
+  {
+    "timestamp": "2025-10-30T21:42:22.165Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:24.044Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 183
+    },
+    "duration": 1879
+  },
+  {
+    "timestamp": "2025-10-30T21:42:24.044Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:24.844Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 800
+  },
+  {
+    "timestamp": "2025-10-30T21:42:24.844Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:25.844Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 1000
+  },
+  {
+    "timestamp": "2025-10-30T21:42:25.845Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:26.176Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 99
+    },
+    "duration": 331
+  },
+  {
+    "timestamp": "2025-10-30T21:42:26.177Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:26.969Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 792
+  },
+  {
+    "timestamp": "2025-10-30T21:42:26.970Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:34.004Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 323
+    },
+    "duration": 7034
+  },
+  {
+    "timestamp": "2025-10-30T21:42:34.005Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:34.726Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 721
+  },
+  {
+    "timestamp": "2025-10-30T21:42:34.727Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:35.420Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 693
+  },
+  {
+    "timestamp": "2025-10-30T21:42:35.420Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:38.792Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 323
+    },
+    "duration": 3372
+  },
+  {
+    "timestamp": "2025-10-30T21:42:38.793Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:39.872Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 1079
+  },
+  {
+    "timestamp": "2025-10-30T21:42:39.873Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:40.796Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 923
+  },
+  {
+    "timestamp": "2025-10-30T21:42:40.796Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:41.510Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 714
+  },
+  {
+    "timestamp": "2025-10-30T21:42:41.510Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:42.828Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 13
+    },
+    "duration": 1318
+  },
+  {
+    "timestamp": "2025-10-30T21:42:42.828Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:43.928Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 13
+    },
+    "duration": 1100
+  },
+  {
+    "timestamp": "2025-10-30T21:42:43.929Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:44.538Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 3
+    },
+    "duration": 609
+  },
+  {
+    "timestamp": "2025-10-30T21:42:44.539Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:45.536Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 60
+    },
+    "duration": 997
+  },
+  {
+    "timestamp": "2025-10-30T21:42:45.536Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:46.261Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 725
+  },
+  {
+    "timestamp": "2025-10-30T21:42:46.262Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:46.957Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 695
+  },
+  {
+    "timestamp": "2025-10-30T21:42:46.957Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:47.761Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 804
+  },
+  {
+    "timestamp": "2025-10-30T21:42:47.761Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:42:48.469Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 708
+  },
+  {
+    "timestamp": "2025-10-30T21:42:48.470Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:06.523Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 18053
+  },
+  {
+    "timestamp": "2025-10-30T21:43:06.523Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:07.633Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1110
+  },
+  {
+    "timestamp": "2025-10-30T21:43:07.633Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:08.605Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 972
+  },
+  {
+    "timestamp": "2025-10-30T21:43:08.606Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:09.349Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 743
+  },
+  {
+    "timestamp": "2025-10-30T21:43:09.350Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:10.083Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 733
+  },
+  {
+    "timestamp": "2025-10-30T21:43:10.084Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:10.771Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 687
+  },
+  {
+    "timestamp": "2025-10-30T21:43:10.772Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:11.570Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 798
+  },
+  {
+    "timestamp": "2025-10-30T21:43:11.571Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:12.303Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 732
+  },
+  {
+    "timestamp": "2025-10-30T21:43:12.303Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:13.297Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 994
+  },
+  {
+    "timestamp": "2025-10-30T21:43:13.297Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:13.980Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 730
+    },
+    "duration": 683
+  },
+  {
+    "timestamp": "2025-10-30T21:43:13.981Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:14.645Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 664
+  },
+  {
+    "timestamp": "2025-10-30T21:43:14.645Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:15.324Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 679
+  },
+  {
+    "timestamp": "2025-10-30T21:43:15.324Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:16.151Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 365
+    },
+    "duration": 827
+  },
+  {
+    "timestamp": "2025-10-30T21:43:16.152Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:17.310Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 731
+    },
+    "duration": 1158
+  },
+  {
+    "timestamp": "2025-10-30T21:43:17.310Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:18.304Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 994
+  },
+  {
+    "timestamp": "2025-10-30T21:43:18.305Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:18.977Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 365
+    },
+    "duration": 672
+  },
+  {
+    "timestamp": "2025-10-30T21:43:18.977Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:19.907Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 930
+  },
+  {
+    "timestamp": "2025-10-30T21:43:19.907Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:20.799Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 892
+  },
+  {
+    "timestamp": "2025-10-30T21:43:20.800Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:21.756Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 365
+    },
+    "duration": 956
+  },
+  {
+    "timestamp": "2025-10-30T21:43:21.756Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:22.443Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 687
+  },
+  {
+    "timestamp": "2025-10-30T21:43:22.444Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:23.138Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 365
+    },
+    "duration": 694
+  },
+  {
+    "timestamp": "2025-10-30T21:43:23.139Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:23.781Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 365
+    },
+    "duration": 642
+  },
+  {
+    "timestamp": "2025-10-30T21:43:23.781Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:24.075Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 21
+    },
+    "duration": 294
+  },
+  {
+    "timestamp": "2025-10-30T21:43:24.076Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:27.501Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 3425
+  },
+  {
+    "timestamp": "2025-10-30T21:43:27.502Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:28.160Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 365
+    },
+    "duration": 658
+  },
+  {
+    "timestamp": "2025-10-30T21:43:28.160Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:29.083Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 365
+    },
+    "duration": 923
+  },
+  {
+    "timestamp": "2025-10-30T21:43:29.083Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:29.744Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 661
+  },
+  {
+    "timestamp": "2025-10-30T21:43:29.745Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:30.610Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 366
+    },
+    "duration": 865
+  },
+  {
+    "timestamp": "2025-10-30T21:43:30.611Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:31.695Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1084
+  },
+  {
+    "timestamp": "2025-10-30T21:43:31.695Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:32.574Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 879
+  },
+  {
+    "timestamp": "2025-10-30T21:43:32.575Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:33.130Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 309
+    },
+    "duration": 555
+  },
+  {
+    "timestamp": "2025-10-30T21:43:33.134Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:33.645Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 404
+    },
+    "duration": 511
+  },
+  {
+    "timestamp": "2025-10-30T21:43:33.645Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:34.649Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 1004
+  },
+  {
+    "timestamp": "2025-10-30T21:43:34.650Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:35.558Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 365
+    },
+    "duration": 908
+  },
+  {
+    "timestamp": "2025-10-30T21:43:35.558Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:36.339Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 365
+    },
+    "duration": 781
+  },
+  {
+    "timestamp": "2025-10-30T21:43:36.340Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:37.877Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 247
+    },
+    "duration": 1537
+  },
+  {
+    "timestamp": "2025-10-30T21:43:37.878Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:38.562Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 684
+  },
+  {
+    "timestamp": "2025-10-30T21:43:38.562Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:39.349Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 787
+  },
+  {
+    "timestamp": "2025-10-30T21:43:39.349Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:40.027Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 678
+  },
+  {
+    "timestamp": "2025-10-30T21:43:40.028Z",
+    "operation": "executeDAXQuery",
+    "status": "started",
+    "details": {
+      "workspaceId": "764f5616-f7ac-4879-9857-837a1fd8bd13",
+      "datasetId": "68ecaa96-bcea-4339-b7db-4de8bc5e2630"
+    }
+  },
+  {
+    "timestamp": "2025-10-30T21:43:40.906Z",
+    "operation": "executeDAXQuery",
+    "status": "success",
+    "details": {
+      "rowCount": 1000
+    },
+    "duration": 878
+  },
+  {
+    "timestamp": "2025-10-30T21:43:41.275Z",
+    "operation": "exportPowerBIData",
+    "status": "success",
+    "details": {
+      "outputPath": "/Users/leso01/Documents/AI-COMPASS/src/data/powerbi-analytics.json",
+      "totalDuration": 405247
+    }
+  }
+]

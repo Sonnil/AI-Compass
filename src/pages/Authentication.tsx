@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Shield, LogIn, Building, AlertCircle, CheckCircle } from 'lucide-react'
-import { BRAND } from './branding'
+import { BRAND } from '@/config/branding'
 
 interface AuthenticationProps {
   onAuthenticated: (user: any) => void
