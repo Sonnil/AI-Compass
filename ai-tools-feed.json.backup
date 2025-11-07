@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2025-11-07T22:13:51.697Z",
-  "totalTools": 46,
+  "lastUpdated": "2025-11-07T17:53:54.342Z",
+  "totalTools": 52,
   "tools": [
     {
       "name": "AI-COMPASS",
@@ -14,6 +14,9 @@
       "codeGeneration": false,
       "imageGeneration": false,
       "accessLink": "https://sonnil.github.io/AI-Compass/?demo=true",
+      "projectStatus": "Development",
+      "deploymentPhase": "Pilot",
+      "statusLastUpdated": "2025-11",
       "salesDescription": "AI-COMPASS accelerates innovation by centralizing visibility across Sanofi's digital and AI ecosystem. It empowers every Sanofian to discover, compare, and connect with existing solutions, reducing duplication, enhancing collaboration, and driving smarter, faster decisions enterprise-wide.",
       "tags": [
         "internal",
@@ -603,27 +606,6 @@
       "id": "search-design-aqemia"
     },
     {
-      "name": "OneAI",
-      "type": "internal",
-      "primaryPurpose": "Enterprise AI platform for specialist use cases",
-      "targetUsers": "Data scientists and AI developers",
-      "technology": "AI/ML Development Platform",
-      "bestUseCase": "Custom AI model development and deployment",
-      "cost": "For AI/ML teams",
-      "realTimeWebSearch": false,
-      "codeGeneration": true,
-      "imageGeneration": false,
-      "accessLink": "https://docs.sanofi.com/one-ai",
-      "salesDescription": "OneAI is our enterprise AI development platform that accelerates the creation and deployment of custom AI solutions. It reduces AI development costs and time-to-value while ensuring governance and scalability.",
-      "tags": [
-        "internal",
-        "ai-platform",
-        "ml-development",
-        "specialist-ai"
-      ],
-      "id": "oneai"
-    },
-    {
       "name": "AWS SageMaker",
       "type": "external",
       "primaryPurpose": "ML model development and deployment",
@@ -1102,6 +1084,176 @@
         "api"
       ],
       "id": "openai"
+    },
+    {
+      "name": "Manufacturing Digital Twin",
+      "type": "internal",
+      "primaryPurpose": "Virtual production simulation and optimization",
+      "targetUsers": "Manufacturing teams, Process Engineers",
+      "technology": "AI + IoT platform",
+      "bestUseCase": "Real-time process optimization and predictive maintenance",
+      "cost": "Manufacturing & Supply",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": false,
+      "accessLink": "https://digitaltwin.sanofi.com",
+      "projectStatus": "Production",
+      "deploymentPhase": "In Production",
+      "statusLastUpdated": "2025-01",
+      "salesDescription": "Manufacturing Digital Twin creates virtual replicas of physical assets and processes, enabling real-time optimization, predictive maintenance, and risk-free testing of process parameters.",
+      "tags": [
+        "internal",
+        "manufacturing",
+        "digital-twin",
+        "simulation",
+        "iot"
+      ],
+      "id": "manufacturing-digital-twin"
+    },
+    {
+      "name": "Patient Digital Twin",
+      "type": "internal",
+      "primaryPurpose": "Virtual patient simulation for clinical trials",
+      "targetUsers": "Clinical Development, R&D teams",
+      "technology": "QSP modeling with AI",
+      "bestUseCase": "Clinical trial optimization and personalized medicine",
+      "cost": "R&D investment",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": false,
+      "accessLink": "https://patientdigitaltwin.sanofi.com",
+      "projectStatus": "Production",
+      "deploymentPhase": "Scaling - Expanding use cases",
+      "statusLastUpdated": "2025-01",
+      "salesDescription": "Patient Digital Twin creates virtual patient simulations using quantitative systems pharmacology modeling and AI, improving clinical trial success rates and enabling personalized medicine approaches.",
+      "tags": [
+        "internal",
+        "clinical-trials",
+        "digital-twin",
+        "personalized-medicine",
+        "simulation"
+      ],
+      "id": "patient-digital-twin"
+    },
+    {
+      "name": "OneAI",
+      "type": "internal",
+      "primaryPurpose": "Comprehensive ML operations platform",
+      "targetUsers": "Data scientists, AI developers",
+      "technology": "ML platform",
+      "bestUseCase": "Building and deploying enterprise AI solutions",
+      "cost": "Digital & Data",
+      "realTimeWebSearch": false,
+      "codeGeneration": true,
+      "imageGeneration": false,
+      "accessLink": "https://oneai.sanofi.com",
+      "projectStatus": "Production",
+      "deploymentPhase": "In Production",
+      "statusLastUpdated": "2025-01",
+      "salesDescription": "OneAI is Sanofi's specialized machine learning operations platform within the AI Foundry, enabling data scientists to build sophisticated AI/ML solutions with collaborative workspaces and scalable infrastructure.",
+      "tags": [
+        "internal",
+        "ml-platform",
+        "ai-development",
+        "enterprise"
+      ],
+      "id": "oneai"
+    },
+    {
+      "name": "Yield Optimization Solution",
+      "type": "internal",
+      "primaryPurpose": "Manufacturing yield optimization",
+      "targetUsers": "Manufacturing teams",
+      "technology": "AI/ML platform",
+      "bestUseCase": "Optimizing batch performance and raw material usage",
+      "cost": "Manufacturing & Supply",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": false,
+      "accessLink": "https://yieldopt.sanofi.com",
+      "projectStatus": "Production",
+      "deploymentPhase": "In Production",
+      "statusLastUpdated": "2025-01",
+      "salesDescription": "The AI-enabled Yield Optimization Solution learns from past and current batch performance to enable consistently higher yield levels, optimizing raw material usage and supporting environmental objectives.",
+      "tags": [
+        "internal",
+        "manufacturing",
+        "optimization",
+        "ai-ml"
+      ],
+      "id": "yield-optimization-solution"
+    },
+    {
+      "name": "Lipid Nanoparticle Predictor",
+      "type": "internal",
+      "primaryPurpose": "mRNA delivery system optimization",
+      "targetUsers": "R&D teams",
+      "technology": "AI predictive modeling",
+      "bestUseCase": "Predicting optimal lipid nanoparticles for mRNA delivery",
+      "cost": "R&D investment",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": false,
+      "accessLink": "https://lnppredictor.sanofi.com",
+      "projectStatus": "Production",
+      "deploymentPhase": "In Production",
+      "statusLastUpdated": "2025-01",
+      "salesDescription": "The Lipid Nanoparticle Predictor uses AI to create digital models that predict the optimal selection of lipid nanoparticles for mRNA delivery, reducing the prediction process from months to days.",
+      "tags": [
+        "internal",
+        "mrna-research",
+        "predictive-modeling",
+        "ai"
+      ],
+      "id": "lipid-nanoparticle-predictor"
+    },
+    {
+      "name": "Inventory Position Predictor",
+      "type": "internal",
+      "primaryPurpose": "Supply chain optimization",
+      "targetUsers": "Supply Chain teams",
+      "technology": "AI predictive analytics",
+      "bestUseCase": "Predicting low inventory positions",
+      "cost": "Manufacturing & Supply",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": false,
+      "accessLink": "https://inventorypredictor.sanofi.com",
+      "projectStatus": "Production",
+      "deploymentPhase": "In Production",
+      "statusLastUpdated": "2025-01",
+      "salesDescription": "The Inventory Position Predictor has proven the ability to predict 80% of low inventory positions, allowing teams to take mitigating actions to secure supply faster than ever before.",
+      "tags": [
+        "internal",
+        "supply-chain",
+        "predictive-analytics",
+        "inventory-management"
+      ],
+      "id": "inventory-position-predictor"
+    },
+    {
+      "name": "Electronic Batch Records",
+      "type": "internal",
+      "primaryPurpose": "Manufacturing quality assessment digitization",
+      "targetUsers": "Manufacturing, Quality teams",
+      "technology": "Digital platform with AI capabilities",
+      "bestUseCase": "Digitizing quality assessment processes",
+      "cost": "Manufacturing & Supply",
+      "realTimeWebSearch": false,
+      "codeGeneration": false,
+      "imageGeneration": false,
+      "accessLink": "https://ebr.sanofi.com",
+      "projectStatus": "Production",
+      "deploymentPhase": "In Production",
+      "statusLastUpdated": "2025-01",
+      "salesDescription": "Electronic Batch Records digitizes quality assessment processes, moving from paper to digital records, leveraging AI to improve asset utilization and increase productivity as part of Manufacturing 4.0 capabilities.",
+      "tags": [
+        "internal",
+        "manufacturing",
+        "quality",
+        "digitization"
+      ],
+      "id": "electronic-batch-records"
     }
   ]
 }
