@@ -153,7 +153,15 @@ export class ResponseGenerator {
     // Filter by capability - CHECK ALL CAPABILITY FLAGS
     if (needsCodeGen) {
       recommendations = recommendations.filter(tool => 
-        tool.capabilities?.codeGeneration === true
+        tool.codeGeneration === true || 
+        tool.capabilities?.codeGeneration === true ||
+        tool.primaryPurpose?.toLowerCase().includes('code') ||
+        tool.primaryPurpose?.toLowerCase().includes('programming') ||
+        tool.primaryPurpose?.toLowerCase().includes('development') ||
+        tool.salesDescription?.toLowerCase().includes('code generation') ||
+        tool.salesDescription?.toLowerCase().includes('programming') ||
+        tool.name?.toLowerCase().includes('copilot') ||
+        tool.name?.toLowerCase().includes('codewhisperer')
       )
     }
     if (needsImageGen) {
