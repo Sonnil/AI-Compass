@@ -8,6 +8,11 @@ export interface Tool {
   url?: string;
   features?: string[];
   tags: string[];
+  // Top-level capability flags (some tools have these at root level)
+  codeGeneration?: boolean;
+  imageGeneration?: boolean | string;
+  realTimeWebSearch?: boolean | string;
+  // Nested capabilities object (some tools use this structure)
   capabilities?: {
     textGeneration?: boolean;
     codeGeneration?: boolean;
@@ -45,8 +50,6 @@ export interface Tool {
   office365Integration?: boolean | string;
   excelDataAnalysis?: boolean | string;
   pptCreation?: boolean | string;
-  realTimeWebSearch?: boolean | string;
-  imageGeneration?: boolean | string;
   diagramCreation?: boolean | string;
   complianceAwareness?: boolean | string;
   trainingRequired?: string;
