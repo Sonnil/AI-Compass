@@ -1578,14 +1578,29 @@ Your suggestion is valuable! To submit it officially:
 
 Your input helps us improve! 🚀
 
-Is there anything else I can help you with?`}handleGeneralQuestion(t){const n=t.toLowerCase();if(/who\s+(are|is)\s+(you|sona)|what\s+(are|is)\s+(you|sona)|tell me about (yourself|sona)|introduce (yourself|sona)|what('?s| is) your name|your name/i.test(n))return`Hi! I'm **SONA** (Sanofi Omni-helpful Navigator & Agent) 🤖 - your AI assistant for the AI Compass platform!
+Is there anything else I can help you with?`}handleGeneralQuestion(t){const n=t.toLowerCase();if(/who\s+(are|is)\s+(you|sona)|what\s+(are|is)\s+(you|sona)|tell me about (yourself|sona)|introduce (yourself|sona)|what('?s| is) your name|your name/i.test(n))return`I am **SONA** (Sanofi Organizational Navigation Assistant) 🤖
+
+I'm an intelligent AI agent created by Sonnil Q. Le to help Sanofi employees navigate the AI Compass platform and discover the right AI tools for their work.
 
 **What I can do:**
-✨ Help you find AI tools
-🔍 Search and filter tools
-⚖️ Compare different tools
-📚 Answer AI questions
-🌍 Support in 8 languages
+
+**1️⃣ AI Tool Discovery & Guidance** 🔍
+• Smart tool recommendations from 52+ tools based on your needs
+• Detailed side-by-side tool comparisons
+• Knowledge of Sanofi's AI ecosystem and platform features
+• Help you find the perfect tool for any task
+
+**2️⃣ Platform Features Assistance** 🎯
+• Guide you through search, filters, and analytics
+• Answer questions about AI Compass features
+• Help you understand tool capabilities
+• Support in 8 languages
+
+**3️⃣ Conversational AI** 💬
+• Natural language understanding
+• Context-aware responses
+• Learning from interactions
+• Friendly and helpful personality
 
 How can I help you today?`;if(/who\s+(built|made|created|developed)\s+(you|sona)|who\s+is\s+your\s+(creator|maker|builder)|who\s+built\s+sona|built\s+by\s+who/i.test(n))return`I was built by **Sonnil Q. Le** and the **AI-Compass** team at Sanofi. 🚀
 
