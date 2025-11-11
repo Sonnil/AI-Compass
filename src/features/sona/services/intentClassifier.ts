@@ -297,25 +297,33 @@ export class IntentClassifier {
     // Extract tool names for comparison - try multiple patterns
     const toolNames: string[] = []
     
-    // Pattern 1: "compare X, Y, Z" or "compare X, Y and Z" (comma-separated list)
-    const compareListMatch = msg.match(/compare\s+(.+?)(?:\s*[.?!]|$)/i)
-    if (compareListMatch) {
-      const toolsText = compareListMatch[1]
-      // Split by comma, "and", or both
-      const parts = toolsText.split(/,\s*(?:and\s+)?|,\s+|\s+and\s+/i)
-      if (parts.length >= 2) {
-        toolNames.push(...parts.map(p => p.trim()))
-      } else {
-        // Fallback: try "compare X and Y" or "compare X vs Y"
-        const binaryMatch = toolsText.match(/([^,]+?)\s+(and|vs|versus|to)\s+(.+)/i)
-        if (binaryMatch) {
-          toolNames.push(binaryMatch[1].trim())
-          toolNames.push(binaryMatch[3].trim())
+    // Pattern 1: "compare X and Y" - most common pattern
+    const compareAndMatch = msg.match(/compare\s+([^,]+?)\s+and\s+(.+?)(?:\s*[.?!]|$)/i)
+    if (compareAndMatch) {
+      toolNames.push(compareAndMatch[1].trim())
+      toolNames.push(compareAndMatch[2].trim())
+    }
+    
+    // Pattern 2: "compare X, Y, Z" or "compare X, Y and Z" (comma-separated list)
+    if (toolNames.length === 0) {
+      const compareListMatch = msg.match(/compare\s+(.+?)(?:\s*[.?!]|$)/i)
+      if (compareListMatch) {
+        const toolsText = compareListMatch[1]
+        // Split by comma, "and", or both
+        const parts = toolsText.split(/,\s*(?:and\s+)?|,\s+/i)
+        if (parts.length >= 2) {
+          toolNames.push(...parts.map(p => p.trim()))
+        } else {
+          // Try splitting by just "and" if no commas
+          const andParts = toolsText.split(/\s+and\s+/i)
+          if (andParts.length >= 2) {
+            toolNames.push(...andParts.map(p => p.trim()))
+          }
         }
       }
     }
     
-    // Pattern 2: "X vs Y" or "X versus Y" or "X or Y" (binary comparison)
+    // Pattern 3: "X vs Y" or "X versus Y" or "X or Y" (binary comparison)
     if (toolNames.length === 0) {
       const vsMatch = msg.match(/(\w+(?:\s+\w+)?)\s+(vs|versus|compared to|or)\s+(\w+(?:\s+\w+)?)/i)
       if (vsMatch) {
@@ -324,7 +332,7 @@ export class IntentClassifier {
       }
     }
     
-    // Pattern 3: "difference between X and Y"
+    // Pattern 4: "difference between X and Y"
     if (toolNames.length === 0) {
       const diffMatch = msg.match(/difference\s+between\s+([^,]+?)\s+and\s+(.+?)(?:\s*[.?!]|$)/i)
       if (diffMatch) {
