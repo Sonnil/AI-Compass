@@ -373,7 +373,7 @@ function App(): React.ReactElement {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-cyan-50 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 dark:text-slate-100" style={{ backgroundImage: 'linear-gradient(135deg, rgba(0, 64, 161, 0.03) 0%, rgba(0, 166, 166, 0.03) 100%)' }}>
-      <header className="sticky top-0 z-20 backdrop-blur bg-white/80 dark:bg-slate-900/80 border-b border-blue-200/50 dark:border-blue-700/50 shadow-lg" style={{ boxShadow: '0 10px 15px -3px rgba(0, 64, 161, 0.1), 0 4px 6px -2px rgba(0, 64, 161, 0.05)' }}>
+      <header className="z-10 backdrop-blur bg-white/80 dark:bg-slate-900/80 border-b border-blue-200/50 dark:border-blue-700/50 shadow-lg" style={{ boxShadow: '0 10px 15px -3px rgba(0, 64, 161, 0.1), 0 4px 6px -2px rgba(0, 64, 161, 0.05)' }}>
         <div className="max-w-6xl mx-auto px-3 sm:px-4 py-3 flex items-center gap-2 sm:gap-3">
           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: BRAND.colors.gradient }}>
             <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
@@ -520,8 +520,9 @@ function App(): React.ReactElement {
       </header>
 
       <main className="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 grid gap-4 sm:gap-6">
-        {/* Controls */}
-        <div className="rounded-2xl border border-blue-200/50 dark:border-blue-700/50 p-3 sm:p-4 bg-white/80 dark:bg-slate-900/60 shadow-lg backdrop-blur" style={{ boxShadow: '0 10px 15px -3px rgba(0, 64, 161, 0.1), 0 4px 6px -2px rgba(0, 64, 161, 0.05)' }}>
+        {/* Controls - Sticky Search Section */}
+        <div className="sticky top-0 z-20 -mx-3 sm:-mx-4 md:-mx-6 px-3 sm:px-4 md:px-6 py-3 sm:py-4 bg-gradient-to-br from-blue-50/95 via-teal-50/95 to-cyan-50/95 dark:from-slate-950/95 dark:via-slate-900/95 dark:to-slate-800/95 backdrop-blur-md border-b border-blue-200/50 dark:border-blue-700/50" style={{ boxShadow: '0 4px 6px -1px rgba(0, 64, 161, 0.1), 0 2px 4px -1px rgba(0, 64, 161, 0.06)' }}>
+          <div className="rounded-2xl border border-blue-200/50 dark:border-blue-700/50 p-3 sm:p-4 bg-white/80 dark:bg-slate-900/60 shadow-lg backdrop-blur" style={{ boxShadow: '0 10px 15px -3px rgba(0, 64, 161, 0.1), 0 4px 6px -2px rgba(0, 64, 161, 0.05)' }}>
           <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
             <div className="relative flex-1">
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: BRAND.colors.primary }} />
@@ -597,6 +598,7 @@ function App(): React.ReactElement {
             </select>
           </div>
           </div>
+        </div>
         </div>
         {/* Results */}
         <section className="grid gap-3">
