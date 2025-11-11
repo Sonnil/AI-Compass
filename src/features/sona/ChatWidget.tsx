@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { MessageSquare, X, Send, Bot, Sparkles, Maximize2, Minimize2, ArrowDown, ThumbsUp, ThumbsDown, Activity } from 'lucide-react'
+import { MessageSquare, X, Send, Bot, Sparkles, Maximize2, Minimize2, ArrowDown, ThumbsUp, ThumbsDown, Activity, Brain } from 'lucide-react'
 import type { Msg, UserProfile } from '../../features/sona/types'
 import { generateIntelligentResponse, decideToolCall, executeTool } from '../../features/sona/agent.js'
 import { storeFeedback, getLearningInsights } from '../../features/sona/learning.js'
@@ -10,6 +10,9 @@ import { createEnhancedAgent } from './enhancedAgent'
 import { generateSuggestedPrompts, getWelcomePrompts, type SuggestedPrompt } from './suggestedPrompts'
 import { ThinkingProcess } from '../../components/ThinkingProcess'
 import { TraceViewer } from '../../components/TraceViewer'
+import { FeedbackPanel, type FeedbackData } from '../../components/FeedbackPanel'
+import LearningDashboard from '../../components/LearningDashboard'
+import { learningService } from '../../services/learning/learningService'
 
 type Props = {
   toolsCatalog: any[]
@@ -77,6 +80,7 @@ export default function ChatWidget({ toolsCatalog }: Props) {
   const [suggestedPrompts, setSuggestedPrompts] = useState<SuggestedPrompt[]>(getWelcomePrompts())
   const [showTraceViewer, setShowTraceViewer] = useState(false)
   const [showThinkingProcess, setShowThinkingProcess] = useState(false)
+  const [showLearningDashboard, setShowLearningDashboard] = useState(false)
   const chatEndRef = useRef<HTMLDivElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -318,6 +322,13 @@ export default function ChatWidget({ toolsCatalog }: Props) {
           >
             <Activity size={20} />
           </button>
+          <button 
+            onClick={() => setShowLearningDashboard(true)} 
+            className="hover:bg-purple-700 p-1 rounded-full transition-colors"
+            title="Learning Analytics"
+          >
+            <Brain size={20} />
+          </button>
           <button onClick={toggleMaximize} className="hover:bg-purple-700 p-1 rounded-full">
             {isMaximized ? <Minimize2 size={20} /> : <Maximize2 size={20} />}
           </button>
@@ -336,36 +347,27 @@ export default function ChatWidget({ toolsCatalog }: Props) {
               <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
             </div>
             {msg.role === 'assistant' && !msg.content.includes('Thank you for') && (
-              <div className="flex items-center gap-2 mt-2 ml-2">
-                <button
-                  onClick={() => handleFeedback(index, 'positive')}
-                  disabled={!!msg.feedback}
-                  className={`p-1.5 rounded-lg transition-all ${
-                    msg.feedback === 'positive'
-                      ? 'bg-green-500 text-white'
-                      : 'bg-gray-200 dark:bg-gray-600 hover:bg-green-100 dark:hover:bg-green-900 text-gray-600 dark:text-gray-300'
-                  } disabled:opacity-50 disabled:cursor-not-allowed`}
-                  title="This was helpful"
-                >
-                  <ThumbsUp className="w-3 h-3" />
-                </button>
-                <button
-                  onClick={() => handleFeedback(index, 'negative')}
-                  disabled={!!msg.feedback}
-                  className={`p-1.5 rounded-lg transition-all ${
-                    msg.feedback === 'negative'
-                      ? 'bg-red-500 text-white'
-                      : 'bg-gray-200 dark:bg-gray-600 hover:bg-red-100 dark:hover:bg-red-900 text-gray-600 dark:text-gray-300'
-                  } disabled:opacity-50 disabled:cursor-not-allowed`}
-                  title="This needs improvement"
-                >
-                  <ThumbsDown className="w-3 h-3" />
-                </button>
-                {msg.feedback && (
-                  <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">
-                    {msg.feedback === 'positive' ? '✓ Helpful' : '✗ Needs work'}
-                  </span>
-                )}
+              <div className="mt-2 ml-2">
+                <FeedbackPanel
+                  messageId={`msg_${index}`}
+                  onFeedbackSubmit={(feedback: FeedbackData) => {
+                    // Record feedback in enhanced agent
+                    enhancedAgent.current.recordFeedback(
+                      feedback.helpful,
+                      feedback.satisfaction
+                    )
+                    
+                    // Update message with feedback for UI
+                    setMessages(prev => {
+                      const newMessages = [...prev]
+                      newMessages[index] = {
+                        ...newMessages[index],
+                        feedback: feedback.helpful ? 'positive' : 'negative'
+                      }
+                      return newMessages
+                    })
+                  }}
+                />
               </div>
             )}
           </div>
@@ -425,6 +427,40 @@ export default function ChatWidget({ toolsCatalog }: Props) {
       
       {/* Trace Viewer Modal */}
       <TraceViewer isOpen={showTraceViewer} onClose={() => setShowTraceViewer(false)} />
+      
+      {/* Learning Dashboard Modal */}
+      {showLearningDashboard && (
+        <LearningDashboard
+          interactions={learningService.getInteractions()}
+          preferences={learningService.getUserPreferences(userProfile.name) || {
+            userId: userProfile.name,
+            preferredToolTypes: [],
+            preferredFeatures: [],
+            frequentQueries: [],
+            learningStyle: 'balanced',
+            expertiseLevel: 'intermediate',
+            interactionPatterns: {
+              avgQueryLength: 0,
+              avgResponseTime: 0
+            },
+            lastUpdated: Date.now()
+          }}
+          model={learningService.getLearningModel()}
+          onClose={() => setShowLearningDashboard(false)}
+          onExportData={() => {
+            const data = enhancedAgent.current.exportLearningData()
+            const blob = new Blob([data], { type: 'application/json' })
+            const url = URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.href = url
+            a.download = `sona-learning-data-${new Date().toISOString()}.json`
+            document.body.appendChild(a)
+            a.click()
+            document.body.removeChild(a)
+            URL.revokeObjectURL(url)
+          }}
+        />
+      )}
     </div>
   )
 }

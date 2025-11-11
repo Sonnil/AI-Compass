@@ -124,12 +124,16 @@ export class IntentClassifier {
   }
   
   private matchesGeneralKnowledge(msg: string): boolean {
-    // Match questions about Sanofi, the company, AI concepts, etc.
+    // Match questions about Sanofi, the company, AI concepts, jokes, facts etc.
     const patterns = [
       /\b(tell me about|what is|what's|about|info on|information about)\b.*\b(sanofi|company)\b/i,
       /\b(what is|what's)\b.*\b(ai|artificial intelligence|machine learning|ml)\b/i,
       /\bhow does\b.*\b(ai|artificial intelligence|machine learning)\b.*\bwork\b/i,
-      /\b(sanofi|company)\b.*\b(news|update|recent|latest)\b/i
+      /\b(sanofi|company)\b.*\b(news|update|recent|latest)\b/i,
+      /\b(tell|give|share).*\b(me|us)\b.*\b(a |an )?(joke|funny|humor|laugh)\b/i,
+      /\b(tell|give|share).*\b(me|us)\b.*\b(a |an )?(fact|trivia|fun fact|interesting fact)\b/i,
+      /\b(joke|funny|humor|laugh)\b/i,
+      /\b(fact|trivia|fun fact|interesting fact|did you know)\b/i
     ]
     return patterns.some(p => p.test(msg))
   }

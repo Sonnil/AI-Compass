@@ -699,6 +699,34 @@ What would you like to know? 😊`
   private handleGeneralQuestion(message: string): string {
     const lowerMsg = message.toLowerCase()
     
+    // Jokes
+    if (lowerMsg.includes('joke') || lowerMsg.includes('funny') || lowerMsg.includes('humor') || lowerMsg.includes('laugh')) {
+      const jokes = [
+        "Why did the neural network go to therapy? It had too many layers of emotional baggage! 🧠😄",
+        "What do you call an AI that sings? A-dell! 🎵🤖",
+        "Why did the machine learning model break up with its dataset? There were too many outliers in the relationship! 💔📊",
+        "How does an AI flirt? 'Hey baby, are you a training dataset? Because I want to learn from you!' 😉🤖",
+        "Why don't AIs ever get lost? They always follow their neural pathways! 🗺️🧠",
+        "What's an AI's favorite type of music? Algorithm and blues! 🎵🎸",
+        "Why did the chatbot go to school? To improve its class-ification! 🎓🤖"
+      ]
+      return jokes[Math.floor(Math.random() * jokes.length)]
+    }
+    
+    // Facts
+    if (lowerMsg.includes('fact') || lowerMsg.includes('trivia') || lowerMsg.includes('did you know')) {
+      const facts = [
+        "🤖 **AI Fun Fact:** The term 'Artificial Intelligence' was coined in 1956 at the Dartmouth Conference. The field is almost 70 years old!",
+        "📊 **Data Insight:** Every day, we create 2.5 quintillion bytes of data! That's why AI tools are so crucial for making sense of it all.",
+        "🎯 **AI Milestone:** GPT-3 has 175 billion parameters - that's roughly equivalent to 800GB of text data!",
+        "🧠 **Amazing AI Fact:** Deep Blue, IBM's chess computer, defeated world champion Garry Kasparov in 1997 - a historic moment for AI!",
+        "🌟 **GenAI Impact:** Generative AI models can now create images, write code, compose music, and even design proteins for drug discovery!",
+        "💡 **Sanofi Innovation:** AI-Compass brings together 52+ AI tools to accelerate innovation across R&D, manufacturing, and commercial operations!",
+        "🚀 **Future Ready:** By 2025, it's estimated that 75% of enterprise applications will use AI in some form!"
+      ]
+      return facts[Math.floor(Math.random() * facts.length)]
+    }
+    
     // AI-related questions
     if (lowerMsg.includes('what is ai') || lowerMsg.includes('what\'s ai')) {
       return `🤖 **Artificial Intelligence (AI)** is technology that enables machines to simulate human intelligence.\n\n**Key AI Capabilities:**\n• Learning from data\n• Understanding language\n• Recognizing patterns\n• Making decisions\n• Generating content\n\n**At Sanofi:**\nWe use AI to accelerate drug discovery, improve patient outcomes, and enhance operational efficiency.\n\n**Explore AI Tools:**\nAI-Compass features 43+ tools for various AI tasks. Ask me to recommend one! 🚀`

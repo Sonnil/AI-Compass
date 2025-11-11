@@ -6,6 +6,8 @@
  * - AnalyticsQueryService: Processes natural language analytics questions
  * - ResponseGenerator: Context-aware, dynamic response generation
  * - TracingService: Observability and traceability for user transparency
+ * - LearningService: Tracks interactions and learns from user feedback
+ * - ReasoningService: Multi-step reasoning for complex queries
  */
 
 import type { Msg, UserProfile } from './types'
@@ -13,17 +15,23 @@ import type { Tool } from '../../types'
 import { IntentClassifier, UserIntent } from './services/intentClassifier'
 import { ResponseGenerator } from './services/responseGenerator'
 import { tracingService, SpanType } from '../../services/tracing/tracingService'
+import { learningService } from '../../services/learning/learningService'
+import { reasoningService } from '../../services/reasoning/reasoningService'
 
 export class EnhancedSONAAgent {
   private intentClassifier: IntentClassifier
   private responseGenerator: ResponseGenerator
+  private tools: Tool[]
+  private sessionId: string
   
   constructor(tools: Tool[]) {
+    this.tools = tools
     this.intentClassifier = new IntentClassifier()
     this.responseGenerator = new ResponseGenerator({
       tools,
       language: 'en'
     })
+    this.sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
   }
   
   /**
@@ -34,6 +42,8 @@ export class EnhancedSONAAgent {
     conversationHistory: Msg[] = [],
     userProfile?: UserProfile
   ): Promise<string> {
+    const startTime = Date.now()
+    
     // Start trace
     const traceId = tracingService.startTrace(userMessage, {
       conversationLength: conversationHistory.length,
@@ -74,14 +84,72 @@ export class EnhancedSONAAgent {
       
       tracingService.endSpan(intentSpanId, 'success')
       
-      // Step 2: Generate context-aware response
+      // Step 2: Apply reasoning for complex queries
+      let reasoningChain
+      const shouldUseReasoning = [
+        UserIntent.TOOL_RECOMMENDATION,
+        UserIntent.TOOL_COMPARISON,
+        UserIntent.TOOL_DETAILS
+      ].includes(intent.type)
+      
+      if (shouldUseReasoning) {
+        const reasoningSpanId = tracingService.startSpan(
+          SpanType.RESPONSE_GENERATION,
+          'Multi-Step Reasoning',
+          { intentType: UserIntent[intent.type] }
+        )
+        
+        tracingService.addSpanEvent(
+          reasoningSpanId,
+          'progress' as any,
+          'Applying multi-step reasoning to understand requirements...'
+        )
+        
+        // Get user expertise from learning service
+        const userPrefs = learningService.getUserPreferences(userProfile?.name || 'anonymous')
+        const previousQueries = conversationHistory.map(msg => msg.content).slice(-5)
+        
+        reasoningChain = reasoningService.reason(
+          userMessage,
+          intent,
+          this.tools,
+          {
+            previousQueries,
+            userExpertise: userPrefs?.expertiseLevel || 'intermediate'
+          }
+        )
+        
+        tracingService.addSpanEvent(
+          reasoningSpanId,
+          'info' as any,
+          `Reasoning completed with ${reasoningChain.steps.length} steps`,
+          {
+            overallConfidence: reasoningChain.overallConfidence,
+            stepsCompleted: reasoningChain.steps.length
+          }
+        )
+        
+        // Add reasoning steps to trace
+        reasoningChain.steps.forEach((step, idx) => {
+          tracingService.addSpanEvent(
+            reasoningSpanId,
+            'info' as any,
+            `Step ${idx + 1}: ${step.description} (${(step.confidence * 100).toFixed(0)}% confidence)`
+          )
+        })
+        
+        tracingService.endSpan(reasoningSpanId, 'success')
+      }
+      
+      // Step 3: Generate context-aware response
       const intentTypeName = UserIntent[intent.type]
       const responseSpanId = tracingService.startSpan(
         SpanType.RESPONSE_GENERATION,
         'Generate Response',
         { 
           intentType: intentTypeName,
-          confidence: intent.confidence
+          confidence: intent.confidence,
+          useReasoning: shouldUseReasoning
         }
       )
       
@@ -101,11 +169,33 @@ export class EnhancedSONAAgent {
       
       tracingService.endSpan(responseSpanId, 'success')
       
+      // Step 4: Record interaction for learning
+      const timeToResponse = Date.now() - startTime
+      const toolsRecommended = this.extractToolNames(response)
+      
+      learningService.recordInteraction({
+        userId: userProfile?.name || 'anonymous',
+        sessionId: this.sessionId,
+        timestamp: Date.now(),
+        query: userMessage,
+        intent: UserIntent[intent.type],
+        confidence: intent.confidence,
+        responseProvided: response,
+        toolsRecommended,
+        timeToResponse,
+        conversationContext: {
+          previousQueries: conversationHistory.map(msg => msg.content).slice(-5),
+          topicsDiscussed: this.extractTopics(conversationHistory)
+        }
+      })
+      
       // End trace successfully
       tracingService.endTrace({ 
         responseLength: response.length,
         intentType: UserIntent[intent.type],
-        confidence: intent.confidence
+        confidence: intent.confidence,
+        timeToResponse,
+        toolsRecommended: toolsRecommended.length
       })
       
       return response
@@ -154,6 +244,80 @@ export class EnhancedSONAAgent {
    */
   getIntent(userMessage: string) {
     return this.intentClassifier.classify(userMessage)
+  }
+  
+  /**
+   * Record user feedback on a response
+   */
+  recordFeedback(
+    helpful: boolean,
+    satisfaction?: number,
+    comment?: string
+  ) {
+    const feedback: 'positive' | 'negative' | 'neutral' = 
+      helpful ? 'positive' : satisfaction !== undefined && satisfaction < 3 ? 'negative' : 'neutral'
+    
+    learningService.recordFeedback(
+      this.sessionId,
+      feedback,
+      satisfaction
+    )
+  }
+  
+  /**
+   * Get learning analytics
+   */
+  getLearningAnalytics() {
+    return learningService.analyzeLearningPatterns()
+  }
+  
+  /**
+   * Export learning data
+   */
+  exportLearningData() {
+    return learningService.exportLearningData()
+  }
+  
+  /**
+   * Get reasoning history
+   */
+  getReasoningHistory() {
+    return reasoningService.getReasoningHistory()
+  }
+  
+  /**
+   * Extract tool names from response text
+   */
+  private extractToolNames(response: string): string[] {
+    const toolNames: string[] = []
+    this.tools.forEach(tool => {
+      if (response.includes(tool.name)) {
+        toolNames.push(tool.name)
+      }
+    })
+    return toolNames
+  }
+  
+  /**
+   * Extract topics from conversation history
+   */
+  private extractTopics(history: Msg[]): string[] {
+    const topics = new Set<string>()
+    const topicKeywords = [
+      'tool', 'ai', 'analytics', 'data', 'code', 'image', 'search',
+      'research', 'medical', 'productivity', 'development', 'platform'
+    ]
+    
+    history.forEach(msg => {
+      const words = msg.content.toLowerCase().split(/\s+/)
+      words.forEach(word => {
+        if (topicKeywords.some(keyword => word.includes(keyword))) {
+          topics.add(word)
+        }
+      })
+    })
+    
+    return Array.from(topics).slice(0, 10)
   }
 }
 
