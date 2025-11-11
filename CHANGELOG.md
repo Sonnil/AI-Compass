@@ -5,6 +5,59 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2025-01-29
+
+### Added
+- **Learning System**: SONA now tracks interactions and learns from user feedback
+  - Learning Dashboard showing intent accuracy, satisfaction scores, and tool success rates
+  - localStorage persistence for learning data
+  - Analytics on intent classification performance
+  - Top tools tracking based on user interactions
+- **Multi-Step Reasoning**: Enhanced agent uses 5-phase reasoning process
+  - Phase 1: Analyze query structure
+  - Phase 2: Infer user goals and requirements
+  - Phase 3: Match tools to requirements
+  - Phase 4: Validate recommendations
+  - Phase 5: Synthesize final response
+- **Tracing Service**: Complete observability into SONA's decision-making
+  - Brain icon button to view agent's thought process
+  - Step-by-step trace of intent classification and reasoning
+  - Transparent AI for better user understanding
+- **Enhanced Intent Classification**: Improved patterns for detecting user intent
+  - Better detection for writing/text generation queries
+  - Enhanced data analysis detection
+  - More robust comparison and recommendation entity extraction
+
+### Fixed
+- **Critical: Reasoning Service Crash**: Fixed parameter passing bug causing enhanced agent to crash
+  - Changed `matchToolsToRequirements()` to receive full output object instead of nested property
+  - Changed `validateRecommendations()` to receive full output object
+  - Resolves "Cannot read properties of undefined (reading 'forEach')" error
+- **Enhanced Agent Error Handling**: Added comprehensive defensive error handling
+  - Try-catch wrapper around intent classification with fallback to GENERAL_QUESTION
+  - Prevents enhanced agent from crashing and falling back to old responses
+  - Graceful degradation when reasoning steps encounter errors
+- **Intent Tracking**: Fixed intentTypeName tracking throughout agent lifecycle
+  - Proper variable scoping prevents "UNKNOWN" intents in Learning Dashboard
+  - Intent accuracy metrics now calculate correctly (no longer stuck at 0%)
+- **GitHub Pages Deployment**: Fixed 404 errors after changing repository visibility
+  - Migrated from "Deploy from a branch" to "GitHub Actions" deployment method
+  - Added proper build and deployment workflow
+  - Site now live at: https://sonnil.github.io/AI-Compass/?demo=true
+
+### Enhanced
+- Comprehensive console logging for debugging agent behavior
+- Better error messages with stack traces for troubleshooting
+- Enhanced entity extraction for writing and text generation queries
+- Improved fallback mechanisms to ensure SONA always responds
+
+### Technical
+- Added defensive error handling in `enhancedAgent.ts`
+- Fixed reasoning service parameter passing in `reasoningService.ts`
+- Enhanced debug logging in `intentClassifier.ts` and `responseGenerator.ts`
+- Improved error logging in `ChatWidget.tsx`
+- Created `.github/workflows/deploy.yml` for automated deployment
+
 ## [2.1.0] - 2025-10-27
 
 ### Added
