@@ -176,6 +176,8 @@ export default function ChatWidget({ toolsCatalog }: Props) {
         }
       } catch (error) {
         console.error('❌ [ChatWidget] Enhanced agent error:', error)
+        console.error('❌ [ChatWidget] Error stack:', error instanceof Error ? error.stack : 'No stack trace')
+        console.error('❌ [ChatWidget] Error message:', error instanceof Error ? error.message : String(error))
         setShowThinkingProcess(false)
         // Fallback to original logic
         const responseContent = await generateIntelligentResponse(textToSend, currentMessages, updatedProfile)

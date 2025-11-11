@@ -256,14 +256,16 @@ export class IntentClassifier {
     if (/\b(data|analytics|analysis|insights|report|statistics|metrics)\b/i.test(msg)) {
       entities.needsDataAnalysis = true
       entities.capability = 'data analysis'
+      console.log('🔍 DEBUG - Data analysis detected')
     }
     if (/\b(document|pdf|file|text|reading|processing)\b/i.test(msg)) {
       entities.needsDocAnalysis = true
       entities.capability = 'document analysis'
     }
-    if (/\b(write|writing|content|text generation|article|blog)\b/i.test(msg)) {
+    if (/\b(write|writing|content|text generation|article|blog|composition|author|draft)\b/i.test(msg)) {
       entities.needsTextGen = true
       entities.capability = 'text generation'
+      console.log('🔍 DEBUG - Writing/text generation detected')
     }
     
     // Extract user type or department

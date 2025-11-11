@@ -68,7 +68,7 @@ class ReasoningService {
 
     // Step 3: Match against available tools
     const matchingStep = this.matchToolsToRequirements(
-      inferenceStep.output.requirements,
+      inferenceStep.output, // Pass the entire output object, not just requirements
       tools
     )
     chain.steps.push(matchingStep)
@@ -76,7 +76,7 @@ class ReasoningService {
     // Step 4: Validate recommendations
     const validationStep = this.validateRecommendations(
       matchingStep.output.matches,
-      inferenceStep.output.requirements,
+      inferenceStep.output, // Pass the entire output object
       context?.userExpertise
     )
     chain.steps.push(validationStep)

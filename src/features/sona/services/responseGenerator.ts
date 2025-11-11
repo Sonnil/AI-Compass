@@ -336,6 +336,10 @@ export class ResponseGenerator {
   private handleComparison(intent: Intent, message: string): string {
     const { toolNames } = intent.entities || {}
     
+    console.log('🔍 DEBUG - Comparison handler called')
+    console.log('🔍 DEBUG - Intent entities:', intent.entities)
+    console.log('🔍 DEBUG - Tool names extracted:', toolNames)
+    
     if (!toolNames || toolNames.length < 2) {
       // Get some example tools from the catalog
       const exampleTools = this.context.tools.slice(0, 4).map(t => t.name)
@@ -346,8 +350,12 @@ export class ResponseGenerator {
       return `To compare tools, please specify at least 2 tool names.\n\nExample: ${examples}\n\n💡 You can also use the **Compare** feature in the tool catalog for detailed side-by-side analysis!`
     }
     
+    console.log('🔍 DEBUG - Searching for tools:', toolNames)
+    
     // Find the tools with fuzzy matching
     const foundTools = toolNames.map(name => this.findToolByName(name)).filter(Boolean) as Tool[]
+    
+    console.log('🔍 DEBUG - Found tools:', foundTools.map(t => t.name).join(', '))
     
     if (foundTools.length < 2) {
       // Try to suggest similar tools or show what's available

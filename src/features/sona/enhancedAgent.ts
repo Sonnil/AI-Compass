@@ -42,49 +42,68 @@ export class EnhancedSONAAgent {
     conversationHistory: Msg[] = [],
     userProfile?: UserProfile
   ): Promise<string> {
+    console.log('🚀 [EnhancedAgent] processMessage called with:', userMessage)
     const startTime = Date.now()
     
-    // Start trace
-    const traceId = tracingService.startTrace(userMessage, {
-      conversationLength: conversationHistory.length,
-      userProfile: userProfile?.name || 'anonymous'
-    })
+    // Initialize intent with default value
+    let intent
+    let intentTypeName = 'UNKNOWN'
     
     try {
-      // Step 1: Classify intent
-      const intentSpanId = tracingService.startSpan(
-        SpanType.INTENT_CLASSIFICATION,
-        'Classify User Intent',
-        { query: userMessage }
-      )
+      // Start trace
+      const traceId = tracingService.startTrace(userMessage, {
+        conversationLength: conversationHistory.length,
+        userProfile: userProfile?.name || 'anonymous'
+      })
+      console.log('✅ [EnhancedAgent] Trace started:', traceId)
       
-      tracingService.addSpanEvent(
-        intentSpanId,
-        'progress' as any,
-        'Analyzing user query to determine intent...'
-      )
-      
-      const intent = this.intentClassifier.classify(userMessage)
-      
-      tracingService.addSpanEvent(
-        intentSpanId,
-        'info' as any,
-        `Intent detected: ${UserIntent[intent.type]}`,
-        { 
+      // Step 1: Classify intent (CRITICAL - must succeed)
+      try {
+        const intentSpanId = tracingService.startSpan(
+          SpanType.INTENT_CLASSIFICATION,
+          'Classify User Intent',
+          { query: userMessage }
+        )
+        
+        tracingService.addSpanEvent(
+          intentSpanId,
+          'progress' as any,
+          'Analyzing user query to determine intent...'
+        )
+        
+        intent = this.intentClassifier.classify(userMessage)
+        intentTypeName = UserIntent[intent.type] || 'UNKNOWN'
+        
+        console.log('🧠 [EnhancedAgent] Intent classified:', {
+          type: intentTypeName,
           confidence: intent.confidence,
           entities: intent.entities
+        })
+        
+        tracingService.addSpanEvent(
+          intentSpanId,
+          'info' as any,
+          `Intent detected: ${intentTypeName}`,
+          { 
+            confidence: intent.confidence,
+            entities: intent.entities,
+            intentType: intentTypeName
+          }
+        )
+        
+        tracingService.endSpan(intentSpanId, 'success')
+      } catch (intentError) {
+        console.error('❌ [EnhancedAgent] Intent classification failed:', intentError)
+        // Create default intent to continue
+        intent = {
+          type: 'GENERAL_QUESTION' as any,
+          confidence: 0.5,
+          entities: {}
         }
-      )
+        intentTypeName = 'GENERAL_QUESTION'
+      }
       
-      console.log('🧠 [EnhancedSONAAgent] Intent classified:', {
-        type: UserIntent[intent.type],
-        confidence: intent.confidence,
-        entities: intent.entities
-      })
-      
-      tracingService.endSpan(intentSpanId, 'success')
-      
-      // Step 2: Apply reasoning for complex queries
+      // Step 2: Apply reasoning for complex queries (OPTIONAL - won't break on error)
       let reasoningChain
       const shouldUseReasoning = [
         UserIntent.TOOL_RECOMMENDATION,
@@ -93,63 +112,69 @@ export class EnhancedSONAAgent {
       ].includes(intent.type)
       
       if (shouldUseReasoning) {
-        const reasoningSpanId = tracingService.startSpan(
-          SpanType.RESPONSE_GENERATION,
-          'Multi-Step Reasoning',
-          { intentType: UserIntent[intent.type] }
-        )
-        
-        tracingService.addSpanEvent(
-          reasoningSpanId,
-          'progress' as any,
-          'Applying multi-step reasoning to understand requirements...'
-        )
-        
-        // Get user expertise from learning service
-        const userPrefs = learningService.getUserPreferences(userProfile?.name || 'anonymous')
-        const previousQueries = conversationHistory.map(msg => msg.content).slice(-5)
-        
-        reasoningChain = reasoningService.reason(
-          userMessage,
-          intent,
-          this.tools,
-          {
-            previousQueries,
-            userExpertise: userPrefs?.expertiseLevel || 'intermediate'
-          }
-        )
-        
-        tracingService.addSpanEvent(
-          reasoningSpanId,
-          'info' as any,
-          `Reasoning completed with ${reasoningChain.steps.length} steps`,
-          {
-            overallConfidence: reasoningChain.overallConfidence,
-            stepsCompleted: reasoningChain.steps.length
-          }
-        )
-        
-        // Add reasoning steps to trace
-        reasoningChain.steps.forEach((step, idx) => {
+        try {
+          const reasoningSpanId = tracingService.startSpan(
+            SpanType.RESPONSE_GENERATION,
+            'Multi-Step Reasoning',
+            { intentType: UserIntent[intent.type] }
+          )
+          
+          tracingService.addSpanEvent(
+            reasoningSpanId,
+            'progress' as any,
+            'Applying multi-step reasoning to understand requirements...'
+          )
+          
+          // Get user expertise from learning service
+          const userPrefs = learningService.getUserPreferences(userProfile?.name || 'anonymous')
+          const previousQueries = conversationHistory.map(msg => msg.content).slice(-5)
+          
+          reasoningChain = reasoningService.reason(
+            userMessage,
+            intent,
+            this.tools,
+            {
+              previousQueries,
+              userExpertise: userPrefs?.expertiseLevel || 'intermediate'
+            }
+          )
+          
           tracingService.addSpanEvent(
             reasoningSpanId,
             'info' as any,
-            `Step ${idx + 1}: ${step.description} (${(step.confidence * 100).toFixed(0)}% confidence)`
+            `Reasoning completed with ${reasoningChain.steps.length} steps`,
+            {
+              overallConfidence: reasoningChain.overallConfidence,
+              stepsCompleted: reasoningChain.steps.length
+            }
           )
-        })
-        
-        tracingService.endSpan(reasoningSpanId, 'success')
+          
+          // Add reasoning steps to trace
+          reasoningChain.steps.forEach((step, idx) => {
+            tracingService.addSpanEvent(
+              reasoningSpanId,
+              'info' as any,
+              `Step ${idx + 1}: ${step.description} (${(step.confidence * 100).toFixed(0)}% confidence)`
+            )
+          })
+          
+          tracingService.endSpan(reasoningSpanId, 'success')
+          console.log('✅ [EnhancedAgent] Reasoning completed successfully')
+        } catch (reasoningError) {
+          console.warn('⚠️ [EnhancedAgent] Reasoning failed, continuing without it:', reasoningError)
+          // Don't let reasoning errors break the whole flow - just skip reasoning
+        }
       }
       
       // Step 3: Generate context-aware response
-      const intentTypeName = UserIntent[intent.type]
+      // intentTypeName already declared at top of function
       const responseSpanId = tracingService.startSpan(
         SpanType.RESPONSE_GENERATION,
         'Generate Response',
         { 
           intentType: intentTypeName,
           confidence: intent.confidence,
-          useReasoning: shouldUseReasoning
+          useReasoning: shouldUseReasoning && !!reasoningChain
         }
       )
       
@@ -159,7 +184,12 @@ export class EnhancedSONAAgent {
         'Generating contextual response based on intent...'
       )
       
+      console.log('📝 [EnhancedAgent] Generating response for intent:', intentTypeName)
       const response = this.responseGenerator.generateResponse(intent, userMessage)
+      console.log('✅ [EnhancedAgent] Response generated:', {
+        length: response.length,
+        preview: response.substring(0, 100) + '...'
+      })
       
       tracingService.addSpanEvent(
         responseSpanId,
@@ -173,12 +203,19 @@ export class EnhancedSONAAgent {
       const timeToResponse = Date.now() - startTime
       const toolsRecommended = this.extractToolNames(response)
       
+      console.log('📊 [EnhancedAgent] Recording interaction:', {
+        sessionId: this.sessionId,
+        intent: intentTypeName,
+        confidence: intent.confidence,
+        toolsRecommended: toolsRecommended.length
+      })
+      
       learningService.recordInteraction({
         userId: userProfile?.name || 'anonymous',
         sessionId: this.sessionId,
         timestamp: Date.now(),
         query: userMessage,
-        intent: UserIntent[intent.type],
+        intent: intentTypeName,
         confidence: intent.confidence,
         responseProvided: response,
         toolsRecommended,
@@ -189,10 +226,12 @@ export class EnhancedSONAAgent {
         }
       })
       
+      console.log('✅ [EnhancedAgent] Interaction recorded successfully')
+      
       // End trace successfully
       tracingService.endTrace({ 
         responseLength: response.length,
-        intentType: UserIntent[intent.type],
+        intentType: intentTypeName,
         confidence: intent.confidence,
         timeToResponse,
         toolsRecommended: toolsRecommended.length
