@@ -150,11 +150,11 @@ export const TraceViewer: React.FC<TraceViewerProps> = ({ isOpen, onClose }) => 
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-6xl w-full max-h-[85vh] flex flex-col overflow-hidden"
+          className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-6xl w-full h-[85vh] flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6">
+          <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 flex-shrink-0">
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-2xl font-bold mb-1">🔍 SONA Trace Viewer</h2>
@@ -199,7 +199,7 @@ export const TraceViewer: React.FC<TraceViewerProps> = ({ isOpen, onClose }) => 
             </div>
           </div>
 
-          <div className="flex h-[calc(85vh-180px)]">
+          <div className="flex flex-1 min-h-0">
             {/* Span Timeline */}
             <div className="w-1/2 border-r border-gray-200 dark:border-gray-700 overflow-y-auto p-6">
               <h3 className="text-lg font-semibold mb-4 dark:text-white">Operation Timeline</h3>
@@ -340,7 +340,7 @@ export const TraceViewer: React.FC<TraceViewerProps> = ({ isOpen, onClose }) => 
           </div>
 
           {/* Footer */}
-          <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-900">
+          <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-900 flex-shrink-0">
             <div className="flex justify-between items-center">
               <button
                 onClick={() => {
