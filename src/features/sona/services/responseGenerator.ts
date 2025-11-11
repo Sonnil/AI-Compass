@@ -707,6 +707,16 @@ What would you like to know? 😊`
   private handleGeneralQuestion(message: string): string {
     const lowerMsg = message.toLowerCase()
     
+    // Identity / "Who are you" questions
+    if (/who\s+(are|is)\s+(you|sona)|what\s+(are|is)\s+(you|sona)|tell me about (yourself|sona)|introduce (yourself|sona)|what('?s| is) your name|your name/i.test(lowerMsg)) {
+      return `Hi! I'm **SONA** (Sanofi Omni-helpful Navigator & Agent) 🤖 - your AI assistant for the AI Compass platform!\n\n**What I can do:**\n✨ Help you find AI tools\n🔍 Search and filter tools\n⚖️ Compare different tools\n📚 Answer AI questions\n🌍 Support in 8 languages\n\nHow can I help you today?`
+    }
+    
+    // Creator / "Who built you" questions
+    if (/who\s+(built|made|created|developed)\s+(you|sona)|who\s+is\s+your\s+(creator|maker|builder)|who\s+built\s+sona|built\s+by\s+who/i.test(lowerMsg)) {
+      return `I was built by **Sonnil Q. Le** and the **AI-Compass** team at Sanofi. 🚀\n\n📧 Contact: sonnil.le@sanofi.com\n\nThe AI-Compass platform helps Sanofians discover and leverage AI tools to accelerate innovation!`
+    }
+    
     // Jokes
     if (lowerMsg.includes('joke') || lowerMsg.includes('funny') || lowerMsg.includes('humor') || lowerMsg.includes('laugh')) {
       const jokes = [
