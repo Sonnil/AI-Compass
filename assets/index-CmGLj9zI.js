@@ -1760,7 +1760,7 @@ ${Sf()}`}])},[]),I.useEffect(()=>{t&&R()},[a,t,s]);const R=()=>{var L;(L=y.curre
             AI[App Insights <br/>(Logging/Tracing)]
         end
 
-        UI --> SONA;
+        UI --> SONA
     end
 
     subgraph "M365 & Data Platforms"
@@ -1771,25 +1771,29 @@ ${Sf()}`}])},[]),I.useEffect(()=>{t&&R()},[a,t,s]);const R=()=>{var L;(L=y.curre
         SNOW[Snowflake <br/>(Data Warehouse)]
     end
 
-    U1 & U2 & U3 & U4 --> UI;
-    SONA --> AOS;
-    SONA --> AIS;
-    SONA -.-> M365;
+    U1 --> UI
+    U2 --> UI
+    U3 --> UI
+    U4 --> UI
+    SONA --> AOS
+    SONA --> AIS
+    SONA -.-> M365
     
-    SONA -- "Parameterized SQL (Read-Only)" --> SNOW;
-    SONA -- "Read/Write to Project Library" --> SP;
-    SONA -- "Semantic Query (Read-Only)" --> PBI;
+    SONA -->|Parameterized SQL Read-Only| SNOW
+    SONA -->|Read/Write to Project Library| SP
+    SONA -->|Semantic Query Read-Only| PBI
 
-    UI & SONA --> AAD;
-    SONA --> KV;
-    SONA --> AI;
+    UI --> AAD
+    SONA --> AAD
+    SONA --> KV
+    SONA --> AI
 
-    classDef azure fill:#0078d4,color:#fff,stroke:#005a9e;
-    classDef data fill:#7fba00,color:#fff,stroke:#5a8300;
-    classDef users fill:#f25022,color:#fff,stroke:#c83c13;
-    class UI,SONA,AOS,AIS,KV,AAD,AI azure;
-    class SP,PBI,M365,SNOW data;
-    class U1,U2,U3,U4 users;`})})}),o.jsx("p",{className:"text-xs text-slate-500 dark:text-slate-400 mt-3",children:t.panZoomHint||"💡 Tip: Use mouse wheel to zoom, click and drag to pan"})]}),o.jsxs(Le,{className:"lg:col-span-full",children:[o.jsx("div",{className:"flex items-center justify-between mb-4",children:o.jsx("h3",{className:"text-lg font-semibold text-slate-900 dark:text-white",children:t.sonaArchitecture||"SONA Agent - Detailed Architecture"})}),o.jsx("div",{className:"relative overflow-auto rounded-lg border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6",children:o.jsx("pre",{className:"mermaid text-xs",children:`sequenceDiagram
+    classDef azure fill:#0078d4,color:#fff,stroke:#005a9e
+    classDef data fill:#7fba00,color:#fff,stroke:#5a8300
+    classDef users fill:#f25022,color:#fff,stroke:#c83c13
+    class UI,SONA,AOS,AIS,KV,AAD,AI azure
+    class SP,PBI,M365,SNOW data
+    class U1,U2,U3,U4 users`})})}),o.jsx("p",{className:"text-xs text-slate-500 dark:text-slate-400 mt-3",children:t.panZoomHint||"💡 Tip: Use mouse wheel to zoom, click and drag to pan"})]}),o.jsxs(Le,{className:"lg:col-span-full",children:[o.jsx("div",{className:"flex items-center justify-between mb-4",children:o.jsx("h3",{className:"text-lg font-semibold text-slate-900 dark:text-white",children:t.sonaArchitecture||"SONA Agent - Detailed Architecture"})}),o.jsx("div",{className:"relative overflow-auto rounded-lg border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6",children:o.jsx("pre",{className:"mermaid text-xs",children:`sequenceDiagram
     actor User
     participant Agent as EnhancedSONAAgent
     participant Trace as tracingService
