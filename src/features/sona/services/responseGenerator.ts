@@ -709,7 +709,7 @@ What would you like to know? 😊`
     
     // Identity / "Who are you" questions
     if (/who\s+(are|is)\s+(you|sona)|what\s+(are|is)\s+(you|sona)|tell me about (yourself|sona)|introduce (yourself|sona)|what('?s| is) your name|your name/i.test(lowerMsg)) {
-      return `Hi! I'm **SONA** (Sanofi Omni-helpful Navigator & Agent) 🤖 - your AI assistant for the AI Compass platform!\n\n**What I can do:**\n✨ Help you find AI tools\n🔍 Search and filter tools\n⚖️ Compare different tools\n📚 Answer AI questions\n🌍 Support in 8 languages\n\nHow can I help you today?`
+      return `I am **SONA** (Sanofi Organizational Navigation Assistant) 🤖\n\nI'm an intelligent AI agent created by Sonnil Q. Le to help Sanofi employees navigate the AI Compass platform and discover the right AI tools for their work.\n\n**What I can do:**\n\n**1️⃣ AI Tool Discovery & Guidance** 🔍\n• Smart tool recommendations from 52+ tools based on your needs\n• Detailed side-by-side tool comparisons\n• Knowledge of Sanofi's AI ecosystem and platform features\n• Help you find the perfect tool for any task\n\n**2️⃣ Platform Features Assistance** 🎯\n• Guide you through search, filters, and analytics\n• Answer questions about AI Compass features\n• Help you understand tool capabilities\n• Support in 8 languages\n\n**3️⃣ Conversational AI** 💬\n• Natural language understanding\n• Context-aware responses\n• Learning from interactions\n• Friendly and helpful personality\n\nHow can I help you today?`
     }
     
     // Creator / "Who built you" questions
