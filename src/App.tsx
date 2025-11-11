@@ -435,7 +435,7 @@ function App(): React.ReactElement {
               </button>
               
               {showSettingsMenu && (
-                <div className="absolute right-0 mt-2 w-56 sm:w-64 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl z-[100] overflow-hidden">
+                <div className="fixed right-3 sm:right-4 mt-12 w-56 sm:w-64 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl z-[100] overflow-hidden">
                   {/* Language Selector */}
                   <div className="p-3 border-b border-slate-200 dark:border-slate-700">
                     <div className="text-xs font-medium text-slate-600 dark:text-slate-400 mb-2 flex items-center gap-2">
