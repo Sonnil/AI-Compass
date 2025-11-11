@@ -285,11 +285,19 @@ function DevelopersView({ lang, t }: { lang: string; t: any }) {
   const [dragStart, setDragStart] = React.useState({ x: 0, y: 0 });
   const containerRef = React.useRef<HTMLDivElement>(null);
 
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const delta = e.deltaY > 0 ? 0.9 : 1.1;
-    setScale(prev => Math.min(Math.max(0.5, prev * delta), 3));
-  };
+  React.useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? 0.9 : 1.1;
+      setScale(prev => Math.min(Math.max(0.5, prev * delta), 3));
+    };
+
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    return () => container.removeEventListener('wheel', handleWheel);
+  }, []);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -403,7 +411,6 @@ function DevelopersView({ lang, t }: { lang: string; t: any }) {
           ref={containerRef}
           className="relative overflow-hidden rounded-lg border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
           style={{ height: '600px', cursor: isDragging ? 'grabbing' : 'grab' }}
-          onWheel={handleWheel}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -419,67 +426,59 @@ function DevelopersView({ lang, t }: { lang: string; t: any }) {
             }}
           >
             <pre className="mermaid text-xs">
-{`graph TD
-    subgraph "User Groups"
-        direction LR
+{`graph TB
+    subgraph users[User Groups]
         U1[QA Ops]
         U2[HSE]
         U3[PMs]
         U4[Analysts]
     end
 
-    subgraph "Azure Platform"
+    subgraph azure[Azure Platform]
         direction TB
-        subgraph "AI-COMPASS"
-            UI[AI-COMPASS UI <br/>(React/Vite)]
-            SONA[SONA Agent <br/>(TypeScript)]
-        end
-        
-        subgraph "Azure AI Services"
-            AOS[Azure OpenAI <br/>(Model Hosting)]
-            AIS[Azure AI Search <br/>(Indexing)]
-        end
-
-        subgraph "Security & Operations"
-            KV[Key Vault <br/>(Secrets)]
-            AAD[Azure Active Directory <br/>(SSO)]
-            AI[App Insights <br/>(Logging/Tracing)]
-        end
-
-        UI --> SONA
+        UI[AI-COMPASS UI]
+        SONA[SONA Agent]
+        AOS[Azure OpenAI]
+        AIS[Azure AI Search]
+        KV[Key Vault]
+        AAD[Azure AD]
+        AI[App Insights]
     end
 
-    subgraph "M365 & Data Platforms"
+    subgraph data[M365 & Data Platforms]
         direction TB
-        SP[SharePoint <br/>(Document Storage)]
-        PBI[Power BI <br/>(Analytics)]
-        M365[M365 Graph API <br/>(User Context)]
-        SNOW[Snowflake <br/>(Data Warehouse)]
+        SP[SharePoint]
+        PBI[Power BI]
+        M365[M365 Graph API]
+        SNOW[Snowflake]
     end
 
     U1 --> UI
     U2 --> UI
     U3 --> UI
     U4 --> UI
+    
+    UI --> SONA
     SONA --> AOS
     SONA --> AIS
     SONA -.-> M365
     
-    SONA -->|Parameterized SQL Read-Only| SNOW
-    SONA -->|Read/Write to Project Library| SP
-    SONA -->|Semantic Query Read-Only| PBI
+    SONA -->|SQL Read-Only| SNOW
+    SONA -->|Read/Write| SP
+    SONA -->|Query| PBI
 
     UI --> AAD
     SONA --> AAD
     SONA --> KV
     SONA --> AI
 
-    classDef azure fill:#0078d4,color:#fff,stroke:#005a9e
-    classDef data fill:#7fba00,color:#fff,stroke:#5a8300
-    classDef users fill:#f25022,color:#fff,stroke:#c83c13
-    class UI,SONA,AOS,AIS,KV,AAD,AI azure
-    class SP,PBI,M365,SNOW data
-    class U1,U2,U3,U4 users`}
+    classDef azureStyle fill:#0078d4,color:#fff,stroke:#005a9e,stroke-width:2px
+    classDef dataStyle fill:#7fba00,color:#fff,stroke:#5a8300,stroke-width:2px
+    classDef userStyle fill:#f25022,color:#fff,stroke:#c83c13,stroke-width:2px
+    
+    class UI,SONA,AOS,AIS,KV,AAD,AI azureStyle
+    class SP,PBI,M365,SNOW dataStyle
+    class U1,U2,U3,U4 userStyle`}
             </pre>
           </div>
         </div>
