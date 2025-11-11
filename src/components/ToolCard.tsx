@@ -429,9 +429,19 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool, isNew, isUpdated, lang }) => 
 
             <div className="flex-shrink-0">
               {isScrollable && !isAtBottom && (
-                <div className="text-center text-xs text-slate-400 dark:text-slate-500 animate-bounce mb-1">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    frontScrollRef.current?.scrollTo({
+                      top: frontScrollRef.current.scrollHeight,
+                      behavior: 'smooth'
+                    });
+                  }}
+                  className="w-full text-center text-xs text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 animate-bounce mb-1 transition-colors cursor-pointer py-1"
+                  title="Scroll to bottom"
+                >
                   <ArrowDown className="w-4 h-4 mx-auto" />
-                </div>
+                </button>
               )}
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
@@ -476,9 +486,19 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool, isNew, isUpdated, lang }) => 
 
             <div className="flex-shrink-0 mt-3">
               {isBackScrollable && !isBackAtBottom && (
-                <div className="text-center text-xs text-slate-400 dark:text-slate-500 animate-bounce">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    backScrollRef.current?.scrollTo({
+                      top: backScrollRef.current.scrollHeight,
+                      behavior: 'smooth'
+                    });
+                  }}
+                  className="w-full text-center text-xs text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 animate-bounce transition-colors cursor-pointer py-1"
+                  title="Scroll to bottom"
+                >
                   <ArrowDown className="w-4 h-4 mx-auto" />
-                </div>
+                </button>
               )}
               <div className="flex items-center justify-between gap-2">
                 <button className={`w-full px-2 py-1 rounded-lg transition-all duration-300 hover:scale-105 text-xs font-medium touch-manipulation ${isInCompare ? "bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-md" : "border border-purple-200 dark:border-purple-700 hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 hover:text-white"}`}
