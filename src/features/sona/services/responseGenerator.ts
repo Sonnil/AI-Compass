@@ -3,6 +3,7 @@ import type { Intent } from './intentClassifier'
 import { UserIntent } from './intentClassifier'
 import { AnalyticsQueryService } from './analyticsQueryService'
 import { getAICompassFeaturesResponse } from '../knowledge'
+import { tracingService, SpanType } from '../../../services/tracing/tracingService'
 
 export interface ResponseContext {
   tools: Tool[]

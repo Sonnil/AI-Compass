@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { MessageSquare, X, Send, Bot, Sparkles, Maximize2, Minimize2, ArrowDown, ThumbsUp, ThumbsDown } from 'lucide-react'
+import { MessageSquare, X, Send, Bot, Sparkles, Maximize2, Minimize2, ArrowDown, ThumbsUp, ThumbsDown, Activity } from 'lucide-react'
 import type { Msg, UserProfile } from '../../features/sona/types'
 import { generateIntelligentResponse, decideToolCall, executeTool } from '../../features/sona/agent.js'
 import { storeFeedback, getLearningInsights } from '../../features/sona/learning.js'
@@ -8,6 +8,8 @@ import { getAITipOfTheDay } from '../../features/sona/knowledge'
 import { callAiChatStream } from '../../services/aiChatClient.js'
 import { createEnhancedAgent } from './enhancedAgent'
 import { generateSuggestedPrompts, getWelcomePrompts, type SuggestedPrompt } from './suggestedPrompts'
+import { ThinkingProcess } from '../../components/ThinkingProcess'
+import { TraceViewer } from '../../components/TraceViewer'
 
 type Props = {
   toolsCatalog: any[]
@@ -73,6 +75,8 @@ export default function ChatWidget({ toolsCatalog }: Props) {
   const [userProfile, setUserProfile] = useState<UserProfile>({ name: 'There', interests: [], commonQueries: [], toolsAskedAbout: [], conversationStyle: 'casual' })
   const [showScroll, setShowScroll] = useState(false)
   const [suggestedPrompts, setSuggestedPrompts] = useState<SuggestedPrompt[]>(getWelcomePrompts())
+  const [showTraceViewer, setShowTraceViewer] = useState(false)
+  const [showThinkingProcess, setShowThinkingProcess] = useState(false)
   const chatEndRef = useRef<HTMLDivElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -149,9 +153,13 @@ export default function ChatWidget({ toolsCatalog }: Props) {
     if (useEnhanced) {
       // Use enhanced agent with intent classification
       console.log('✨ [ChatWidget] Using enhanced agent')
+      setShowThinkingProcess(true) // Show thinking process
       try {
         const responseContent = await enhancedAgent.current.processMessage(textToSend, currentMessages, updatedProfile)
         console.log('📝 [ChatWidget] Enhanced response:', responseContent.slice(0, 200))
+        
+        // Hide thinking process before streaming response
+        setShowThinkingProcess(false)
         
         // Stream the response
         const stream = streamResponse(responseContent)
@@ -164,6 +172,7 @@ export default function ChatWidget({ toolsCatalog }: Props) {
         }
       } catch (error) {
         console.error('❌ [ChatWidget] Enhanced agent error:', error)
+        setShowThinkingProcess(false)
         // Fallback to original logic
         const responseContent = await generateIntelligentResponse(textToSend, currentMessages, updatedProfile)
         const stream = streamResponse(responseContent)
@@ -302,6 +311,13 @@ export default function ChatWidget({ toolsCatalog }: Props) {
           <h3 className="font-bold text-lg">SONA Assistant</h3>
         </div>
         <div className="flex items-center space-x-2">
+          <button 
+            onClick={() => setShowTraceViewer(true)} 
+            className="hover:bg-purple-700 p-1 rounded-full transition-colors"
+            title="View Trace Details"
+          >
+            <Activity size={20} />
+          </button>
           <button onClick={toggleMaximize} className="hover:bg-purple-700 p-1 rounded-full">
             {isMaximized ? <Minimize2 size={20} /> : <Maximize2 size={20} />}
           </button>
@@ -311,6 +327,9 @@ export default function ChatWidget({ toolsCatalog }: Props) {
         </div>
       </div>
       <div ref={chatContainerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto p-4 flex flex-col space-y-4 bg-gray-50 dark:bg-gray-900">
+        {/* Thinking Process Display */}
+        <ThinkingProcess isVisible={showThinkingProcess} />
+        
         {messages.map((msg, index) => (
           <div key={index} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
             <div className={`max-w-xs md:max-w-md lg:max-w-lg p-3 rounded-lg ${msg.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200'}`}>
@@ -403,6 +422,9 @@ export default function ChatWidget({ toolsCatalog }: Props) {
           </button>
         </div>
       </div>
+      
+      {/* Trace Viewer Modal */}
+      <TraceViewer isOpen={showTraceViewer} onClose={() => setShowTraceViewer(false)} />
     </div>
   )
 }

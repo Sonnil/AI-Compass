@@ -5,12 +5,14 @@
  * - IntentClassifier: Understands user intent beyond keyword matching
  * - AnalyticsQueryService: Processes natural language analytics questions
  * - ResponseGenerator: Context-aware, dynamic response generation
+ * - TracingService: Observability and traceability for user transparency
  */
 
 import type { Msg, UserProfile } from './types'
 import type { Tool } from '../../types'
 import { IntentClassifier, UserIntent } from './services/intentClassifier'
 import { ResponseGenerator } from './services/responseGenerator'
+import { tracingService, SpanType } from '../../services/tracing/tracingService'
 
 export class EnhancedSONAAgent {
   private intentClassifier: IntentClassifier
@@ -32,19 +34,84 @@ export class EnhancedSONAAgent {
     conversationHistory: Msg[] = [],
     userProfile?: UserProfile
   ): Promise<string> {
-    // Step 1: Classify intent
-    const intent = this.intentClassifier.classify(userMessage)
-    
-    console.log('🧠 [EnhancedSONAAgent] Intent classified:', {
-      type: UserIntent[intent.type],
-      confidence: intent.confidence,
-      entities: intent.entities
+    // Start trace
+    const traceId = tracingService.startTrace(userMessage, {
+      conversationLength: conversationHistory.length,
+      userProfile: userProfile?.name || 'anonymous'
     })
     
-    // Step 2: Generate context-aware response
-    const response = this.responseGenerator.generateResponse(intent, userMessage)
-    
-    return response
+    try {
+      // Step 1: Classify intent
+      const intentSpanId = tracingService.startSpan(
+        SpanType.INTENT_CLASSIFICATION,
+        'Classify User Intent',
+        { query: userMessage }
+      )
+      
+      tracingService.addSpanEvent(
+        intentSpanId,
+        'progress' as any,
+        'Analyzing user query to determine intent...'
+      )
+      
+      const intent = this.intentClassifier.classify(userMessage)
+      
+      tracingService.addSpanEvent(
+        intentSpanId,
+        'info' as any,
+        `Intent detected: ${UserIntent[intent.type]}`,
+        { 
+          confidence: intent.confidence,
+          entities: intent.entities
+        }
+      )
+      
+      console.log('🧠 [EnhancedSONAAgent] Intent classified:', {
+        type: UserIntent[intent.type],
+        confidence: intent.confidence,
+        entities: intent.entities
+      })
+      
+      tracingService.endSpan(intentSpanId, 'success')
+      
+      // Step 2: Generate context-aware response
+      const responseSpanId = tracingService.startSpan(
+        SpanType.RESPONSE_GENERATION,
+        'Generate Response',
+        { intentType: UserIntent[intent.type] }
+      )
+      
+      tracingService.addSpanEvent(
+        responseSpanId,
+        'progress' as any,
+        'Generating contextual response based on intent...'
+      )
+      
+      const response = this.responseGenerator.generateResponse(intent, userMessage)
+      
+      tracingService.addSpanEvent(
+        responseSpanId,
+        'info' as any,
+        `Generated response (${response.length} characters)`
+      )
+      
+      tracingService.endSpan(responseSpanId, 'success')
+      
+      // End trace successfully
+      tracingService.endTrace({ 
+        responseLength: response.length,
+        intentType: UserIntent[intent.type],
+        confidence: intent.confidence
+      })
+      
+      return response
+    } catch (error) {
+      // End trace with error
+      tracingService.endTrace({ 
+        error: error instanceof Error ? error.message : 'Unknown error'
+      })
+      throw error
+    }
   }
   
   /**
