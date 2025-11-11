@@ -148,11 +148,11 @@ export default function ChatWidget({ toolsCatalog }: Props) {
 
     // Check if we should use enhanced agent
     const useEnhanced = enhancedAgent.current.shouldUseEnhancedAgent(textToSend)
-    console.log('🧠 [ChatWidget] Use enhanced agent:', useEnhanced)
+    console.log('🧠 [ChatWidget] Use enhanced agent:', useEnhanced, 'for query:', textToSend)
 
     if (useEnhanced) {
       // Use enhanced agent with intent classification
-      console.log('✨ [ChatWidget] Using enhanced agent')
+      console.log('✨ [ChatWidget] Using enhanced agent with tracing')
       setShowThinkingProcess(true) // Show thinking process
       try {
         const responseContent = await enhancedAgent.current.processMessage(textToSend, currentMessages, updatedProfile)

@@ -33,21 +33,92 @@ const SpanTypeIcons: Record<SpanType, string> = {
 
 export const TraceViewer: React.FC<TraceViewerProps> = ({ isOpen, onClose }) => {
   const [currentTrace, setCurrentTrace] = useState<Trace | null>(null)
+  const [allTraces, setAllTraces] = useState<Trace[]>([])
+  const [selectedTraceId, setSelectedTraceId] = useState<string | null>(null)
   const [selectedSpan, setSelectedSpan] = useState<TraceSpan | null>(null)
 
   useEffect(() => {
-    // Subscribe to trace updates
-    const unsubscribe = tracingService.subscribe((trace) => {
-      setCurrentTrace(trace)
-    })
+    if (isOpen) {
+      // Subscribe to trace updates
+      const unsubscribe = tracingService.subscribe((trace) => {
+        setCurrentTrace(trace)
+        // Update all traces
+        setAllTraces(tracingService.getAllTraces())
+        // Auto-select the current trace
+        if (trace) {
+          setSelectedTraceId(trace.id)
+        }
+      })
 
-    // Get initial trace
-    setCurrentTrace(tracingService.getCurrentTrace())
+      // Get initial data
+      const current = tracingService.getCurrentTrace()
+      const all = tracingService.getAllTraces()
+      
+      setCurrentTrace(current)
+      setAllTraces(all)
+      
+      // Select the most recent trace (current or last completed)
+      if (current) {
+        setSelectedTraceId(current.id)
+      } else if (all.length > 0) {
+        setSelectedTraceId(all[all.length - 1].id)
+      }
 
-    return unsubscribe
-  }, [])
+      return unsubscribe
+    }
+  }, [isOpen])
 
-  if (!isOpen || !currentTrace) return null
+  if (!isOpen) return null
+
+  // Get the trace to display
+  const displayTrace = selectedTraceId
+    ? (currentTrace?.id === selectedTraceId ? currentTrace : allTraces.find(t => t.id === selectedTraceId))
+    : currentTrace || (allTraces.length > 0 ? allTraces[allTraces.length - 1] : null)
+
+  // Show empty state if no traces available
+  if (!displayTrace) {
+    return (
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-2xl w-full p-12 text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/20 dark:to-blue-900/20 rounded-full flex items-center justify-center">
+                <svg className="w-10 h-10 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                  No Traces Yet
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md">
+                  Start a conversation with SONA to see trace information. Ask any question and watch the AI's thought process unfold!
+                </p>
+              </div>
+              <button
+                onClick={onClose}
+                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg font-medium"
+              >
+                Got it, let's chat!
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
+    )
+  }
 
   const formatDuration = (ms: number) => {
     if (ms < 1000) return `${ms}ms`
@@ -88,7 +159,7 @@ export const TraceViewer: React.FC<TraceViewerProps> = ({ isOpen, onClose }) => 
               <div>
                 <h2 className="text-2xl font-bold mb-1">🔍 SONA Trace Viewer</h2>
                 <p className="text-purple-100 text-sm">
-                  Real-time observability: {currentTrace.userQuery}
+                  Real-time observability: {displayTrace.userQuery}
                 </p>
               </div>
               <button
@@ -105,20 +176,26 @@ export const TraceViewer: React.FC<TraceViewerProps> = ({ isOpen, onClose }) => 
             <div className="flex gap-4 mt-4 text-sm">
               <div className="bg-white/20 rounded-lg px-3 py-1">
                 <span className="opacity-80">Spans:</span>{' '}
-                <span className="font-semibold">{currentTrace.spans.length}</span>
+                <span className="font-semibold">{displayTrace.spans.length}</span>
               </div>
-              {currentTrace.duration && (
+              {displayTrace.duration && (
                 <div className="bg-white/20 rounded-lg px-3 py-1">
                   <span className="opacity-80">Duration:</span>{' '}
-                  <span className="font-semibold">{formatDuration(currentTrace.duration)}</span>
+                  <span className="font-semibold">{formatDuration(displayTrace.duration)}</span>
                 </div>
               )}
               <div className="bg-white/20 rounded-lg px-3 py-1">
                 <span className="opacity-80">Status:</span>{' '}
                 <span className="font-semibold">
-                  {currentTrace.endTime ? '✓ Complete' : '⏳ Running'}
+                  {displayTrace.endTime ? '✓ Complete' : '⏳ Running'}
                 </span>
               </div>
+              {allTraces.length > 0 && (
+                <div className="bg-white/20 rounded-lg px-3 py-1">
+                  <span className="opacity-80">History:</span>{' '}
+                  <span className="font-semibold">{allTraces.length} trace{allTraces.length !== 1 ? 's' : ''}</span>
+                </div>
+              )}
             </div>
           </div>
 
@@ -128,7 +205,7 @@ export const TraceViewer: React.FC<TraceViewerProps> = ({ isOpen, onClose }) => 
               <h3 className="text-lg font-semibold mb-4 dark:text-white">Operation Timeline</h3>
               
               <div className="space-y-3">
-                {currentTrace.spans.map((span, index) => {
+                {displayTrace.spans.map((span, index) => {
                   const isSelected = selectedSpan?.id === span.id
                   const statusColor = 
                     span.status === 'running' ? 'border-blue-500' :
@@ -267,14 +344,13 @@ export const TraceViewer: React.FC<TraceViewerProps> = ({ isOpen, onClose }) => 
             <div className="flex justify-between items-center">
               <button
                 onClick={() => {
-                  const trace = tracingService.getCurrentTrace()
-                  if (trace) {
-                    const json = tracingService.exportTrace(trace.id)
+                  if (displayTrace) {
+                    const json = tracingService.exportTrace(displayTrace.id)
                     const blob = new Blob([json], { type: 'application/json' })
                     const url = URL.createObjectURL(blob)
                     const a = document.createElement('a')
                     a.href = url
-                    a.download = `sona-trace-${trace.id}.json`
+                    a.download = `sona-trace-${displayTrace.id}.json`
                     a.click()
                     URL.revokeObjectURL(url)
                   }

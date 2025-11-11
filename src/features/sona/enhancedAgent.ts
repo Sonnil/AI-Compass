@@ -122,8 +122,14 @@ export class EnhancedSONAAgent {
    * - Analytics questions
    * - Platform help
    * - Tool details
+   * 
+   * NOTE: Now returns true for ALL queries to enable tracing for everything
    */
   shouldUseEnhancedAgent(userMessage: string): boolean {
+    // Always use enhanced agent to enable tracing for all queries
+    return true
+    
+    /* Original logic - kept for reference
     const intent = this.intentClassifier.classify(userMessage)
     
     // Use enhanced agent for high-confidence, specific intents
@@ -136,6 +142,7 @@ export class EnhancedSONAAgent {
     ]
     
     return enhancedIntents.includes(intent.type) && intent.confidence >= 0.6
+    */
   }
   
   /**
