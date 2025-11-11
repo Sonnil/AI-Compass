@@ -446,7 +446,7 @@ function DevelopersView({ lang, t }: { lang: string; t: any }) {
             AI[App Insights <br/>(Logging/Tracing)]
         end
 
-        UI --> SONA;
+        UI --> SONA
     end
 
     subgraph "M365 & Data Platforms"
@@ -457,25 +457,29 @@ function DevelopersView({ lang, t }: { lang: string; t: any }) {
         SNOW[Snowflake <br/>(Data Warehouse)]
     end
 
-    U1 & U2 & U3 & U4 --> UI;
-    SONA --> AOS;
-    SONA --> AIS;
-    SONA -.-> M365;
+    U1 --> UI
+    U2 --> UI
+    U3 --> UI
+    U4 --> UI
+    SONA --> AOS
+    SONA --> AIS
+    SONA -.-> M365
     
-    SONA -- "Parameterized SQL (Read-Only)" --> SNOW;
-    SONA -- "Read/Write to Project Library" --> SP;
-    SONA -- "Semantic Query (Read-Only)" --> PBI;
+    SONA -->|Parameterized SQL Read-Only| SNOW
+    SONA -->|Read/Write to Project Library| SP
+    SONA -->|Semantic Query Read-Only| PBI
 
-    UI & SONA --> AAD;
-    SONA --> KV;
-    SONA --> AI;
+    UI --> AAD
+    SONA --> AAD
+    SONA --> KV
+    SONA --> AI
 
-    classDef azure fill:#0078d4,color:#fff,stroke:#005a9e;
-    classDef data fill:#7fba00,color:#fff,stroke:#5a8300;
-    classDef users fill:#f25022,color:#fff,stroke:#c83c13;
-    class UI,SONA,AOS,AIS,KV,AAD,AI azure;
-    class SP,PBI,M365,SNOW data;
-    class U1,U2,U3,U4 users;`}
+    classDef azure fill:#0078d4,color:#fff,stroke:#005a9e
+    classDef data fill:#7fba00,color:#fff,stroke:#5a8300
+    classDef users fill:#f25022,color:#fff,stroke:#c83c13
+    class UI,SONA,AOS,AIS,KV,AAD,AI azure
+    class SP,PBI,M365,SNOW data
+    class U1,U2,U3,U4 users`}
             </pre>
           </div>
         </div>
