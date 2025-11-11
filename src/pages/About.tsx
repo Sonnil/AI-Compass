@@ -637,32 +637,6 @@ function DevelopersView({ lang, t }: { lang: string; t: any }) {
         </div>
       </Card>
 
-      {/* GitHub Repository */}
-      <Card className="lg:col-span-full">
-        <SectionTitle 
-          icon={<Code2 className="h-5 w-5 text-blue-600 dark:text-blue-400" />}
-          title={t.openSource || "Open Source & Community"} 
-        />
-        <div className="space-y-4">
-          <p className="leading-relaxed">
-            {t.openSourceDesc || "AI-COMPASS is built with modern open-source technologies and follows enterprise-grade development practices. The codebase demonstrates best practices in TypeScript, React, and AI integration."}
-          </p>
-          <div className="flex items-center gap-4">
-            <a 
-              href="https://github.com/Sonnil/AI-Compass"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-700 dark:hover:bg-slate-100 transition-colors"
-            >
-              <Code2 className="h-4 w-4" />
-              {t.viewOnGitHub || "View on GitHub"}
-            </a>
-            <span className="text-sm text-slate-600 dark:text-slate-400">
-              {t.builtWithLove || "Built with ❤️ by Sonnil Le"}
-            </span>
-          </div>
-        </div>
-      </Card>
     </div>
   );
 }
