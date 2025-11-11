@@ -150,7 +150,7 @@ export const TraceViewer: React.FC<TraceViewerProps> = ({ isOpen, onClose }) => 
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden"
+          className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-6xl w-full max-h-[85vh] flex flex-col overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
@@ -199,7 +199,7 @@ export const TraceViewer: React.FC<TraceViewerProps> = ({ isOpen, onClose }) => 
             </div>
           </div>
 
-          <div className="flex h-[calc(90vh-180px)]">
+          <div className="flex h-[calc(85vh-180px)]">
             {/* Span Timeline */}
             <div className="w-1/2 border-r border-gray-200 dark:border-gray-700 overflow-y-auto p-6">
               <h3 className="text-lg font-semibold mb-4 dark:text-white">Operation Timeline</h3>
@@ -271,10 +271,10 @@ export const TraceViewer: React.FC<TraceViewerProps> = ({ isOpen, onClose }) => 
                       </h4>
                       <div className="bg-white dark:bg-gray-900 rounded-lg p-3 space-y-1">
                         {Object.entries(selectedSpan.metadata).map(([key, value]) => (
-                          <div key={key} className="flex justify-between text-sm">
-                            <span className="text-gray-600 dark:text-gray-400">{key}:</span>
-                            <span className="font-mono text-gray-900 dark:text-white">
-                              {typeof value === 'object' ? JSON.stringify(value) : String(value)}
+                          <div key={key} className="flex gap-2 text-sm">
+                            <span className="text-gray-600 dark:text-gray-400 flex-shrink-0">{key}:</span>
+                            <span className="font-mono text-gray-900 dark:text-white break-all">
+                              {typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value)}
                             </span>
                           </div>
                         ))}

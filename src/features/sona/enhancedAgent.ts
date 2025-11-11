@@ -75,10 +75,14 @@ export class EnhancedSONAAgent {
       tracingService.endSpan(intentSpanId, 'success')
       
       // Step 2: Generate context-aware response
+      const intentTypeName = UserIntent[intent.type]
       const responseSpanId = tracingService.startSpan(
         SpanType.RESPONSE_GENERATION,
         'Generate Response',
-        { intentType: UserIntent[intent.type] }
+        { 
+          intentType: intentTypeName,
+          confidence: intent.confidence
+        }
       )
       
       tracingService.addSpanEvent(
