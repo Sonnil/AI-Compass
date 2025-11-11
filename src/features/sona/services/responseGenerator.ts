@@ -717,6 +717,13 @@ What would you like to know? 😊`
       return `I was built by **Sonnil Q. Le** and the **AI-Compass** team at Sanofi. 🚀\n\n📧 Contact: sonnil.le@sanofi.com\n\nThe AI-Compass platform helps Sanofians discover and leverage AI tools to accelerate innovation!`
     }
     
+    // Sonnil Q. Le questions - import getSonnilLeResponse from knowledge.ts
+    if (/sonnil\b|who\s+is\s+sonnil|tell\s+me\s+about\s+sonnil/i.test(lowerMsg)) {
+      // Import and use the comprehensive Sonnil profile from knowledge.ts
+      const { getSonnilLeResponse } = require('../knowledge')
+      return getSonnilLeResponse(message)
+    }
+    
     // Jokes
     if (lowerMsg.includes('joke') || lowerMsg.includes('funny') || lowerMsg.includes('humor') || lowerMsg.includes('laugh')) {
       const jokes = [
